@@ -10,8 +10,7 @@ const byte header[] = {
 };
 
 
-MidiWriter::MidiWriter(int pin){
-  
+MidiWriter::MidiWriter(){
 }
 
 void MidiWriter::setFilename(const char* filename) {
@@ -20,17 +19,25 @@ void MidiWriter::setFilename(const char* filename) {
 }
 
 void MidiWriter::writeHeader() {
-  for (int i=0; i<sizeof(header); i++)
+  for (unsigned int i=0; i<sizeof(header); i++)
     dataFile.write(header[i]);
 }
 
-void MidiWriter::addEvent(byte a, byte b, byte c, byte d) {
+void MidiWriter::addEvent(int ticks, byte a, byte b, byte c, byte d) {
+  dataFile.write(ticks);
   dataFile.write(a);
   dataFile.write(b);
   dataFile.write(c);
   dataFile.write(d);
+  trackSize += 4;
 }
 
 void MidiWriter::flush() {
-  dataFile.flush();
+  if (dataFile != NULL) {
+    dataFile.flush();
+    unsigned long position = dataFile.position();
+    dataFile.seek(18);
+    dataFile.write(trackSize);
+    dataFile.seek(position);
+  }
 }
