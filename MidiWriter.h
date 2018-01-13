@@ -12,9 +12,16 @@ class MidiWriter
     void writeHeader();
     void addEvent(int ticks, byte a, byte b, byte c, byte d);
     void flush();
+    
   private:
+    byte _buffer[50];
+    byte _bufferPos = 0;
+    
+    char _filename[80];
     unsigned long trackSize = 0;
-    File dataFile;
+
+    void write_buf_int(unsigned int data);
+    void write_buf_byte(byte a);
 };
 
 #endif
