@@ -7,14 +7,14 @@
 class MidiWriter
 {
   public:
-    MidiWriter(int pin);
+    MidiWriter();
     void setFilename(const char* filename);
     void writeHeader();
-    void addEvent(byte a, byte b, byte c, byte d);
+    void addEvent(int ticks, byte a, byte b, byte c, byte d);
     void flush();
   private:
+    unsigned long trackSize = 0;
     File dataFile;
-    int _pin;
 };
 
 #endif
