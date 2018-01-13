@@ -15,6 +15,13 @@
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
+// Teensy 3.5 & 3.6 on-board: BUILTIN_SDCARD
+// Wiz820+SD board: pin 4
+// Teensy 2.0: pin 0
+// Teensy++ 2.0: pin 20
+const int chipSelect = BUILTIN_SDCARD;
+
+
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
 
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
@@ -38,12 +45,12 @@ void setup()
   //while (!Serial) {
   //  delay(100);
   //}
-    Serial.begin(9600);
-    Serial.println("hello!");
+    //Serial.begin(9600);
+    //Serial.println("hello!");
     
     // Initiate MIDI communications, listen to all channels
     midiA.begin(MIDI_CHANNEL_OMNI);
-    Serial.println("midi has begun!");
+    //Serial.println("midi has begun!");
      //Draw the white keys on the keyboard
     for (int i=0; i<24; i++) {
     tft.fillRect(0,i*5,64,4,ST7735_WHITE);
@@ -70,7 +77,17 @@ void setup()
     tft.fillRect(0,93,32,3,ST7735_BLACK);
     tft.fillRect(0,98,32,3,ST7735_BLACK);
 
-    midi_writer.setFilename("first.mid");
+
+   //Serial.print("Initializing SD card...");
+  
+    // see if the card is present and can be initialized:
+    if (!SD.begin(chipSelect)) {
+      //Serial.println("Card failed, or not present");
+      // don't do anything more:
+      return;
+    }
+    //Serial.println("card initialized.");
+    midi_writer.setFilename("f");
     midi_writer.writeHeader();
     midi_writer.flush();
 }
