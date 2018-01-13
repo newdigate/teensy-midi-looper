@@ -28,7 +28,7 @@ typedef struct strRec {
 } Rec;
 
 Queue q(sizeof(Rec), 10, FIFO);
-MidiWriter midi_writer(1);
+MidiWriter midi_writer;
 
 void setup()
 {
@@ -75,8 +75,7 @@ void setup()
     midi_writer.flush();
 }
 
-unsigned long previousMillis=0;
-unsigned long previousQ=0;
+unsigned int previousSixtyFourth=0;
 
 const float beats_per_minute = 120.0;
 const float beats_per_second = beats_per_minute / 60;
@@ -84,19 +83,21 @@ const float seconds_per_beat = 60 / beats_per_minute;
 const float millis_per_beat = seconds_per_beat * 1000;
 const float millis_per_64th = millis_per_beat/64;
 
+byte beat;
+byte bar;
+
 void loop()
 {
-    if (midiA.read())
-    {
-       //Serial.print(".");
-        // Thru on A has already pushed the input message to out A.
-        // Forward the message to out B as well.
+    unsigned int sixtyFourth = millis() / millis_per_64th;
+  
+    if (midiA.read()) {
+
         switch (midiA.getType () ) {
           case midi::NoteOn:
           case midi::NoteOff: {
       
               Rec r;
-              r.time = millis();
+              r.time = sixtyFourth;
               r.entry1 = midiA.getType();
               r.entry2 = midiA.getData1();
               r.entry3 = midiA.getData2();
@@ -106,12 +107,15 @@ void loop()
             
             break;
           }
+          
+          default:
+            break;
         }
     } else
     {
       if (!q.isEmpty()) {
         
-        Rec rec = {0xff,0xff, 0x0, 0x0};
+        Rec rec = {0x0000, 0xff,0xff, 0x0, 0x0};
         q.pop(&rec);
         //Serial.print();
 
@@ -129,20 +133,11 @@ void loop()
         itoa(rec.entry4,c,16);
         tft.println(c);
 
-
-        unsigned int m ;
-        unsigned int q;
-
-        if (previousQ == 0) {
-          q = rec.time / millis_per_64th;
-        } else 
-        {
-          q = (rec.time - previousMillis) / millis_per_64th;
-        }
+        unsigned int q = sixtyFourth - previousSixtyFourth;
        
-        midi_writer.write(q, rec.entry1, rec.entry2, rec.entry3, rec.entry4);
+        midi_writer.addEvent(q, rec.entry1, rec.entry2, rec.entry3, rec.entry4);
         midi_writer.flush();
-        previousMillis = rec.time;        
+        previousSixtyFourth = sixtyFourth;        
       }
 
     }
