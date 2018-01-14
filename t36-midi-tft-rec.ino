@@ -38,6 +38,7 @@ typedef struct strRec {
 MidiWriter midi_writer;
 
 void drawPiano();
+byte keysWhichArePressed[22];
 
 void setup()
 {
@@ -69,6 +70,10 @@ void setup()
     midi_writer.setFilename("af");
     midi_writer.writeHeader();
     midi_writer.flush();
+
+    for (unsigned int i=0; i < sizeof(keysWhichArePressed); i++) {
+      keysWhichArePressed[i] = 0x00;
+    }
 }
 
 unsigned long previousSixtyFourth=0;
@@ -78,17 +83,39 @@ const float beats_per_second = beats_per_minute / 60;
 const float seconds_per_beat = 60 / beats_per_minute;
 const float millis_per_beat = seconds_per_beat * 1000;
 const float millis_per_64th = millis_per_beat/64;
+const float millis_per_256th = millis_per_beat/256;
 
-int beat, lastbeat, bar;
+
+int beat, lastbeat, bar, lastbar;
 
 bool firstNote = true;
 
 unsigned long previous = 0;
 
 unsigned long lastDisplayUpdate = 0;
+bool shouldUpdatePiano = true;
+
+bool isKeyPressed(byte key) {
+    byte byteNumberOfKey = key / 8;
+    byte bitNumberOfKey = key % 8;
+    return bitRead( keysWhichArePressed[byteNumberOfKey], bitNumberOfKey);
+}
+
+bool isAnyKeyPressed(byte key) {
+    byte index = key % 24;
+    for (int i = 0; i < 3; i++) {
+      byte transformedKey = index + (i * 24);
+      byte byteNumberOfKey = transformedKey / 8;
+      byte bitNumberOfKey = transformedKey % 8;
+      bool keydown = bitRead( keysWhichArePressed[byteNumberOfKey], bitNumberOfKey);
+      if (keydown) return true;
+    }
+    return false;
+}
 
 void loop()
 {
+
     unsigned long currentTime = millis();
     unsigned long sixtyFourth = 0;
     if (previous > currentTime) {     
@@ -101,6 +128,7 @@ void loop()
     
     if (midiA.read()) {
         //Serial.printf("*** %x (%x)\n", sixtyFourth, previousSixtyFourth);
+        shouldUpdatePiano = true;
         switch (midiA.getType () ) {
           case midi::NoteOn:
           case midi::NoteOff: {
@@ -124,24 +152,64 @@ void loop()
         }
 
         
+        switch (midiA.getType () ) {
+          case midi::NoteOn: {
+            byte byteNumberOfKey = midiA.getData1() / 8;
+            byte bitNumberOfKey = midiA.getData1() % 8;
+
+            //Serial.printf("ON: %d,%d ON\n", byteNumberOfKey, bitNumberOfKey);
+            byte b = keysWhichArePressed[byteNumberOfKey];
+            //Serial.printf("before ON: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, b);
+            bitSet( b, bitNumberOfKey);
+            //Serial.printf("ON: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, b);
+            keysWhichArePressed[byteNumberOfKey] = b;
+            break;
+          } 
+          case midi::NoteOff: {
+            byte byteNumberOfKey = midiA.getData1() / 8;
+            byte bitNumberOfKey = midiA.getData1() % 8;
+            byte b = keysWhichArePressed[byteNumberOfKey];
+            //Serial.printf("before OFF: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, b);
+            bitClear( b, bitNumberOfKey);
+            keysWhichArePressed[byteNumberOfKey] = b;
+            //Serial.printf("OFF: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, b);
+            break;
+          }   
+          default:
+            break;
+        }
+        
     } else {
       
-      if (millis() - lastDisplayUpdate > 50) {
+      if (millis() - lastDisplayUpdate > 25) {
         // update display
         beat = (sixtyFourth / 64);
         bar = beat / 4;
         beat %= 4;
 
-        if (beat != lastbeat) {
+        if (beat != lastbeat || shouldUpdatePiano) {
 
-          tft.fillScreen(ST7735_BLACK);
+          //tft.fillScreen(ST7735_BLACK);
+          tft.setCursor(0,0);
+          tft.setTextSize(3);
+          tft.setTextColor(ST7735_BLACK);
+          char c[] = "     ";
+          itoa(lastbar,c,10);
+          tft.print(c);
+          tft.print(":");
+          itoa(lastbeat+1,c,10);    
+          tft.print(c); 
+
+
           drawPiano();
+          shouldUpdatePiano = false;
+      
     
           tft.setCursor(0,0);
   
-          tft.setTextSize(3);
+          //tft.setTextSize(3);
           tft.setTextColor(ST7735_RED);
-          char c[] = "     ";
+          
           itoa(bar,c,10);
           tft.print(c);
           tft.print(":");
@@ -150,7 +218,9 @@ void loop()
 
           lastDisplayUpdate = millis(); 
           lastbeat = beat;
+          lastbar = bar;
         }
+
   
 
     }
@@ -159,6 +229,61 @@ void loop()
 
 
 void drawPiano() {
+  /*
+    for (int i=0; i< 14; i++) {
+      char c[] = "         ";
+      itoa(keysWhichArePressed[i],c,2);
+      Serial.printf("%d: %s\n", i, c);
+    }
+    Serial.println();
+    */
+    const byte b[] = {/* E*/ 4 + 12, /* D */2 + 12, /* C */ 0 + 12, /* B */ 11, /* A */ 9, /* G */ 7, /*F*/ 5 };
+    //Draw the white keys on the keyboard
+    for (int i=0; i<24; i++) {
+      byte mod = i % 7;
+      byte key = b[mod];
+      bool isDown = isAnyKeyPressed(key);
+
+      /*if (isDown)
+        Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, DOWN]\n", i, mod, key);
+      else
+        Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, UP]\n", i, mod, key);
+*/
+      
+      if (isDown) 
+        tft.fillRect(0,i*5,32,4,ST7735_BLUE);
+      else 
+        tft.fillRect(0,i*5,32,4,ST7735_WHITE);     
+    }
+    //Draw the black keys on the keyboard
+    tft.fillRect(0,3,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,8,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
+    
+    tft.fillRect(0,18,16,3, isAnyKeyPressed(10)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,23,16,3, isAnyKeyPressed(9)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,28,16,3, isAnyKeyPressed(7)? ST7735_BLUE : ST7735_BLACK);
+    
+    tft.fillRect(0,38,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,43,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
+    
+    tft.fillRect(0,53,16,3, isAnyKeyPressed(10)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,58,16,3, isAnyKeyPressed(9)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,63,16,3, isAnyKeyPressed(7)? ST7735_BLUE : ST7735_BLACK);
+    
+    tft.fillRect(0,73,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,78,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
+    
+    tft.fillRect(0,88,16,3, isAnyKeyPressed(10)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,93,16,3, isAnyKeyPressed(9)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,98,16,3, isAnyKeyPressed(7)? ST7735_BLUE : ST7735_BLACK);
+    
+    tft.fillRect(0,108,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
+    tft.fillRect(0,113,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
+
+}
+
+
+void drawPiano2() {
     //Draw the white keys on the keyboard
     for (int i=0; i<24; i++) {
       tft.fillRect(0,i*5,64,4,ST7735_WHITE);
@@ -185,3 +310,4 @@ void drawPiano() {
     tft.fillRect(0,93,32,3,ST7735_BLACK);
     tft.fillRect(0,98,32,3,ST7735_BLACK);
 }
+
