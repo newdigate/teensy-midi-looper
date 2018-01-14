@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "MidiWriter.h"
+#include <cppQueue.h>
 
 const byte header[] = {
      0x4d, 0x54, 0x68, 0x64, 0x00, 0x00, 0x00, 0x06,
@@ -59,13 +60,56 @@ void MidiWriter::writeHeader() {
     flush();
 }
 
-void MidiWriter::addEvent(int ticks, byte a, byte b, byte c, byte d) {
-  write_buf_int(ticks);
-  write_buf_byte(a);
-  write_buf_byte(b);
-  write_buf_byte(c);
-  write_buf_byte(d);
-  trackSize += 8;
+void MidiWriter::addEvent(unsigned int deltaticks, byte type, byte data1, byte data2, byte channel) {
+
+  
+  //Serial.printf("delta ticks= %d :type= %x, data1=%x, data2=%x, channel=%x\n", deltaticks, type, data1, data2, channel);
+  if (deltaticks < 128) {
+    write_buf_byte(deltaticks);
+    trackSize += 1;
+    Serial.printf("[", deltaticks);
+  } else {
+    Serial.print("[");
+
+    Queue q(1, 4, LIFO);
+    byte b[4];
+    
+    for (int i = 3; i >= 0; i--) {
+        b[i] = (byte)(deltaticks & 0x7f);
+  
+        if(i < 3)
+            b[i] |= 0x80;
+
+        q.push(&b[i]);
+        //Serial.printf("push %d: /%x/ \n", i, b[i]);
+        //trackSize += 1;
+        
+        deltaticks >>= 7;
+  
+        if (deltaticks < 1)
+            break;
+    }
+
+    while (!q.isEmpty()) {
+      byte b;
+      q.pop(&b);
+      //Serial.printf("pop /%x/ \n", b);
+      
+      write_buf_byte(b);
+      trackSize += 1;
+
+      //char buffer [9];
+      //itoa (b,buffer,2);
+      //Serial.printf ("%x binary: %s\n", b, buffer);
+    }
+  }
+  byte z = type | channel;
+  //Serial.printf("] - %x %x %x \n", z, data1, data2);
+  //write_buf_int(ticks);
+  write_buf_byte(z);
+  write_buf_byte(data1);
+  write_buf_byte(data2);
+  trackSize += 3;
 }
 
 void MidiWriter::flush() {
