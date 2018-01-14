@@ -67,9 +67,9 @@ void MidiWriter::addEvent(unsigned int deltaticks, byte type, byte data1, byte d
   if (deltaticks < 128) {
     write_buf_byte(deltaticks);
     trackSize += 1;
-    Serial.printf("[", deltaticks);
+    //Serial.printf("[", deltaticks);
   } else {
-    Serial.print("[");
+    //Serial.print("[");
 
     Queue q(1, 4, LIFO);
     byte b[4];
