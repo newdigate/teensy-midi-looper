@@ -10,13 +10,12 @@ class MidiWriter
     MidiWriter();
     void setFilename(const char* filename);
     void writeHeader();
-    void addEvent(int ticks, byte a, byte b, byte c, byte d);
+    void addEvent(unsigned int deltaticks, byte a, byte b, byte c, byte d);
     void flush();
     
   private:
     byte _buffer[50];
     byte _bufferPos = 0;
-    
     char _filename[80];
     unsigned long trackSize = 0;
 
