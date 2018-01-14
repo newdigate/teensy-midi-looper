@@ -21,26 +21,10 @@
 // Teensy++ 2.0: pin 20
 const int chipSelect = BUILTIN_SDCARD;
 
-
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
 TFTPianoDisplay piano(tft, 3, 0);
-
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
-
-typedef struct strRec {
-  unsigned long time;
-  uint8_t  entry1;
-  uint8_t  entry2;
-  uint8_t  entry3;
-  uint8_t  entry4;
-} Rec;
-
-//Queue q(sizeof(Rec), 100, FIFO);
 MidiWriter midi_writer;
-
-
-void drawPiano();
-
 
 void setup()
 {
