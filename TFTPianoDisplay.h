@@ -20,6 +20,7 @@ class TFTPianoDisplay
     Adafruit_GFX *_tft;
     byte _x, _y;
     byte _height, _width;
+    byte _offsetKeyZero;
     unsigned int _octaves, _startOctave; 
     
     bool _shouldUpdatePiano = true;
