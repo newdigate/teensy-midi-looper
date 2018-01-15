@@ -135,13 +135,19 @@ void loop()
         
     } else {
       
+      if (piano.displayNeedsUpdating()) {
+        piano.drawPiano();
+      }
+        
       if (millis() - lastDisplayUpdate > 25) {
         // update display
         beat = (sixtyFourth / 64);
         bar = beat / 4;
         beat %= 4;
-
-        if (beat != lastbeat || piano.displayNeedsUpdating() ) {
+        
+        
+        
+        if (beat != lastbeat ) {
 
           //tft.fillScreen(ST7735_BLACK);
           tft.setCursor(0,0);
@@ -155,8 +161,7 @@ void loop()
           tft.print(c); 
 
 
-          piano.drawPiano();
-          
+
           tft.setCursor(0,0);
   
           //tft.setTextSize(3);
