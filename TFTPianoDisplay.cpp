@@ -3,13 +3,13 @@
 
 TFTPianoDisplay::TFTPianoDisplay(Adafruit_GFX &tft, unsigned int octaves, unsigned int startOctave){
     _tft = &tft;
-    _x = 0;
-    _y = 0;
+    _x = 5;
+    _y = 24;
     _height = 32;
     _width = 128;
     _octaves = octaves;
     _startOctave = startOctave; 
-    
+    _offsetKeyZero = ( 12 * 3 ) -1; 
     _shouldUpdatePiano = true;
     
     for (unsigned int i=0; i < sizeof(_keysWhichArePressed); i++) {
@@ -77,47 +77,33 @@ void TFTPianoDisplay::drawPiano() {
     }
     Serial.println();
     */
-    const byte b[] = {/* E*/ 4 + 12, /* D */2 + 12, /* C */ 0 + 12, /* B */ 11, /* A */ 9, /* G */ 7, /*F*/ 5 };
+    const byte b[] = {/* C */ 0, /* D */ 2, /* E */ 4, /* F */ 5, /* G */ 7, /* A */ 9, /* B */ 11 };
     //Draw the white keys on the keyboard
-    for (int i=0; i<24; i++) {
-      byte mod = i % 7;
-      byte key = b[mod];
-      bool isDown = isAnyKeyPressed(key);
-
-      /*if (isDown)
-        Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, DOWN]\n", i, mod, key);
-      else
-        Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, UP]\n", i, mod, key);
-*/
+    for (unsigned int octave=0; octave < _octaves; octave++) { 
+      for (int i=0; i<7; i++) {
+        byte key = b[i] + (octave * 12);
+        bool isDown = isKeyPressed(key + _offsetKeyZero);
+  
+        /*if (isDown)
+          Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, DOWN]\n", i, mod, key);
+        else
+          Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, UP]\n", i, mod, key);
+  */
+        
+        if (isDown) 
+          _tft->fillRect(_x + i*5 + (octave*5*7), _y, 4, 32, ST7735_BLUE);
+        else 
+          _tft->fillRect(_x + i*5 + (octave*5*7), _y, 4, 32, ST7735_WHITE);     
+      }
+  
+      const byte blackKeys[] = {/* C# */ 1, /* D# */ 3, /*Skip*/ 0, /* F# */ 6, /* G# */ 8, /* A# */ 10, /*Skip*/ 0};
       
-      if (isDown) 
-        _tft->fillRect(0,i*5,32,4,ST7735_BLUE);
-      else 
-        _tft->fillRect(0,i*5,32,4,ST7735_WHITE);     
+      //Draw the black keys on the keyboard
+      for (int i=0; i<6; i++){
+        if ( i==2 ) continue;
+        byte key = blackKeys[i] + (octave * 12);
+        _tft->fillRect( _x+3 + (5*i) + (octave*5*7), _y, 3, 16, isKeyPressed(blackKeys[key])? ST7735_BLUE : ST7735_BLACK);
+      }
     }
-    //Draw the black keys on the keyboard
-    _tft->fillRect(0,3,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,8,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
-    
-    _tft->fillRect(0,18,16,3, isAnyKeyPressed(10)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,23,16,3, isAnyKeyPressed(9)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,28,16,3, isAnyKeyPressed(7)? ST7735_BLUE : ST7735_BLACK);
-    
-    _tft->fillRect(0,38,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,43,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
-    
-    _tft->fillRect(0,53,16,3, isAnyKeyPressed(10)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,58,16,3, isAnyKeyPressed(9)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,63,16,3, isAnyKeyPressed(7)? ST7735_BLUE : ST7735_BLACK);
-    
-    _tft->fillRect(0,73,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,78,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
-    
-    _tft->fillRect(0,88,16,3, isAnyKeyPressed(10)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,93,16,3, isAnyKeyPressed(9)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,98,16,3, isAnyKeyPressed(7)? ST7735_BLUE : ST7735_BLACK);
-    
-    _tft->fillRect(0,108,16,3, isAnyKeyPressed(3)? ST7735_BLUE : ST7735_BLACK);
-    _tft->fillRect(0,113,16,3, isAnyKeyPressed(1)? ST7735_BLUE : ST7735_BLACK);
     _shouldUpdatePiano = false;
 }
