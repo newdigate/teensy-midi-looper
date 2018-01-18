@@ -26,6 +26,7 @@ TFTPianoDisplay piano(tft, 3, 0);
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
 
+
 void setup()
 {
   tft.initR(INITR_GREENTAB); // initialize a ST7735R chip, green tab
@@ -53,7 +54,7 @@ void setup()
       return;
     }
     //Serial.println("card initialized.");
-    midi_writer.setFilename("af");
+    midi_writer.setFilename("rec");
     midi_writer.writeHeader();
     midi_writer.flush();
 
@@ -61,36 +62,31 @@ void setup()
 }
 
 unsigned long previousSixtyFourth=0;
-
 const float beats_per_minute = 120.0;
 const float beats_per_second = beats_per_minute / 60;
 const float seconds_per_beat = 60 / beats_per_minute;
 const float millis_per_beat = seconds_per_beat * 1000;
+const float millis_per_16th = millis_per_beat/16;
 const float millis_per_64th = millis_per_beat/64;
 const float millis_per_256th = millis_per_beat/256;
-
-
 int beat, lastbeat, bar, lastbar;
 
 bool firstNote = true;
-
 unsigned long previous = 0;
-
 unsigned long lastDisplayUpdate = 0;
+unsigned long lastDisplayFilenameUpdate = 0;
 
+unsigned long lastDisplayRecordIndictorBlink = 0;
+bool recordIndicatorState = false;
 
-
-
-void loop()
-{
-
+void loop() {
     unsigned long currentTime = millis();
     unsigned long sixtyFourth = 0;
     if (previous > currentTime) {     
       // overflow occurred
-      sixtyFourth = ((0xffffffff - previous) + currentTime) / millis_per_64th;
+      sixtyFourth = ((0xffffffff - previous) + currentTime) / millis_per_16th;
     } else {
-      sixtyFourth = currentTime / millis_per_64th;
+      sixtyFourth = currentTime / millis_per_16th;
     }
     previous = currentTime;
     
@@ -138,10 +134,25 @@ void loop()
       if (piano.displayNeedsUpdating()) {
         piano.drawPiano();
       }
-        
-      if (millis() - lastDisplayUpdate > 25) {
+      
+      if (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000) {
+          tft.setCursor(16,64);
+          tft.setTextSize(1);
+          tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
+          tft.setTextColor(ST7735_RED);   
+          tft.print(midi_writer.getFilename());
+          lastDisplayFilenameUpdate = currentTime;
+      }
+
+      if (lastDisplayRecordIndictorBlink == 0 || currentTime - lastDisplayRecordIndictorBlink > 500) {
+        lastDisplayRecordIndictorBlink = currentTime;
+        recordIndicatorState = !recordIndicatorState;
+        tft.fillCircle(8,64+4, 4,recordIndicatorState? ST7735_RED : ST7735_BLACK);
+      }
+      
+      if (currentTime - lastDisplayUpdate > 5) {
         // update display
-        beat = (sixtyFourth / 64);
+        beat = (sixtyFourth / 16);
         bar = beat / 4;
         beat %= 4;
         
@@ -165,7 +176,7 @@ void loop()
           tft.setCursor(0,0);
   
           //tft.setTextSize(3);
-          tft.setTextColor(ST7735_RED);
+          tft.setTextColor(ST7735_GREEN);
           
           itoa(bar,c,10);
           tft.print(c);
@@ -173,7 +184,7 @@ void loop()
           itoa(beat+1,c,10);    
           tft.print(c); 
 
-          lastDisplayUpdate = millis(); 
+          lastDisplayUpdate = currentTime; 
           lastbeat = beat;
           lastbar = bar;
         }
