@@ -102,7 +102,7 @@ void TFTPianoDisplay::drawPiano() {
       for (int i=0; i<6; i++){
         if ( i==2 ) continue;
         byte key = blackKeys[i] + (octave * 12);
-        _tft->fillRect( _x+3 + (5*i) + (octave*5*7), _y, 3, 16, isKeyPressed(blackKeys[key])? ST7735_BLUE : ST7735_BLACK);
+        _tft->fillRect( _x+3 + (5*i) + (octave*5*7), _y, 3, 16, isKeyPressed(blackKeys[key] + _offsetKeyZero)? ST7735_BLUE : ST7735_BLACK);
       }
     }
     _shouldUpdatePiano = false;
