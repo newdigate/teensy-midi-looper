@@ -22,7 +22,7 @@
 const int chipSelect = BUILTIN_SDCARD;
 
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
-TFTPianoDisplay piano(tft, 3, 0);
+TFTPianoDisplay piano(tft, 3, 2);
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
 
@@ -107,90 +107,88 @@ void loop() {
               previousSixtyFourth = sixtyFourth;
               midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
               //Serial.printf("%x: %x %x %x %x\n", q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+
+              switch (midiA.getType () ) {
+                case midi::NoteOn: {
+                  piano.keyDown(midiA.getData1());
+                  break;
+                } 
+                case midi::NoteOff: {
+                  piano.keyUp(midiA.getData1());
+                  break;
+                }   
+                default:
+                  break;
+              }
             
             break;
           }
           
           default:
             break;
-        }
+        }        
+    } else
+        
+    if (piano.displayNeedsUpdating()) {
+      piano.drawPiano();
+    } else
+    
+    if (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000) {
+        tft.setCursor(16,64);
+        tft.setTextSize(1);
+        tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
+        tft.setTextColor(ST7735_RED);   
+        tft.print(midi_writer.getFilename());
+        lastDisplayFilenameUpdate = currentTime;
+    } else
 
-        
-        switch (midiA.getType () ) {
-          case midi::NoteOn: {
-            piano.keyDown(midiA.getData1());
-            break;
-          } 
-          case midi::NoteOff: {
-            piano.keyUp(midiA.getData1());
-            break;
-          }   
-          default:
-            break;
-        }
-        
-    } else {
+    if (lastDisplayRecordIndictorBlink == 0 || currentTime - lastDisplayRecordIndictorBlink > 500) {
+      lastDisplayRecordIndictorBlink = currentTime;
+      recordIndicatorState = !recordIndicatorState;
+      tft.fillCircle(8,64+4, 4,recordIndicatorState? ST7735_RED : ST7735_BLACK);
+    } else
+    
+    if (currentTime - lastDisplayUpdate > 50) {
+      // update display
+      beat = (sixtyFourth / 16);
+      bar = beat / 4;
+      beat %= 4;
       
-      if (piano.displayNeedsUpdating()) {
-        piano.drawPiano();
-      }
       
-      if (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000) {
-          tft.setCursor(16,64);
-          tft.setTextSize(1);
-          tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
-          tft.setTextColor(ST7735_RED);   
-          tft.print(midi_writer.getFilename());
-          lastDisplayFilenameUpdate = currentTime;
-      }
-
-      if (lastDisplayRecordIndictorBlink == 0 || currentTime - lastDisplayRecordIndictorBlink > 500) {
-        lastDisplayRecordIndictorBlink = currentTime;
-        recordIndicatorState = !recordIndicatorState;
-        tft.fillCircle(8,64+4, 4,recordIndicatorState? ST7735_RED : ST7735_BLACK);
-      }
       
-      if (currentTime - lastDisplayUpdate > 5) {
-        // update display
-        beat = (sixtyFourth / 16);
-        bar = beat / 4;
-        beat %= 4;
+      if (beat != lastbeat ) {
+
+        //tft.fillScreen(ST7735_BLACK);
+        tft.setCursor(0,0);
+        tft.setTextSize(3);
+        tft.setTextColor(ST7735_BLACK);
+        char c[] = "     ";
+        itoa(lastbar,c,10);
+        tft.print(c);
+        tft.print(":");
+        itoa(lastbeat+1,c,10);    
+        tft.print(c); 
+
+
+
+        tft.setCursor(0,0);
+
+        //tft.setTextSize(3);
+        tft.setTextColor(ST7735_GREEN);
         
-        
-        
-        if (beat != lastbeat ) {
+        itoa(bar,c,10);
+        tft.print(c);
+        tft.print(":");
+        itoa(beat+1,c,10);    
+        tft.print(c); 
 
-          //tft.fillScreen(ST7735_BLACK);
-          tft.setCursor(0,0);
-          tft.setTextSize(3);
-          tft.setTextColor(ST7735_BLACK);
-          char c[] = "     ";
-          itoa(lastbar,c,10);
-          tft.print(c);
-          tft.print(":");
-          itoa(lastbeat+1,c,10);    
-          tft.print(c); 
+        lastDisplayUpdate = currentTime; 
+        lastbeat = beat;
+        lastbar = bar;
+      }
 
 
 
-          tft.setCursor(0,0);
-  
-          //tft.setTextSize(3);
-          tft.setTextColor(ST7735_GREEN);
-          
-          itoa(bar,c,10);
-          tft.print(c);
-          tft.print(":");
-          itoa(beat+1,c,10);    
-          tft.print(c); 
-
-          lastDisplayUpdate = currentTime; 
-          lastbeat = beat;
-          lastbar = bar;
-        }
-
-  
-
-    }
   }
+
 }
