@@ -1,10 +1,10 @@
 #include "Arduino.h"
 #include "TFTPianoDisplay.h"
 
-TFTPianoDisplay::TFTPianoDisplay(Adafruit_GFX &tft, unsigned int octaves, unsigned int startOctave){
+TFTPianoDisplay::TFTPianoDisplay(Adafruit_GFX &tft, byte octaves, byte startOctave, byte x, byte y){
     _tft = &tft;
-    _x = 5;
-    _y = 24;
+    _x = x;
+    _y = y;
     _height = 32;
     _width = 128;
     _octaves = octaves;
