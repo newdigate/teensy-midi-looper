@@ -13,6 +13,9 @@ const byte header[] = {
 MidiWriter::MidiWriter(){
 }
 
+char* MidiWriter:: getFilename() {
+  return &_filename[0];
+}
 
 void MidiWriter::write_buf_int(unsigned int data) {
   //Serial.printf("%x\n", data);
