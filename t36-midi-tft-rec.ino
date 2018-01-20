@@ -20,9 +20,11 @@
 // Teensy 2.0: pin 0
 // Teensy++ 2.0: pin 20
 const int chipSelect = BUILTIN_SDCARD;
-
+const byte numOctaves = 3;
+const byte startOctave = 2;
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
-TFTPianoDisplay piano(tft, 3, 2);
+TFTPianoDisplay piano(tft, numOctaves, startOctave, 5, 24);
+TFTPianoDisplay piano2(tft, numOctaves, startOctave+numOctaves, 5, 80);
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
 
@@ -111,10 +113,12 @@ void loop() {
               switch (midiA.getType () ) {
                 case midi::NoteOn: {
                   piano.keyDown(midiA.getData1());
+                  piano2.keyDown(midiA.getData1());
                   break;
                 } 
                 case midi::NoteOff: {
                   piano.keyUp(midiA.getData1());
+                  piano2.keyUp(midiA.getData1());
                   break;
                 }   
                 default:
@@ -126,11 +130,17 @@ void loop() {
           
           default:
             break;
-        }        
+        }
+
+        return;
     } else
         
     if (piano.displayNeedsUpdating()) {
       piano.drawPiano();
+    } 
+    
+    if (piano2.displayNeedsUpdating()) {
+      piano2.drawPiano();
     } else
     
     if (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000) {
@@ -140,13 +150,13 @@ void loop() {
         tft.setTextColor(ST7735_RED);   
         tft.print(midi_writer.getFilename());
         lastDisplayFilenameUpdate = currentTime;
-    } else
+    }
 
     if (lastDisplayRecordIndictorBlink == 0 || currentTime - lastDisplayRecordIndictorBlink > 500) {
       lastDisplayRecordIndictorBlink = currentTime;
       recordIndicatorState = !recordIndicatorState;
       tft.fillCircle(8,64+4, 4,recordIndicatorState? ST7735_RED : ST7735_BLACK);
-    } else
+    }
     
     if (currentTime - lastDisplayUpdate > 50) {
       // update display
