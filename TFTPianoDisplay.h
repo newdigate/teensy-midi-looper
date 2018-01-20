@@ -9,7 +9,7 @@
 class TFTPianoDisplay
 {
   public:
-    TFTPianoDisplay(Adafruit_GFX &tft, unsigned int octaves, unsigned int startOctave);
+    TFTPianoDisplay(Adafruit_GFX &tft, byte octaves, byte startOctave, byte x, byte y);
     void setPosition(byte x, byte y);
     void keyDown(byte key);
     void keyUp(byte key);
