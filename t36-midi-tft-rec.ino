@@ -33,7 +33,7 @@ bool _sdCardFound = false;
 void setup()
 {
   tft.initR(INITR_GREENTAB); // initialize a ST7735R chip, green tab
-  tft.setRotation(1);
+  tft.setRotation(2);
   tft.setTextWrap(true);
   tft.fillScreen(ST7735_BLACK);
   //while (!Serial) {
@@ -85,8 +85,11 @@ unsigned long lastDisplayUpdate = 0;
 unsigned long lastDisplayFilenameUpdate = 0;
 unsigned long lastsdCardCheck = 0;
 unsigned long lastDisplayRecordIndictorBlink = 0;
+unsigned long lastEvent = 0;
+
 bool recordIndicatorState = false;
 bool sdcardIndicatorState = false;
+
 
 void loop() {
   
@@ -102,8 +105,14 @@ void loop() {
     
     if (midiA.read()) {
         //Serial.printf("*** %x (%x)\n", sixtyFourth, previousSixtyFourth);
+        lastEvent = currentTime;
         
         switch (midiA.getType () ) {
+          case midi::AfterTouchPoly:                
+          case midi::AfterTouchChannel:    
+          case midi::PitchBend:             
+          case midi::ControlChange:        
+          case midi::ProgramChange: 
           case midi::NoteOn:
           case midi::NoteOff: {
 
@@ -115,23 +124,38 @@ void loop() {
                 q = sixtyFourth - previousSixtyFourth;
               }
               previousSixtyFourth = sixtyFourth;
-              
-              if (_sdCardFound)
-                midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
-                
               //Serial.printf("%x: %x %x %x %x\n", q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
 
               switch (midiA.getType () ) {
                 case midi::NoteOn: {
+                  if (_sdCardFound)
+                    midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+                
                   piano.keyDown(midiA.getData1());
                   piano2.keyDown(midiA.getData1());
                   break;
                 } 
+                
                 case midi::NoteOff: {
+                  if (_sdCardFound)
+                    midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+                    
                   piano.keyUp(midiA.getData1());
                   piano2.keyUp(midiA.getData1());
                   break;
+                }  
+                
+                case midi::AfterTouchPoly:       //= 0xA0    //# Polyphonic AfterTouch         
+                case midi::AfterTouchChannel:    //= 0xD0    //# Channel (monophonic) AfterTouch
+                case midi::PitchBend:            //= 0xE0    //# Pitch Bend  
+                case midi::ControlChange:        //= 0xB0    //# Control Change / Channel Mode
+                case midi::ProgramChange: {
+                  if (_sdCardFound)
+                    midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+                                  
+                  break;
                 }   
+                 
                 default:
                   break;
               }
@@ -139,12 +163,25 @@ void loop() {
             break;
           }
           
+
+          case midi::SystemExclusive:      //= 0xF0    //# System Exclusive
+          case midi::TimeCodeQuarterFrame: //= 0xF1    //# System Common - MIDI Time Code Quarter Frame
+          case midi::SongPosition:         //= 0xF2    //# System Common - Song Position Pointer
+          case midi::SongSelect:           //= 0xF3    //# System Common - Song Select
+          case midi::TuneRequest:          //= 0xF6    //# System Common - Tune Request
+          case midi::Clock:                //= 0xF8    //# System Real Time - Timing Clock
+          case midi::Start:                //= 0xFA    //# System Real Time - Start
+          case midi::Continue:             //= 0xFB    //# System Real Time - Continue
+          case midi::Stop:                 //= 0xFC    //# System Real Time - Stop
+          case midi::ActiveSensing:        //= 0xFE    //# System Real Time - Active Sensing
+          case midi::SystemReset:          //= 0xFF    //# System Real Time - System Reset
+          
           default:
             break;
         }
 
         return;
-    } else
+    }
         
     if (piano.displayNeedsUpdating()) {
       piano.drawPiano();
@@ -242,7 +279,12 @@ void loop() {
         lastbar = bar;
       }
 
-
+    if (currentTime - lastEvent > 30000) {
+        midi_writer.setFilename("rec");
+        midi_writer.writeHeader();
+        midi_writer.flush(); 
+        firstNote = true;    
+    }
 
   }
 
