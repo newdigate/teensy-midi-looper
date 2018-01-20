@@ -28,6 +28,7 @@ TFTPianoDisplay piano2(tft, numOctaves, startOctave+numOctaves, 5, 80);
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
 
+bool _sdCardFound = false;
 
 void setup()
 {
@@ -51,10 +52,15 @@ void setup()
   
     // see if the card is present and can be initialized:
     if (!SD.begin(chipSelect)) {
-      //Serial.println("Card failed, or not present");
-      // don't do anything more:
-      return;
-    }
+        _sdCardFound = false;
+        tft.setCursor(16,64);
+        tft.setTextSize(1);
+        tft.setTextColor(ST7735_RED);   
+        tft.print("SD card not found");
+        return;
+    } else 
+      _sdCardFound = true;
+      
     //Serial.println("card initialized.");
     midi_writer.setFilename("rec");
     midi_writer.writeHeader();
@@ -77,11 +83,13 @@ bool firstNote = true;
 unsigned long previous = 0;
 unsigned long lastDisplayUpdate = 0;
 unsigned long lastDisplayFilenameUpdate = 0;
-
+unsigned long lastsdCardCheck = 0;
 unsigned long lastDisplayRecordIndictorBlink = 0;
 bool recordIndicatorState = false;
+bool sdcardIndicatorState = false;
 
 void loop() {
+  
     unsigned long currentTime = millis();
     unsigned long sixtyFourth = 0;
     if (previous > currentTime) {     
@@ -107,7 +115,10 @@ void loop() {
                 q = sixtyFourth - previousSixtyFourth;
               }
               previousSixtyFourth = sixtyFourth;
-              midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+              
+              if (_sdCardFound)
+                midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+                
               //Serial.printf("%x: %x %x %x %x\n", q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
 
               switch (midiA.getType () ) {
@@ -143,7 +154,7 @@ void loop() {
       piano2.drawPiano();
     } else
     
-    if (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000) {
+    if (_sdCardFound && (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000)) {
         tft.setCursor(16,64);
         tft.setTextSize(1);
         tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
@@ -152,12 +163,46 @@ void loop() {
         lastDisplayFilenameUpdate = currentTime;
     }
 
-    if (lastDisplayRecordIndictorBlink == 0 || currentTime - lastDisplayRecordIndictorBlink > 500) {
+    if ( _sdCardFound && (lastDisplayRecordIndictorBlink == 0 || currentTime - lastDisplayRecordIndictorBlink > 500)) {
       lastDisplayRecordIndictorBlink = currentTime;
       recordIndicatorState = !recordIndicatorState;
       tft.fillCircle(8,64+4, 4,recordIndicatorState? ST7735_RED : ST7735_BLACK);
     }
-    
+
+    if ( !_sdCardFound && (lastsdCardCheck == 0 || currentTime - lastsdCardCheck > 500) )  {
+      if (!SD.begin(chipSelect)) {
+        _sdCardFound = false;
+        tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
+        tft.setTextSize(1); 
+        tft.setCursor(2,64);
+        sdcardIndicatorState = !sdcardIndicatorState;
+        tft.setTextColor(sdcardIndicatorState? ST7735_YELLOW : ST7735_BLACK); 
+        tft.print("insert SD card");
+        lastsdCardCheck = millis();
+        return;
+      } else {
+        _sdCardFound = true;
+  
+        tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
+        tft.setTextSize(1); 
+        tft.setCursor(2,64);
+        tft.setTextColor(ST7735_YELLOW); 
+        tft.print("found SD card");
+        delay(1000);
+        
+        midi_writer.setFilename("rec");
+        midi_writer.writeHeader();
+        midi_writer.flush();
+  
+        tft.fillRect(0, 64, 128, 16, ST7735_BLACK);
+        tft.setTextSize(1); 
+        tft.setCursor(2,64);
+        tft.setTextColor(ST7735_YELLOW); 
+        tft.print("initialized....");
+        
+        lastsdCardCheck = millis();
+      }
+    }
     if (currentTime - lastDisplayUpdate > 50) {
       // update display
       beat = (sixtyFourth / 16);
