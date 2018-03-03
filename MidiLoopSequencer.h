@@ -4,17 +4,25 @@
 #include "Arduino.h"
 #include <MIDI.h>
 #include "midi.hpp"
+
+#include <vector>
+#include <functional>
+
 struct SongPosition {
   int bar;
   byte beat;
 };
 
+
 class MidiLoopSequencer
 {
   public:
-    MidiLoopSequencer(HardwareSerial *midiPort);
+    MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort);
 
-    void tick();
+    std::vector< std::function< void() > > onSomething;
+
+    void initialize();
+    void tick(unsigned long milliseconds);
     
     SongPosition getSongPosition();
     void setSongPosition(int bar, byte beat);
@@ -41,29 +49,33 @@ class MidiLoopSequencer
     void setStepRecordEnabled(bool step_record_enabled);
     
   private: 
-    HardwareSerial *midi_port;
+    midi::MidiInterface<HardwareSerial> *_midi_port;
 
-    char *fileName;
+    char *_fileName;
     bool 
-      en_loop = false, 
-      en_rec = false, 
-      en_overdub = false,
-      en_play = false,
-      en_midiThru = true,
-      en_step_record = false,
-      en_metronome = false,
-      en_solo = false;
+      _en_loop = false, 
+      _en_rec = false, 
+      _en_overdub = false,
+      _en_play = false,
+      _en_midiThru = true,
+      _en_step_record = false,
+      _en_metronome = false,
+      _en_solo = false;
       
-    int loop_duration_bars = 16;
+    int _loop_duration_bars = 16;
+    unsigned long _milliseconds = 0;
+    unsigned long _previousMilliseconds = 0;
+    unsigned long _sixtyFourth = 0;
+        
     SongPosition _position = { 1, 1 };
     byte _numTracks = 0;
     byte _selectedTrackIndex = 0;
 
-    //File *smf_tracks;
-
-    // 
+    float _beats_per_minute = 0;
+    float _millis_per_16th = 0;
 
     void allNotesOff();
+    unsigned long updateBarAndBeat(unsigned long milliseconds);
 };
 
 #endif

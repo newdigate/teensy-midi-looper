@@ -30,7 +30,7 @@ MidiWriter midi_writer;
 
 bool _sdCardFound = false;
 
-MidiLoopSequencer sequencer( &Serial1 );
+MidiLoopSequencer sequencer( &midiA );
 
 void setup()
 {
@@ -43,9 +43,10 @@ void setup()
   //}
     Serial.begin(9600);
     Serial.println("hello!");
-    
+
+    sequencer.initialize();
     // Initiate MIDI communications, listen to all channels
-    midiA.begin(MIDI_CHANNEL_OMNI);
+    // midiA.begin(MIDI_CHANNEL_OMNI);
     //Serial.println("midi has begun!");
 
 
@@ -68,6 +69,9 @@ void setup()
     midi_writer.writeHeader();
     midi_writer.flush();
 
+  sequencer.onSomething.push_back( [&] {
+    Serial.print("something...");
+  });
 
 }
 
@@ -97,6 +101,9 @@ const bool enableMidiThru = true;
 void loop() {
   
     unsigned long currentTime = millis();
+
+    sequencer.tick(currentTime);
+    
     unsigned long sixtyFourth = 0;
     if (previous > currentTime) {     
       // overflow occurred
