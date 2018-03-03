@@ -69,8 +69,8 @@ void setup()
     midi_writer.writeHeader();
     midi_writer.flush();
 
-  sequencer.onSomething.push_back( [&] {
-    Serial.print("something...");
+  sequencer.onKeyChanged.push_back( [&] () {
+      Serial.printf("key released...%d", 1);
   });
 
 }
@@ -113,94 +113,7 @@ void loop() {
     }
     previous = currentTime;
     
-    if (midiA.read()) {
-
-        //Serial.printf("*** %x (%x)\n", sixtyFourth, previousSixtyFourth);
-        lastEvent = currentTime;
-        
-        if (enableMidiThru) {
-          midiA.send(
-            midiA.getType(),
-            midiA.getData1(),
-            midiA.getData2(),
-            midiA.getChannel());
-        }
-        
-        switch (midiA.getType () ) {
-          case midi::AfterTouchPoly:                
-          case midi::AfterTouchChannel:    
-          case midi::PitchBend:             
-          case midi::ControlChange:        
-          case midi::ProgramChange: 
-          case midi::NoteOn:
-          case midi::NoteOff: {
-
-              unsigned long q = 0;
-              
-              if (firstNote) {
-                firstNote = false;
-              } else {
-                q = sixtyFourth - previousSixtyFourth;
-              }
-              previousSixtyFourth = sixtyFourth;
-              //Serial.printf("%x: %x %x %x %x\n", q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
-
-              switch (midiA.getType () ) {
-                case midi::NoteOn: {
-                  if (_sdCardFound)
-                    midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
-                
-                  piano.keyDown(midiA.getData1());
-                  piano2.keyDown(midiA.getData1());
-                  break;
-                } 
-                
-                case midi::NoteOff: {
-                  if (_sdCardFound)
-                    midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
-                    
-                  piano.keyUp(midiA.getData1());
-                  piano2.keyUp(midiA.getData1());
-                  break;
-                }  
-                
-                case midi::AfterTouchPoly:       //= 0xA0    //# Polyphonic AfterTouch         
-                case midi::AfterTouchChannel:    //= 0xD0    //# Channel (monophonic) AfterTouch
-                case midi::PitchBend:            //= 0xE0    //# Pitch Bend  
-                case midi::ControlChange:        //= 0xB0    //# Control Change / Channel Mode
-                case midi::ProgramChange: {
-                  if (_sdCardFound)
-                    midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
-                                  
-                  break;
-                }   
-                 
-                default:
-                  break;
-              }
-            
-            break;
-          }
-          
-
-          case midi::SystemExclusive:      //= 0xF0    //# System Exclusive
-          case midi::TimeCodeQuarterFrame: //= 0xF1    //# System Common - MIDI Time Code Quarter Frame
-          case midi::SongPosition:         //= 0xF2    //# System Common - Song Position Pointer
-          case midi::SongSelect:           //= 0xF3    //# System Common - Song Select
-          case midi::TuneRequest:          //= 0xF6    //# System Common - Tune Request
-          case midi::Clock:                //= 0xF8    //# System Real Time - Timing Clock
-          case midi::Start:                //= 0xFA    //# System Real Time - Start
-          case midi::Continue:             //= 0xFB    //# System Real Time - Continue
-          case midi::Stop:                 //= 0xFC    //# System Real Time - Stop
-          case midi::ActiveSensing:        //= 0xFE    //# System Real Time - Active Sensing
-          case midi::SystemReset:          //= 0xFF    //# System Real Time - System Reset
-          
-          default:
-            break;
-        }
-
-        return;
-    }
+  
         
     if (piano.displayNeedsUpdating()) {
       piano.drawPiano();

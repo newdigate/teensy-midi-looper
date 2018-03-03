@@ -20,36 +20,106 @@ void MidiLoopSequencer::initialize() {
   
   _milliseconds = 0;
   _previousMilliseconds = 0;
+  _lastEventMillis = 0;
 }
 
 void MidiLoopSequencer::tick(unsigned long millisecs) {
-    updateBarAndBeat(millisecs);
+  updateBarAndBeat(millisecs);
+  processNewIncomingMidiMessages();
 }
-   
-unsigned long MidiLoopSequencer::updateBarAndBeat(unsigned long millisecs) {
+
+bool MidiLoopSequencer::isNoteEvent(byte msgType) {
+  switch (msgType) {
+    case midi::AfterTouchPoly:                
+    case midi::AfterTouchChannel:    
+    case midi::PitchBend:             
+    case midi::ControlChange:        
+    case midi::ProgramChange: 
+    case midi::NoteOn:
+    case midi::NoteOff: 
+      return true;
+      
+    default:
+      return false;
+  }
+}
+
+void MidiLoopSequencer::processNewIncomingMidiMessages() {
+  if (_midi_port->read()) {
+     
+    if (_en_midiThru) {
+      _midi_port->send(
+        _midi_port->getType(),
+        _midi_port->getData1(),
+        _midi_port->getData2(),
+        _midi_port->getChannel());
+    }
+
+    if (isNoteEvent(_midi_port->getType())) {
+        
+      unsigned long delta = _milliseconds - _lastEventMillis;
+      _lastEventMillis = _milliseconds; 
+      
+      unsigned long deltaTicks = delta / _millis_per_16th;
+  
+      switch (_midi_port->getType () ) {
+        case midi::NoteOn: {
+          //if (_sdCardFound)
+          //  midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+        
+          //piano.keyDown(midiA.getData1());
+          //piano2.keyDown(midiA.getData1());
+
+          for(std::vector<function<void()>>::size_type i = 0; i != onKeyChanged.size(); i++) {
+            std::function<void()> f = onKeyChanged[i];
+            f();
+          }
+
+          break;
+        } 
+        
+        case midi::NoteOff: {
+          //if (_sdCardFound)
+          //  midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());         
+          //piano.keyUp(midiA.getData1());
+          //piano2.keyUp(midiA.getData1());
+          break;
+        }  
+        
+        case midi::AfterTouchPoly:       //= 0xA0    //# Polyphonic AfterTouch         
+        case midi::AfterTouchChannel:    //= 0xD0    //# Channel (monophonic) AfterTouch
+        case midi::PitchBend:            //= 0xE0    //# Pitch Bend  
+        case midi::ControlChange:        //= 0xB0    //# Control Change / Channel Mode
+        case midi::ProgramChange: {
+          //if (_sdCardFound)
+          //  midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());
+                          
+          break;
+        }   
+         
+        default:
+          break;
+        
+      }
+    }
+  }
+}
+
+void MidiLoopSequencer::updateBarAndBeat(unsigned long millisecs) {
   _previousMilliseconds = _milliseconds;
   _milliseconds = millisecs;
   
-  unsigned long delta;
-  if (_previousMilliseconds == 0) {
-    delta = _milliseconds;
-    _sixtyFourth = delta / _millis_per_16th;
-  } else 
   if (_previousMilliseconds > _milliseconds) {     
     // overflow occurred
     unsigned long underflow = (0xffffffff - _previousMilliseconds);
-    delta = (underflow + _milliseconds);
-    _sixtyFourth = delta / _millis_per_16th;
+    _sixtyFourth = (underflow + _milliseconds) / _millis_per_16th;
   } else {
-    delta = _milliseconds - _previousMilliseconds;
-    _sixtyFourth = delta / _millis_per_16th;
+    _sixtyFourth = _milliseconds / _millis_per_16th;
   }
 
   unsigned long beat = (_sixtyFourth / 16);
   _position.bar = beat / 4;
   _position.beat = beat % 4;
-
-  return delta;
 }
 
 SongPosition MidiLoopSequencer::getSongPosition() {

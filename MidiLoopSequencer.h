@@ -8,6 +8,8 @@
 #include <vector>
 #include <functional>
 
+using namespace std;
+
 struct SongPosition {
   int bar;
   byte beat;
@@ -19,7 +21,10 @@ class MidiLoopSequencer
   public:
     MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort);
 
-    std::vector< std::function< void() > > onSomething;
+    vector<function<void()>> onKeyChanged;
+    vector<function<void(bool playing)>> onPlayChanged;
+    vector<function<void(bool recording)>> onRecordChanged;
+    vector<function<void(float tempo)>> onTempoChanged;
 
     void initialize();
     void tick(unsigned long milliseconds);
@@ -66,6 +71,8 @@ class MidiLoopSequencer
     unsigned long _milliseconds = 0;
     unsigned long _previousMilliseconds = 0;
     unsigned long _sixtyFourth = 0;
+    unsigned long _previousSixtyFourth = 0;
+    unsigned long _lastEventMillis = 0;
         
     SongPosition _position = { 1, 1 };
     byte _numTracks = 0;
@@ -75,7 +82,9 @@ class MidiLoopSequencer
     float _millis_per_16th = 0;
 
     void allNotesOff();
-    unsigned long updateBarAndBeat(unsigned long milliseconds);
+    void updateBarAndBeat(unsigned long millisecs);
+    void processNewIncomingMidiMessages();
+    bool isNoteEvent(byte eventType);
 };
 
 #endif
