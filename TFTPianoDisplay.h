@@ -1,5 +1,5 @@
 #ifndef TFTPianoDisplay_h
-#define TFTPianoDisplayr_h
+#define TFTPianoDisplay_h
 
 #include "Arduino.h"
 #include <SD.h>
