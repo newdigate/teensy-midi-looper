@@ -15,6 +15,10 @@
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
+// workaround for linking error 
+// https://forum.arduino.cc/index.php?topic=382211.0
+namespace std { void __throw_bad_function_call() { Serial.print("throw_bad_function_call"); } }
+
 // Teensy 3.5 & 3.6 on-board: BUILTIN_SDCARD
 // Wiz820+SD board: pin 4
 // Teensy 2.0: pin 0
@@ -69,9 +73,9 @@ void setup()
     midi_writer.writeHeader();
     midi_writer.flush();
 
-  sequencer.onKeyChanged.push_back( [&] () {
-      Serial.printf("key released...%d", 1);
-  });
+  sequencer.onKeyChanged += [&] (bool isPressed, byte key, byte velocity, byte channle) {
+      Serial.printf("key released...%d", key);
+  };
 
 }
 

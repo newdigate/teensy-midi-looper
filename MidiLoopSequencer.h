@@ -4,7 +4,7 @@
 #include "Arduino.h"
 #include <MIDI.h>
 #include "midi.hpp"
-
+#include "Delegate.h"
 #include <vector>
 #include <functional>
 
@@ -21,10 +21,10 @@ class MidiLoopSequencer
   public:
     MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort);
 
-    vector<function<void()>> onKeyChanged;
-    vector<function<void(bool playing)>> onPlayChanged;
-    vector<function<void(bool recording)>> onRecordChanged;
-    vector<function<void(float tempo)>> onTempoChanged;
+    Delegate<bool, byte, byte, byte> onKeyChanged;
+    //vector<function<void(bool playing)>> onPlayChanged;
+    //vector<function<void(bool recording)>> onRecordChanged;
+    //vector<function<void(float tempo)>> onTempoChanged;
 
     void initialize();
     void tick(unsigned long milliseconds);

@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #include <MIDI.h>
 #include "MidiLoopSequencer.h"
-
+#include "Delegate.h"
 
 MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort) {
   _midi_port = midiPort;
@@ -70,10 +70,10 @@ void MidiLoopSequencer::processNewIncomingMidiMessages() {
           //piano.keyDown(midiA.getData1());
           //piano2.keyDown(midiA.getData1());
 
-          for(std::vector<function<void()>>::size_type i = 0; i != onKeyChanged.size(); i++) {
-            std::function<void()> f = onKeyChanged[i];
-            f();
-          }
+          onKeyChanged(true, _midi_port->getData1(), _midi_port->getData2(), _midi_port->getChannel() );
+
+          //if (onKeyChanged) 
+          //  onKeyChanged(true, _midi_port->getData1(), _midi_port->getData2(), _midi_port->getChannel() );
 
           break;
         } 
