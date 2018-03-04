@@ -16,7 +16,7 @@ using namespace std;
 
 struct SongPosition {
   int bar;
-  byte beat;
+  int8_t beat;
 };
 
 
@@ -26,6 +26,7 @@ class MidiLoopSequencer
     MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort);
 
     Delegate<bool, byte, byte, byte> onKeyChanged;
+    Delegate<SongPosition> onPositionChanged;
     //vector<function<void(bool playing)>> onPlayChanged;
     //vector<function<void(bool recording)>> onRecordChanged;
     //vector<function<void(float tempo)>> onTempoChanged;

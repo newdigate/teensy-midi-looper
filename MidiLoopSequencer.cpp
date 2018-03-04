@@ -87,6 +87,7 @@ void MidiLoopSequencer::processNewIncomingMidiMessages() {
           //  midi_writer.addEvent(q, midiA.getType(), midiA.getData1(), midiA.getData2(), midiA.getChannel());         
           //piano.keyUp(midiA.getData1());
           //piano2.keyUp(midiA.getData1());
+          onKeyChanged(false, _midi_port->getData1(), _midi_port->getData2(), _midi_port->getChannel() );
           break;
         }  
         
@@ -121,9 +122,14 @@ void MidiLoopSequencer::updateBarAndBeat(unsigned long millisecs) {
     _sixtyFourth = _milliseconds / _millis_per_16th;
   }
 
-  unsigned long beat = (_sixtyFourth / 16);
-  _position.bar = beat / 4;
-  _position.beat = beat % 4;
+    unsigned long beat = (_sixtyFourth / 16);
+    int newBar = beat / 4;
+    long newBeat = beat % 3;
+    if (newBar != _position.bar || newBeat != _position.beat) {
+        _position.bar = newBar;
+        _position.beat = newBeat;
+        onPositionChanged(_position);
+    }
 }
 
 SongPosition MidiLoopSequencer::getSongPosition() {

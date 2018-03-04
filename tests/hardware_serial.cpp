@@ -59,7 +59,7 @@ void HardwareSerial::flush(void) {
 }
 
 int HardwareSerial::write(uint8_t a) {
-  std::cout << a;
+  // std::cout << a;
   return 0;
 }
 

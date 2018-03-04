@@ -50,7 +50,7 @@ void delay_test() {
 void run_tests();
 
 int main(int argc, char **argv){
-	std::cout << "starting app...";
+	std::cout << "starting app...\n";
     initialize_mock_arduino();
     run_tests();
 }
@@ -66,8 +66,12 @@ void run_tests() {
     MidiLoopSequencer midiLoopSequencer(midi);
     midiLoopSequencer.initialize();
 
-    midiLoopSequencer.onKeyChanged += [] (bool pressed, byte key, byte vel, byte channel) {
-        std::cout  << "<-" << key << " : " << channel << "\n";
+    midiLoopSequencer.onKeyChanged += [] (bool pressed, uint8_t key, uint8_t velocity, uint8_t channel) {
+        printf("%s %#2x ch:%#2x vel:%2x\n", (pressed)? "On" : "Off", key, channel, velocity);
+    };
+
+    midiLoopSequencer.onPositionChanged += [] (SongPosition position) {
+        printf("Song: %#5d \t %#5d\n", position.bar, position.beat);
     };
 
     int64_t t = 0;
