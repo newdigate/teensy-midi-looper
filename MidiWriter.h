@@ -1,8 +1,12 @@
 #ifndef MidiWriter_h
 #define MidiWriter_h
 
+#ifdef build_for_arduino
 #include "Arduino.h"
 #include <SD.h>
+#else
+#include "tests/mock_arduino.h"
+#endif
 
 class MidiWriter
 {

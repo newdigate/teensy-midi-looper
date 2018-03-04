@@ -1,9 +1,13 @@
 #ifndef MidiLoopSequencer_h
 #define MidiLoopSequencer_h
 
+#ifdef build_for_arduino
 #include "Arduino.h"
-#include <MIDI.h>
-#include "midi.hpp"
+#else
+#include "tests/mock_arduino.h"
+#endif
+
+#include "midi/MIDI.h"
 #include "Delegate.h"
 #include <vector>
 #include <functional>

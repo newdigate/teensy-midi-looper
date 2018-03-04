@@ -1,3 +1,4 @@
+#ifdef build_for_arduino
 #include "Arduino.h"
 #include "TFTPianoDisplay.h"
 
@@ -108,3 +109,6 @@ void TFTPianoDisplay::drawPiano() {
     }
     _shouldUpdatePiano = false;
 }
+#else
+#include "tests/mock_arduino.h"
+#endif

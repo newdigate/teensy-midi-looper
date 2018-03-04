@@ -1,7 +1,10 @@
 #ifndef TFTPianoDisplay_h
 #define TFTPianoDisplay_h
 
+#ifdef build_for_arduino
 #include "Arduino.h"
+
+
 #include <SD.h>
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
@@ -29,5 +32,8 @@ class TFTPianoDisplay
     bool isKeyPressed(byte key);
     bool isAnyKeyPressed(byte key);
 };
+#else
+#include "tests/mock_arduino.h"
+#endif
 
 #endif

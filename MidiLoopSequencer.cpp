@@ -1,9 +1,13 @@
 #include <vector>
 #include <functional>
 
-
+#ifdef build_for_arduino
 #include "Arduino.h"
-#include <MIDI.h>
+#else
+#include "tests/mock_arduino.h"
+#endif
+
+#include "midi/MIDI.h"
 #include "MidiLoopSequencer.h"
 #include "Delegate.h"
 
