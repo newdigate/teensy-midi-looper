@@ -1,7 +1,15 @@
 # arduino-midi-writer
-* arduino class to write simple midi events to SMF on SD card 
-   * currently saves single track SMF (SMF type 0)
-   
+* classes
+  * MidiWriter.h
+    * class to write simple midi events to SMF on SD card 
+    * currently saves single track SMF (SMF type 0)
+
+  * TFTPianoDisplay.h
+    * class to display incomming midi note on/off messages on a piano keyboard view on ILI9341 TFT (using AdafruitGFX)
+
+  * MidiLoopSequencer.h (work in progress)
+    * class to manage looping / recording / playing / event callbacks
+
 * hardware
   * teensy 3.6 microcontroller board w/ SD Card
   * ILI9341 TFT display
@@ -31,3 +39,6 @@
   * https://github.com/SMFSW/Queue
 * Arduino menu 
   * https://github.com/neu-rah/ArduinoMenu
+* AdafruitGFX, Adafruit_ST7735
+  * https://github.com/adafruit/Adafruit-GFX-Library 
+  * https://github.com/adafruit/Adafruit-ST7735-Library
