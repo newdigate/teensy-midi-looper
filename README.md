@@ -1,7 +1,15 @@
-# arduino-midi-writer
-I would like to build a simple microcontroller device to record the midi output of my digital piano onto an SD-card. 
+# Teensy midi loop recorder
+This micro-controller project aims to play and record midi standard midi files (SMF) from SD-card.   
 
-Having searched the internet for a simple arduino library to write standard midi files (SMF) and not found anything, I have written a library to this. 
+I am writing these c++ classes with compatibility for both x86 and arm32.  
+
+I am using these hardware components:
+  * teensy 3.6 microcontroller board with onboard SD Card
+    * https://www.pjrc.com/store/teensy36.html
+  * 2.2" ILI9341 TFT display 240x320
+  * rotary encoder with built-in switch
+  * MIDI break-out board 
+    * http://www.hobbytronics.co.uk/midi-breakout
 
 * classes
   * MidiWriter.h
@@ -14,13 +22,6 @@ Having searched the internet for a simple arduino library to write standard midi
   * MidiLoopSequencer.h (work in progress)
     * class to manage looping / recording / playing / event callbacks
 
-* hardware
-  * teensy 3.6 microcontroller board w/ SD Card
-    * https://www.pjrc.com/store/teensy36.html
-  * ILI9341 TFT display
-  * rotary encoder
-  * MIDI break-out board 
-    * http://www.hobbytronics.co.uk/midi-breakout
   
 * TFT display
   * indicators
