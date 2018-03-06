@@ -3,7 +3,7 @@ This micro-controller project aims to play and record midi standard midi files (
 
 I am writing these c++ classes with compatibility for both x86 and arm32.  
 
-I am using these hardware components:
+Hardware requirements:
   * teensy 3.6 microcontroller board with onboard SD Card
     * https://www.pjrc.com/store/teensy36.html
   * 2.2" ILI9341 TFT display 240x320
@@ -15,13 +15,10 @@ I am using these hardware components:
   * MidiWriter.h
     * class to write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
-
   * TFTPianoDisplay.h
     * class to display incomming midi note on/off messages on a piano keyboard view on ILI9341 TFT (using AdafruitGFX)
-
   * MidiLoopSequencer.h (work in progress)
     * class to manage looping / recording / playing / event callbacks
-
   
 * TFT display
   * indicators
