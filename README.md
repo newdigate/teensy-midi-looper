@@ -1,9 +1,10 @@
 # Teensy midi loop recorder
 This micro-controller project aims to play and record midi standard midi files (SMF) from SD-card.   
 
-I am writing these c++ classes with compatibility for both x86 and arm32.  
+## Compatibilty:
+I am writing these c++ classes with compatibility for both x86 and arm32 to allow me to debug the code without needing to upload the compiled binaries to the microcontroller; 
 
-Hardware requirements:
+## Hardware requirements:
   * teensy 3.6 microcontroller board with onboard SD Card
     * https://www.pjrc.com/store/teensy36.html
   * 2.2" ILI9341 TFT display 240x320
@@ -28,14 +29,14 @@ Hardware requirements:
   * working on integrating with arduino menu
     * using rotary encoder and switch input
 
-# work in progress
+## work in progress
   * playback
   * looping
   * step record
   * multi-track loop recording
   * tempo detection
 
-# dependencies
+## dependencies
 * arduino midi library 
   * https://github.com/PaulStoffregen/MIDI
 * cppQueue 
