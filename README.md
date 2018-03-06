@@ -1,5 +1,5 @@
 # Teensy midi loop recorder
-This micro-controller project aims to play and record midi standard midi files (SMF) from SD-card.   
+This micro-controller project aims to play and record midi tracks to/from standard midi files (SMF) on SD-card.   
 
 ## Compatibilty:
 I am writing these c++ classes with compatibility for both x86 and arm32 to allow me to debug the code without needing to upload the compiled binaries to the microcontroller; 
@@ -12,14 +12,14 @@ I am writing these c++ classes with compatibility for both x86 and arm32 to allo
   * MIDI break-out board 
     * http://www.hobbytronics.co.uk/midi-breakout
 
-## classes
+## Classes
   * MidiWriter.h
-    * class to write simple midi events to SMF on SD card 
+    * write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
   * TFTPianoDisplay.h
-    * class to display incomming midi note on/off messages on a piano keyboard view on ILI9341 TFT (using AdafruitGFX)
+    * display incomming midi note on/off messages on a piano keyboard view
   * MidiLoopSequencer.h (work in progress)
-    * class to manage looping / recording / playing / event callbacks
+    * manage looping / recording / playing / event callbacks
   
 ## TFT display
   * indicators
@@ -29,14 +29,14 @@ I am writing these c++ classes with compatibility for both x86 and arm32 to allo
   * working on integrating with arduino menu
     * using rotary encoder and switch input
 
-## work in progress
+## Work in progress
   * playback
   * looping
   * step record
   * multi-track loop recording
   * tempo detection
 
-## dependencies
+## Dependencies
 * arduino midi library 
   * https://github.com/PaulStoffregen/MIDI
 * cppQueue 
