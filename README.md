@@ -2,7 +2,7 @@
 This micro-controller project aims to play and record midi tracks to/from standard midi files (SMF) on SD-card.   
 
 ## Compatibilty:
-I am writing these c++ classes with compatibility for both x86 and arm32 to allow me to debug the code without needing to upload the compiled binaries to the microcontroller; 
+I am writing these c++ classes with compatibility for both x86 and arduino to allow me to debug the code without needing to upload the compiled binaries to the microcontroller; 
 
 ## Hardware requirements:
   * teensy 3.6 microcontroller board with onboard SD Card
