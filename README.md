@@ -12,7 +12,7 @@ I am writing these c++ classes with compatibility for both x86 and arm32 to allo
   * MIDI break-out board 
     * http://www.hobbytronics.co.uk/midi-breakout
 
-* classes
+## classes
   * MidiWriter.h
     * class to write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
@@ -21,7 +21,7 @@ I am writing these c++ classes with compatibility for both x86 and arm32 to allo
   * MidiLoopSequencer.h (work in progress)
     * class to manage looping / recording / playing / event callbacks
   
-* TFT display
+## TFT display
   * indicators
     * displays notes received via midi on a piano keyboard view
     * song position (beats / bars)
