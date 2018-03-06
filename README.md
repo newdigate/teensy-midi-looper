@@ -1,5 +1,5 @@
 # arduino-midi-writer
-I would like a simple device to record the midi output of my digital piano onto an SD-card. 
+I would like to build a simple microcontroller device to record the midi output of my digital piano onto an SD-card. 
 
 Having searched the internet for a simple arduino library to write standard midi files (SMF) and not found anything, I have written a library to this. 
 
