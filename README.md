@@ -1,6 +1,7 @@
 # arduino-midi-writer
 * arduino class to write simple midi events to SMF on SD card 
-   * currently saves single track SMF
+   * currently saves single track SMF (SMF type 0)
+   
 * hardware
   * teensy 3.6 microcontroller board w/ SD Card
   * ILI9341 TFT display
