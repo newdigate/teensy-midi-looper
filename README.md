@@ -7,7 +7,7 @@ I am writing these c++ classes with compatibility for both x86 and arduino to al
 ## Hardware requirements:
   * teensy 3.6 microcontroller board with onboard SD Card
     * https://www.pjrc.com/store/teensy36.html
-  * 2.2" ILI9341 TFT display 240x320
+  * 2.2" Adafruit_ST7735 TFT 16-bit color display 160x160
   * rotary encoder with built-in switch
   * MIDI break-out board 
     * http://www.hobbytronics.co.uk/midi-breakout
@@ -30,11 +30,14 @@ I am writing these c++ classes with compatibility for both x86 and arduino to al
     * using rotary encoder and switch input
 
 ## Work in progress
-  * playback
+  * recording (mostly working, tested lightly)
+  * playback (not started)
   * looping
   * step record
   * multi-track loop recording
   * tempo detection
+  * ILI9341 320x240 TFT color display integration
+  * menu system
 
 ## Dependencies
 * arduino midi library 
