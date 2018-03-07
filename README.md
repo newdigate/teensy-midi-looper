@@ -8,6 +8,8 @@ Eventually I would like looping/step-recording/multi-track sequencing and record
 ## Compatibilty:
 I am writing these c++ classes with compatibility for both x86 and arduino to allow me to debug the code without needing to upload the compiled binaries to the microcontroller; 
 
+(I am thinking about implementing some form of mock tft display for use when debugging locally on x86 platform, perhaps using JUCE)  
+
 ## Hardware requirements:
   * teensy 3.6 microcontroller board with onboard SD Card
     * https://www.pjrc.com/store/teensy36.html
