@@ -2,8 +2,10 @@
 ## Objective
 This arduino/teensy platform micro-controller project aims to record midi input from a midi input port (physical) to standard midi files (SMF) on SD-card, and play midi from SD-card to a midi output port.  
 
+This project is a work-in-progress, and intended for educational and enthusiast purposes. Please use with causion, and sensability. 
+
 ## Why?
-I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool. 
+I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
 
 ## Compatibilty:
 I am writing these c++ classes with compatibility for both x86 and arduino to allow me to debug the code without needing to upload the compiled binaries a teensy microcontroller; 
