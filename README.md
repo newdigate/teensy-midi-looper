@@ -1,14 +1,14 @@
 # Teensy midi loop recorder
 ## Objective
-This micro-controller project aims to record midi input from a midi input port (physical) to standard midi files (SMF) on SD-card, and play midi from SD-card to a midi output port.  
+This arduino/teensy platform micro-controller project aims to record midi input from a midi input port (physical) to standard midi files (SMF) on SD-card, and play midi from SD-card to a midi output port.  
 
 ## Why?
 I'd like a portable battery-powered device with physical midi input and output port (DIN midi) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool. 
 
 ## Compatibilty:
-I am writing these c++ classes with compatibility for both x86 and arduino to allow me to debug the code without needing to upload the compiled binaries to the microcontroller; 
+I am writing these c++ classes with compatibility for both x86 and arduino to allow me to debug the code without needing to upload the compiled binaries a teensy microcontroller; 
 
-(I am thinking about implementing some form of mock tft display for use when debugging locally on x86 platform, perhaps using JUCE)  
+(I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
 
 ## Hardware requirements:
   * teensy 3.6 microcontroller board with onboard SD Card
