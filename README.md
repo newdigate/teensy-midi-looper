@@ -13,17 +13,24 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
 
 ## Software 
-### Compile 
-#### x86
-  * requirements
-    * cmake / make / c++11 compiler
-```
-[open terminal to arduino_midi_writer directory]
-$mkdir debug
-$cd debug
-$cmake ..
-$make
-```
+### Compile
+#### build & run on x86
+* install cmake, if its not aleady installed.
+  * on mac, use brew install cmake (download brew https://brew.sh/)
+* to build
+  * open terminal to arduino_midi_writer directory
+  ```
+  $mkdir debug
+  $cd debug
+  $cmake ..
+  $make
+  ```
+* to run
+  * follow build instructions above
+  * open terminal to arduino_midi_writer directory
+  ```
+  build/arduino_midi_writer
+  ```
 
 ## Hardware requirements / compatibity:
   * teensy 3.6 microcontroller board with onboard SD Card
