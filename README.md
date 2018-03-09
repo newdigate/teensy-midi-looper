@@ -12,6 +12,14 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
 
+## Hardware requirements / compatibity:
+  * teensy 3.6 microcontroller board with onboard SD Card
+    * https://www.pjrc.com/store/teensy36.html
+  * 2.2" Adafruit_ST7735 TFT 16-bit color display 160x160
+  * rotary encoder with built-in switch
+  * MIDI break-out board 
+    * http://www.hobbytronics.co.uk/midi-breakout
+
 ## Software 
 ### Compile
 #### build & run on x86
@@ -31,16 +39,7 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
   ```
   build/arduino_midi_writer
   ```
-
-## Hardware requirements / compatibity:
-  * teensy 3.6 microcontroller board with onboard SD Card
-    * https://www.pjrc.com/store/teensy36.html
-  * 2.2" Adafruit_ST7735 TFT 16-bit color display 160x160
-  * rotary encoder with built-in switch
-  * MIDI break-out board 
-    * http://www.hobbytronics.co.uk/midi-breakout
-
-## Classes
+### Classes
   * MidiWriter.h
     * write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
