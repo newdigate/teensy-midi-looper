@@ -17,13 +17,13 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 #### x86
   * requirements
     * cmake / make / c++11 compiler
-    ```
-    [open terminal to arduino_midi_writer directory]
-    $mkdir debug
-    $cd debug
-    $cmake ..
-    $make
-    ```
+```
+[open terminal to arduino_midi_writer directory]
+$mkdir debug
+$cd debug
+$cmake ..
+$make
+```
 
 ## Hardware requirements / compatibity:
   * teensy 3.6 microcontroller board with onboard SD Card
