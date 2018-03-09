@@ -1,4 +1,4 @@
-# Teensy midi loop recorder
+# Teensy midi looper
 ## Objective
 This arduino/teensy platform micro-controller project aims to record midi events from a midi input port (physical) to standard midi files (SMF) on SD-card, and play smf files from SD-card to a midi output port.  
 
