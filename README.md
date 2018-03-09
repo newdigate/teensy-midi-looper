@@ -2,17 +2,30 @@
 ## Objective
 This arduino/teensy platform micro-controller project aims to record midi events from a midi input port (physical) to standard midi files (SMF) on SD-card, and play smf files from SD-card to a midi output port.  
 
-This project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. 
+This project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. I would like to prepare the documentation with as a step-by-step tutorial that students can follow.
 
 ## Why?
 I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
 
-## Compatibilty:
-I am writing these c++ classes with compatibility for both x86 and arduino to allow me to debug the code without needing to upload the compiled binaries a teensy microcontroller; 
+## Platform compatibilty:
+I am writing these c++ classes with compatibility for both x86 and arduino/teensy to allow me to debug the code without needing to upload the compiled binaries a microcontroller to test; 
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
 
-## Hardware requirements:
+## Software 
+### Compile 
+#### x86
+  * requirements
+    * cmake / make / c++11 compiler
+    ```
+    [open terminal to arduino_midi_writer directory]
+    $mkdir debug
+    $cd debug
+    $cmake ..
+    $make
+    ```
+
+## Hardware requirements / compatibity:
   * teensy 3.6 microcontroller board with onboard SD Card
     * https://www.pjrc.com/store/teensy36.html
   * 2.2" Adafruit_ST7735 TFT 16-bit color display 160x160
