@@ -7,7 +7,7 @@ This project is a **work-in-progress**, and is intended for educational and enth
 ## Why?
 I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
 
-## x86 x64 compatibilty
+## x86 / x64 / arm compatibilty
 I am writing these c++ classes with compatibility for both x86 and arduino/teensy to allow me to debug the code without needing to upload the compiled binaries a microcontroller to test; 
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
