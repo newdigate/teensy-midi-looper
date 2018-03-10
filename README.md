@@ -23,9 +23,11 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 ### Compile
 #### build & run on x86
 * install cmake, if its not aleady installed.
-  * on mac, use brew install cmake (download brew https://brew.sh/)
+  * for macos, 
+    * use https://brew.sh/ 
+      * `brew install cmake`
 * to build
-  * open terminal to arduino_midi_writer directory
+  * open terminal to arduino_midi_writer\Software\x86 directory
   ```
   $mkdir debug
   $cd debug
