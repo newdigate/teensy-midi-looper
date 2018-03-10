@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="57.6" height="115.2" viewBox="0, 0, 57.6, 115.2">
+  <g id="Layer_1">
+    <g>
+      <path d="M14.4,-0 L57.6,-0 L57.6,108.169 L14.4,108.169 z" fill="#FFFFFF"/>
+      <path d="M14.4,-0 L57.6,-0 L57.6,108.169 L14.4,108.169 z" fill-opacity="0" stroke="#000000" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <path d="M0,7.4 L14.4,7.4" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector0pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 6.15)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">1</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 20.395, 7.4)">
+      <tspan x="-4.195" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">VCC</tspan>
+    </text>
+    <path d="M0,14.4 L14.4,14.4" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector1pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 13.35)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">2</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 20.589, 14.6)">
+      <tspan x="-4.389" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">GND</tspan>
+    </text>
+    <path d="M0,21.6 L14.4,21.6" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector2pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 20.55)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">3</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 19.131, 21.8)">
+      <tspan x="-2.931" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">CS</tspan>
+    </text>
+    <path d="M0,28.8 L14.4,28.8" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector3pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 27.75)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">4</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 22.534, 29)">
+      <tspan x="-6.334" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">RESET</tspan>
+    </text>
+    <path d="M0,36 L14.4,36" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector4pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 34.95)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">5</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 22.145, 36.2)">
+      <tspan x="-5.945" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">DC/RS</tspan>
+    </text>
+    <path d="M0,43.2 L14.4,43.2" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector5pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 42.15)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">6</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 25.548, 43.4)">
+      <tspan x="-9.348" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">SDI / MOSI</tspan>
+    </text>
+    <path d="M0,50.4 L14.4,50.4" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector6pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 49.35)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">7</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 20.298, 50.6)">
+      <tspan x="-4.098" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">SCK</tspan>
+    </text>
+    <path d="M0,57.6 L14.4,57.6" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector7pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 56.55)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">8</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 20.104, 57.8)">
+      <tspan x="-3.904" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">LED</tspan>
+    </text>
+    <path d="M0,64.8 L14.4,64.8" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector8pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.55, 63.75)">
+      <tspan x="-0.695" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">9</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 26.423, 65)">
+      <tspan x="-10.223" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">SDO / MISO</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 44.973, 49.8)" id="label">
+      <tspan x="-0.331" y="-6.5" font-family="Helvetica" font-size="4.3" fill="#000000">2.8" </tspan>
+      <tspan x="-7.173" y="-1.5" font-family="Helvetica" font-size="4.3" fill="#000000">ILI9341</tspan>
+      <tspan x="-0.707" y="3.5" font-family="Helvetica" font-size="4.3" fill="#000000">TFT</tspan>
+      <tspan x="-6.212" y="8.5" font-family="Helvetica" font-size="4.3" fill="#000000">display</tspan>
+    </text>
+    <path d="M0,72 L14.4,72" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector9pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.745, 70.963)">
+      <tspan x="-1.39" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">10</tspan>
+    </text>
+    <path d="M0,79.2 L14.4,79.2" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector10pin"/>
+    <path d="M0,86.4 L14.4,86.4" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector11pin"/>
+    <path d="M0,93.6 L14.4,93.6" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector12pin"/>
+    <path d="M0,100.8 L14.4,100.8" fill-opacity="0" stroke="#787878" stroke-width="0.7" stroke-linecap="round" id="connector13pin"/>
+    <text transform="matrix(1, 0, 0, 1, 7.653, 78.125)">
+      <tspan x="-1.298" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">11</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 7.642, 85.281)">
+      <tspan x="-1.39" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">12</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 7.2, 92.469)">
+      <tspan x="-1.39" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">13</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 7.2, 99.625)">
+      <tspan x="-1.39" y="0" font-family="Helvetica" font-size="2.5" fill="#8C8C8C">14	</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 26.423, 100.8)">
+      <tspan x="-10.223" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">T_IRQ</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 26.423, 93.6)">
+      <tspan x="-10.223" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">T_DO</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 26.423, 86.4)">
+      <tspan x="-10.223" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">T_DIN</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 26.423, 79.2)">
+      <tspan x="-10.223" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">T_CS</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 26.423, 72)">
+      <tspan x="-10.223" y="0.5" font-family="Helvetica" font-size="3.5" fill="#8C8C8C">T_CLK</tspan>
+    </text>
+  </g>
+</svg>

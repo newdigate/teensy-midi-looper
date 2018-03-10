@@ -33,7 +33,7 @@ void HardwareSerial::end() {
 }
 
 int HardwareSerial::available(void) {
-  return !_inputBuffer.isEmpty();
+  return (!_inputBuffer.isEmpty());
 }
 
 void HardwareSerial::begin(unsigned long, uint8_t) {

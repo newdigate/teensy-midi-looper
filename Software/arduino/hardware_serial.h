@@ -23,8 +23,7 @@
 #include <inttypes.h>
 #include <streambuf>
 #include <vector>
-
-#include "../../common/cppQueue/cppQueue.h"
+#include "cppQueue/cppQueue.h"
 
 class HardwareSerial  {
 public:
