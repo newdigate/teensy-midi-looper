@@ -1,7 +1,7 @@
 #ifdef build_for_arduino
 #include "Arduino.h"
 #else
-#include "tests/mock_arduino.h"
+#include "../x86/mocks/mock_arduino.h"
 #endif
 
 #include "MidiWriter.h"

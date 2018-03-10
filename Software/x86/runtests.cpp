@@ -19,8 +19,7 @@
 */
 
 #include <iostream>
-#include "mock_arduino.h"
-#include "../MidiLoopSequencer.h"
+#include "../common/MidiLoopSequencer.h"
 #include <unistd.h>
 
 using namespace std;

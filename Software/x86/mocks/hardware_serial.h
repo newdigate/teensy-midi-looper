@@ -24,7 +24,7 @@
 #include <streambuf>
 #include <vector>
 
-#include "../cppQueue/cppQueue.h"
+#include "../../common/cppQueue/cppQueue.h"
 
 class HardwareSerial  {
 public:
