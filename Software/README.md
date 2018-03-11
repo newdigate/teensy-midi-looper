@@ -1,6 +1,5 @@
-## Software 
-### Compile
-#### build & run on x86
+# Compile
+## build & run on x86
 * You need a x86/x64 compatible c++11 toolchain installed
   * cmake for mac, and linux users 
     * for macos use brew to install cmake: https://brew.sh/ 
@@ -39,7 +38,7 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   ```
   ./arduino_midi_writer
   ```
-### Classes
+# Classes
   * MidiWriter.h
     * write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
@@ -48,7 +47,7 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   * MidiLoopSequencer.h (work in progress)
     * manage looping / recording / playing / event callbacks
   
-## Dependencies
+# Dependencies
 * arduino midi library 
   * https://github.com/PaulStoffregen/MIDI
 * cppQueue 
