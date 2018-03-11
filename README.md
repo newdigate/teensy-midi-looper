@@ -1,15 +1,16 @@
 # Teensy midi looper 
 ![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
 
-This teensy platform micro-controller project aims to create a device which can record midi events from a physical midi input port to standard midi files (SMF) on SD-card, and play smf files from SD-card to a physical midi output port.  
+This teensy platform micro-controller project aims to create a prototype device which can record midi events from a physical midi input port to standard midi files (SMF) on SD-card, and play smf files from SD-card to a physical midi output port.  
 
 This project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. Eventually I would like to prepare the project documentation as a step-by-step tutorial that students can follow.
 
 ## Why?
 I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
 
-## Hardware requirements / compatibity:
-  * teensy 3.6 microcontroller board with onboard SD Card
+## Prototype hardware requirements / compatibity:
+  * teensy 3.6 microcontroller board 
+    * onboard SD Card using SDIO
     * https://www.pjrc.com/store/teensy36.html
   * 2.2" Adafruit_ST7735 TFT 16-bit color display 160x160
   * rotary encoder with built-in switch
