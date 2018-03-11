@@ -11,4 +11,6 @@ add_library(teensy_midi_common STATIC
 		MidiLoopSequencer.h
 		MidiWriter.cpp
 		MidiWriter.h
-		Delegate.h)
+		Delegate.h
+        TFTPianoDisplay.cpp
+        TFTPianoDisplay.h)

@@ -41,22 +41,22 @@
 
 using namespace std;
 
-class __FlashStringHelper;
+//class __FlashStringHelper;
 
 class Print
 {
 public:
     constexpr Print() : write_error(0) {}
-    virtual size_t write(uint8_t b) = 0;
+    virtual int write(uint8_t b) = 0;
     size_t write(const char *str)			{ return write((const uint8_t *)str, strlen(str)); }
-    virtual size_t write(const uint8_t *buffer, size_t size);
+    virtual int write(const uint8_t *buffer, size_t size);
     virtual int availableForWrite(void)		{ return 0; }
     virtual void flush()				{ }
     size_t write(const char *buffer, size_t size)   { return write((const uint8_t *)buffer, size); }
     size_t print(const string &s);
     size_t print(char c)				{ return write((uint8_t)c); }
     size_t print(const char s[])			{ return write(s); }
-    size_t print(const __FlashStringHelper *f);
+    //size_t print(const __FlashStringHelper *f);
 
     size_t print(uint8_t b)				{ return printNumber(b, 0, 10); }
     size_t print(int n)				{ return print((long)n); }
@@ -76,7 +76,7 @@ public:
     size_t println(const string &s)			{ return print(s) + println(); }
     size_t println(char c)				{ return print(c) + println(); }
     size_t println(const char s[])			{ return print(s) + println(); }
-    size_t println(const __FlashStringHelper *f)	{ return print(f) + println(); }
+    //size_t println(const __FlashStringHelper *f)	{ return print(f) + println(); }
 
     size_t println(uint8_t b)			{ return print(b) + println(); }
     size_t println(int n)				{ return print(n) + println(); }
@@ -95,7 +95,7 @@ public:
     int getWriteError() { return write_error; }
     void clearWriteError() { setWriteError(0); }
     int printf(const char *format, ...);
-    int printf(const __FlashStringHelper *format, ...);
+    //int printf(const __FlashStringHelper *format, ...);
 protected:
     void setWriteError(int err = 1) { write_error = err; }
 private:

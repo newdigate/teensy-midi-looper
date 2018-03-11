@@ -2,10 +2,10 @@
 #include "Arduino.h"
 #else
 #include "../arduino/mock_arduino.h"
+#include "SD/SD.h"
 #endif
 
 #include "MidiWriter.h"
-#include "cppQueue/cppQueue.h"
 
 const byte header[] = {
      0x4d, 0x54, 0x68, 0x64, 0x00, 0x00, 0x00, 0x06,
@@ -51,7 +51,6 @@ void MidiWriter::write_buf_byte(byte b) {
 void MidiWriter::setFilename(const char* filename) {
   flush();
 
-#ifdef build_for_arduino
   sprintf(_filename, "%s.mid", filename);
   
   int count = 1;
@@ -60,7 +59,6 @@ void MidiWriter::setFilename(const char* filename) {
     sprintf(_filename, "%s%i.mid", filename, count);
     count++;
   }
-#endif
   //Serial.printf("using filename '%s'\n", _filename);
 }
 
@@ -124,25 +122,23 @@ void MidiWriter::addEvent(unsigned int deltaticks, byte type, byte data1, byte d
 
 void MidiWriter::flush() {
   if (_bufferPos == 0) return;
-#ifdef build_for_arduino
   File data = SD.open(_filename, FILE_WRITE);
   if (!data) {
-    //Serial.printf("Not able to open %s\n", _filename);
+    Serial.printf("Not able to open %s\n", _filename);
     return;
   }
   
   for (byte b = 0; b < _bufferPos; b++) {
-    data.write(_inputBuffer[b]);
+    data.write(_buffer[b]);
   } 
   _bufferPos = 0;
   
   data.seek(18);
   write_buf_int(trackSize);
   for (byte b = 0; b < _bufferPos; b++) {
-    data.write(_inputBuffer[b]);
+    data.write(_buffer[b]);
   } 
   _bufferPos = 0;
   
   data.close();
-#endif
 }

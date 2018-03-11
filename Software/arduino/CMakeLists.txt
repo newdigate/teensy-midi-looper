@@ -23,4 +23,17 @@ add_library(arduino_abstraction STATIC
         midi/midi_Defs.h
         midi/midi_Message.h
         midi/midi_Namespace.h
-        midi/midi_Settings.h)
+        midi/midi_Settings.h
+        SD/File.cpp
+        SD/SD.cpp
+        SD/SD.h
+        SD/utility/FatStructs.h
+        SD/utility/Sd2Card.cpp
+        SD/utility/Sd2Card.h
+        SD/utility/Sd2PinMap.h
+        SD/utility/SdFat.h
+        SD/utility/SdFatUtil.h
+        SD/utility/SdFatmainpage.h
+        SD/utility/SdFile.cpp
+        SD/utility/SdInfo.h
+        SD/utility/SdVolume.cpp)

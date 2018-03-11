@@ -24,8 +24,9 @@
 #include <streambuf>
 #include <vector>
 #include "cppQueue/cppQueue.h"
+#include "Teensy/Print.h"
 
-class HardwareSerial  {
+class HardwareSerial {
 public:
     void begin(unsigned long baud);
     void begin(unsigned long, uint8_t);
@@ -40,9 +41,14 @@ public:
     inline int write(long n) { return write((uint8_t)n); }
     inline int write(unsigned int n) { return write((uint8_t)n); }
     inline int write(int n) { return write((uint8_t)n); }
+    int write(unsigned char const*, unsigned long);
     operator bool() { return true; }
-
     Queue _inputBuffer = Queue(1, 100);
+
+    void print(char i);
+    void print(char *i);
+    void println();
+    void printf(const char *s, ...);
 };
 
 extern HardwareSerial Serial;

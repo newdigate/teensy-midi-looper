@@ -111,11 +111,7 @@ public:
                           int16_t *x1, int16_t *y1, uint16_t *w, uint16_t *h);
 #endif
 
-#if ARDUINO >= 100
-    virtual size_t write(uint8_t);
-#else
-    virtual size_t write(uint8_t);
-#endif
+    virtual int write(uint8_t);
 
     int16_t height(void) const;
     int16_t width(void) const;
