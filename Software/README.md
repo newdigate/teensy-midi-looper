@@ -1,5 +1,4 @@
-# Compile
-## build & run on x86
+# build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
   * cmake for mac, and linux users 
     * for macos use brew to install cmake: https://brew.sh/ 
