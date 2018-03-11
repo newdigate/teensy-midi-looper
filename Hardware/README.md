@@ -14,4 +14,4 @@
     * possibly use neopixels rings as indicator for rotary encoder.
   * 2 tactile switches (play/stop, record enabled)
   
-![ILI9341 TFT breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/tft.ili9341-2.8in.display.breadboard.svg?raw=true "ILI9341 TFT 2.8' display")
+![ILI9341 TFT breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/tft.ili9341-2.8in.display.breadboard.svg?sanitize=true "ILI9341 TFT 2.8' display")
