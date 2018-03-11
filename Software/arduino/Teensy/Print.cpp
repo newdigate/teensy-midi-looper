@@ -3,3 +3,6 @@
 //
 
 #include "Print.h"
+int Print::write(unsigned char const*, unsigned long) {
+    return 0;
+}

@@ -20,6 +20,8 @@
 
 #include <iostream>
 #include "../common/MidiLoopSequencer.h"
+#include "../common/TFTPianoDisplay.h"
+#include "AdafruitTFTMock.h"
 #include <unistd.h>
 
 using namespace std;
@@ -47,11 +49,12 @@ void delay_test() {
 }
 
 void run_tests();
+void run_tests2();
 
 int main(int argc, char **argv){
 	std::cout << "starting app...\n";
     initialize_mock_arduino();
-    run_tests();
+    run_tests2();
 }
 
 uint8_t tab[][3] = {
@@ -93,4 +96,10 @@ void run_tests() {
         }
         t++;
     }
+}
+
+void run_tests2() {
+    AdafruitTFTMock mock = AdafruitTFTMock(160, 160);
+    TFTPianoDisplay tftPiano = TFTPianoDisplay(mock, 5, 0, 0, 0);
+    tftPiano.drawPiano();
 }

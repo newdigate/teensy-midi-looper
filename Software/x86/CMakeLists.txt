@@ -9,7 +9,9 @@ link_directories(../arduino/cmake-build-debug)
 link_directories(../common/cmake-build-debug)
 
 add_executable(arduino_midi_writer
-        runtests.cpp)
+        runtests.cpp
+        AdafruitTFTMock.cpp
+        AdafruitTFTMock.h)
 
 target_link_libraries(arduino_midi_writer arduino_abstraction)
 target_link_libraries(arduino_midi_writer teensy_midi_common)
