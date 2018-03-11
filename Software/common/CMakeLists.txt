@@ -11,11 +11,4 @@ add_library(teensy_midi_common STATIC
 		MidiLoopSequencer.h
 		MidiWriter.cpp
 		MidiWriter.h
-		midi/MIDI.h
-		midi/MIDI.cpp
-		midi/MIDI.hpp
-		midi/midi_Defs.h
-		midi/midi_Message.h
-		midi/midi_Namespace.h
-		midi/midi_Settings.h
 		Delegate.h)

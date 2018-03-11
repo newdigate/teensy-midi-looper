@@ -16,4 +16,11 @@ add_library(arduino_abstraction STATIC
         Adafruit/glcdfont.c
         Teensy/Printable.h
         cppQueue/cppQueue.cpp
-        cppQueue/cppQueue.h)
+        cppQueue/cppQueue.h
+        midi/MIDI.h
+        midi/MIDI.cpp
+        midi/MIDI.hpp
+        midi/midi_Defs.h
+        midi/midi_Message.h
+        midi/midi_Namespace.h
+        midi/midi_Settings.h)
