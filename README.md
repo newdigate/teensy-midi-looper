@@ -56,12 +56,6 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
     cmake ..
     make
     ```  
-  ```
-  $mkdir debug
-  $cd debug
-  $cmake ..
-  $make
-  ```
 * to run
   * follow build instructions above
 open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
