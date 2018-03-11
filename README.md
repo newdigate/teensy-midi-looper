@@ -8,7 +8,6 @@ This project is a **work-in-progress**, and is intended for educational and enth
 ## Why?
 I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators-tempo, song position, midi channel in/out activity, keyboard view, play/stop/recording, on a cheep 2" TFT display. Eventually I would like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
 
-
 ## Prototype hardware requirements / compatibity:
   * teensy 3.6 microcontroller board 
     * onboard SD Card using SDIO
@@ -19,9 +18,9 @@ I'd like a portable battery-powered device with physical midi input and output p
   * MIDI break-out board 
     * http://www.hobbytronics.co.uk/midi-breakout
 
-## [more info about compiling,and debugging software](Software)
-## [more info about hardware prototyping and pcb design](Hardware)
+[more info about compiling,and debugging software](Software)
 
+[more info about hardware prototyping and pcb design](Hardware)
 
 ## TFT display
   * indicators
