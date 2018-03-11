@@ -24,12 +24,38 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 ## Software 
 ### Compile
 #### build & run on x86
-* install cmake, if its not aleady installed.
-  * for macos, 
-    * use https://brew.sh/ 
+* You need a x86/x64 compatible c++11 toolchain installed
+  * cmake for mac, and linux users 
+    * for macos use brew to install cmake: https://brew.sh/ 
       * `brew install cmake`
-* to build
-  * open terminal to arduino_midi_writer\Software\x86 directory
+  * JetBrains Clion IDE
+      
+* to build for x86/x64
+  * open terminal to arduino_midi_writer/Software
+    * build arduino abstractions library (libarduino_abstraction.a)
+    ```
+    $cd arduino
+    $mkdir cmake-build-debug
+    $cd cmake-build-debug/
+    cmake ..
+    make
+    ```
+    * build common library (libteensy_midi_common.a)
+    ```
+    $cd ../../common/
+    $mkdir cmake-build-debug
+    $cd cmake-build-debug/
+    cmake ..
+    make
+    ```  
+    * build x86/x64 application (libarduino_abstraction.a)
+    ```
+    $cd ../../x86/
+    $mkdir cmake-build-debug
+    $cd cmake-build-debug/
+    cmake ..
+    make
+    ```  
   ```
   $mkdir debug
   $cd debug
@@ -38,9 +64,9 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
   ```
 * to run
   * follow build instructions above
-  * open terminal to arduino_midi_writer directory
+open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   ```
-  build/arduino_midi_writer
+  ./arduino_midi_writer
   ```
 ### Classes
   * MidiWriter.h
