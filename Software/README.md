@@ -2,7 +2,7 @@ This folder contains source code for:
 * the firm-ware of the device 
 * simulation code intended for development, debugging and testing on desktop computer  
 
-#### folder structure
+#### structure
 ```arduino-midi-writer/Software```
   * ```arduino```
     * c++ abstractions and implementations which allow compiling arduino code for x86_64.
