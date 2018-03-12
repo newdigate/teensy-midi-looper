@@ -5,7 +5,9 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 
 # build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
-  * build system uses `cmake` (see CMakeLists.txt in each directory)
+  * x86_64 build system uses `cmake` https://cmake.org/
+    * each directory contains a CMakeLists.txt file
+    * `cmake` will create a .Makefile which can be triggered by running `make`
   * JetBrains CLion IDE
     * Very good integrated development environment. integrates very well with cmake.  
       
