@@ -1,3 +1,7 @@
+This folder contains source code for: 
+* the firm-ware of the device 
+* simulation code intended for development, debugging and testing on desktop computer  
+
 #### folder structure
 ```arduino-midi-writer/Software```
   * ```arduino```
