@@ -1,5 +1,5 @@
 This folder contains source code for: 
-* the firm-ware of the device 
+* firm-ware of the ```teensy-midi-looper``` device 
 * simulation code intended for development, debugging and testing on desktop computer  
 
 #### structure
