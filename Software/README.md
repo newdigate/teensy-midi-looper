@@ -1,9 +1,12 @@
 #### folder structure
 * arduino-midi-writer/Software 
-  * arduino
+  * arduino 
     * c++ abstractions and implementations which allow compiling arduino code for x86_64.
   * common	
-    * library with classes which are common to arduino, and x86_64 (MidiLoopSequencer	MidiWriter TFTPianoDisplay classes)
+    * library with classes which are common to arduino, and x86_64 
+      * MidiLoopSequencer	
+      * MidiWriter 
+      * TFTPianoDisplay
   * x86
     * application with test harness for x86_64 architecture
 
