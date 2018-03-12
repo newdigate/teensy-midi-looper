@@ -1,9 +1,18 @@
-# compatibilty for x86 / x64 / arm 
+#### folder structure
+* arduino-midi-writer/Software 
+  * arduino
+    * c++ abstractions and implementations which allow compiling arduino code for x86_64.
+  * common	
+    * library with classes which are common to arduino, and x86_64 (MidiLoopSequencer	MidiWriter TFTPianoDisplay classes)
+  * x86
+    * application with test harness for x86_64 architecture
+
+#### compatibilty for x86 / x64 / arm 
 I am writing these c++ classes with compatibility for both x86 and arduino/teensy to allow me to debug the code without needing to upload the compiled binaries a microcontroller to test; 
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
 
-# build, run and test on x86/x64
+#### build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
   * x86_64 build system uses `cmake` https://cmake.org/
     * each directory contains a CMakeLists.txt file
@@ -43,7 +52,7 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   ```
   ./arduino_midi_writer
   ```
-# Classes
+#### classes
   * MidiWriter.h
     * write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
@@ -52,7 +61,7 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   * MidiLoopSequencer.h (work in progress)
     * manage looping / recording / playing / event callbacks
   
-# Dependencies
+#### dependencies
 * arduino midi library 
   * https://github.com/PaulStoffregen/MIDI
 * cppQueue 
