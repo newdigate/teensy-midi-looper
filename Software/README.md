@@ -6,8 +6,6 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 # build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
   * build system uses `cmake` (see CMakeLists.txt in each directory)
-    * for macos use brew to install cmake: https://brew.sh/ 
-      * `brew install cmake`
   * JetBrains CLion IDE
     * Very good integrated development environment. integrates very well with cmake.  
       
