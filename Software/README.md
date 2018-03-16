@@ -79,3 +79,4 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
 * AdafruitGFX, Adafruit_ST7735
   * https://github.com/adafruit/Adafruit-GFX-Library 
   * https://github.com/adafruit/Adafruit-ST7735-Library
+* https://github.com/mpaland/printf
