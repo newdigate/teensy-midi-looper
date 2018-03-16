@@ -102,4 +102,7 @@ void run_tests2() {
     AdafruitTFTMock mock = AdafruitTFTMock(160, 160);
     TFTPianoDisplay tftPiano = TFTPianoDisplay(mock, 5, 0, 0, 0);
     tftPiano.drawPiano();
+    mock.print("hello");
+    string in;
+    cin >> in;
 }
