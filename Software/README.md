@@ -1,3 +1,5 @@
+![TFT emulator running on macos](docs/images/tft_emulator.png "TFT Piano Display on emulator")
+
 This folder contains source code for: 
 * firm-ware of the ```teensy-midi-looper``` device 
 * simulation code intended for development, debugging and testing on desktop computer  
