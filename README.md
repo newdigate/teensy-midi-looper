@@ -1,6 +1,6 @@
 ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/logo.svg?sanitize=true "Teensy midi looper board")
 
-![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
+![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board") Teensy 3.6 https://www.pjrc.com/store/teensy36.html
 
 This micro-controller project aims to create a prototype device which can:
 * **record** midi events from a physical midi input port to standard midi files (SMF) on SD-card
