@@ -8,10 +8,10 @@ This teensy platform micro-controller project aims to create a prototype device 
 ## Work-in-progress
 The project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. Eventually I would like to prepare the project documentation as a step-by-step tutorial that students can follow.
 
+<img src="Software/docs/images/tft_emulator.png" width="200px"/>
+
 ## Software development
  * information about **compiling** and **debugging** software here: [software](Software)
-
-<img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
 ## Prototype hardware requirements / compatibity:
   * teensy 3.6 microcontroller board 
