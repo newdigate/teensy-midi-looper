@@ -1,17 +1,17 @@
-# Teensy midi looper 
 ![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
 
-<img src="Software/docs/images/tft_emulator.png" width=200px/>
-
+# Teensy midi looper 
 This teensy platform micro-controller project aims to create a prototype device which can:
 * **record** midi events from a physical midi input port to standard midi files (SMF) on SD-card
 * **play** smf files from SD-card to a physical midi output port.  
 
+## Work-in-progress
 The project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. Eventually I would like to prepare the project documentation as a step-by-step tutorial that students can follow.
-
 
 ## Software development
  * information about **compiling** and **debugging** software here: [software](Software)
+
+<img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
 ## Prototype hardware requirements / compatibity:
   * teensy 3.6 microcontroller board 
