@@ -9,12 +9,9 @@ This teensy platform micro-controller project aims to create a prototype device 
 
 The project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. Eventually I would like to prepare the project documentation as a step-by-step tutorial that students can follow.
 
-## Why?
-I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators on a cheep 2" TFT display: tempo; song position; midi channel in/out activity; keyboard view; play/stop/recording;
 
-Eventually I'd like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
-
-information about **compiling** and **debugging** software here: [software](Software)
+## Software development
+ * information about **compiling** and **debugging** software here: [software](Software)
 
 ## Prototype hardware requirements / compatibity:
   * teensy 3.6 microcontroller board 
@@ -45,3 +42,8 @@ more information about **hardware prototyping** and **pcb design** here: [hardwa
   * tempo detection
   * ILI9341 320x240 TFT color display integration
   * menu system
+  
+## Why?
+I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators on a cheep 2" TFT display: tempo; song position; midi channel in/out activity; keyboard view; play/stop/recording;
+
+Eventually I'd like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
