@@ -1,4 +1,4 @@
-![TFT emulator running on macos](docs/images/tft_emulator.png "TFT Piano Display on emulator")
+<img src="docs/images/tft_emulator.png" width="200">
 
 This folder contains source code for: 
 * firm-ware of the ```teensy-midi-looper``` device 
