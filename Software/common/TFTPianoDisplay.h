@@ -1,7 +1,7 @@
 #ifndef TFTPianoDisplay_h
 #define TFTPianoDisplay_h
 
-#ifdef build_for_arduino
+#ifdef ARDUINO
 #include "Arduino.h"
 #else
 #include "mock_arduino.h"
