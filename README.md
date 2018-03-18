@@ -1,4 +1,4 @@
-# ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/logo.svg?sanitize=true "Teensy midi looper board")
+# ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/logo.svg?sanitize=true "Teensy midi looper")
 
 [![Join the chat at https://gitter.im/newdigate/arduino-midi-writer](https://badges.gitter.im/newdigate/arduino-midi-writer.svg)](https://gitter.im/newdigate/arduino-midi-writer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
