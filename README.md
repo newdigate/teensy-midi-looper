@@ -7,13 +7,13 @@ This micro-controller project aims to create a prototype device which can:
 * **play** smf files from SD-card to a physical midi output port
 * **display** midi input & output activity, indicators (tempo, key, signature, position) on small color TFT display 
 
-The firmware is targeting arduino-compatible architectures, focusing on the [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **pjrc**  
+The firmware is targeting arduino-compatible architectures, focusing on the [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
 * Teensy 3.6 features a 32bit 180 MHz ARM Cortex-M4 processor
 * A massive eco-system of source code libraries are available from arduino/teensy communities 
 
 ![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board") 
 
-## Work-in-progress
+## Status
 The project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. Eventually I would like to prepare the project documentation as a step-by-step tutorial that students can follow.
 
 <img src="Software/docs/images/tft_emulator.png" width="200px"/>
