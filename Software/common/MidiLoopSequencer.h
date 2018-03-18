@@ -3,11 +3,12 @@
 
 #ifdef ARDUINO
 #include "Arduino.h"
+#include <MIDI.h>
 #else
 #include "mock_arduino.h"
+#include "midi/MIDI.h"
 #endif
 
-#include "midi/MIDI.h"
 #include "Delegate.h"
 #include <vector>
 #include <functional>
