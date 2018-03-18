@@ -9,10 +9,10 @@ This micro-controller project aims to create a prototype device which can:
 
 
 ##### [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **pjrc**  
-
+* The Teensy USB Development Board is a complete USB-based microcontoller development system.
+* Version 3.6 features a 32bit 180 MHz ARM Cortex-M4 processor with floating point unit.
 
 ![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board") 
-
 
 ## Work-in-progress
 The project is a **work-in-progress**, and is intended for educational and enthusiast purposes. Please use with causion, and sensability. Eventually I would like to prepare the project documentation as a step-by-step tutorial that students can follow.
