@@ -17,7 +17,7 @@ The firmware is targeting arduino-compatible architectures, focusing on the [Tee
 The project is a **work-in-progress** in a very **early** stage of development; 
 
 | Feature       | status | notes         |
-| ------------- | ------------- | -------------|
+| ------------- |:-------------:| -------------|
 | arduino sketch to record midi record to SMF on SD| ```poc working (needs attention)``` | out-of-date (needs some attention to compile) |
 | midi sequencing | ```poc in progress``` | |
 | TFT emulation on x86_64 | ```basic functions``` | requires [JUCE](https://www.juce.com "JUCE libraries") |
