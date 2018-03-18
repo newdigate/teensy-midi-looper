@@ -1,4 +1,4 @@
-# ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/logo.svg?sanitize=true "Teensy midi looper")
+# ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper")
 
 [![Join the chat at https://gitter.im/newdigate/arduino-midi-writer](https://badges.gitter.im/newdigate/arduino-midi-writer.svg)](https://gitter.im/newdigate/teensy-midi-looper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -11,7 +11,7 @@ The firmware is targeting arduino-compatible architectures, focusing on the [Tee
 * Teensy 3.6 features a 32bit 180 MHz ARM Cortex-M4 processor
 * A massive eco-system of source code libraries are available from arduino/teensy communities 
 
-![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board") 
+![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board") 
 
 ## Status
 The project is a **work-in-progress** in a very **early** stage of development; 
