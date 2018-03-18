@@ -16,15 +16,15 @@ The firmware is targeting arduino-compatible architectures, focusing on the [Tee
 ## Status
 The project is a **work-in-progress** in a very **early** stage of development; 
 
-| Feature       | Status | 
+| Feature       | ```status``` | 
 | ------------- |-------------|
-| record midi record to SMF on SD| **working** |
-| midi read from SMF  | not started | 
-| looping  | not started | 
-| TFT emulation on x86_64 | basic functions | 
-| **TFT indicators** | in progress | 
-|   * Piano view | basic functions |
-|   * recording indicators | in progress |
+| record midi record to SMF on SD| ```working``` |
+| midi read from SMF  | ```not started``` | 
+| looping  | ```not started``` | 
+| TFT emulation on x86_64 | ```basic functions``` | 
+| **TFT indicators** | ```in progress``` | 
+|   * Piano view | ```basic functions``` |
+|   * recording indicators | ```in progress``` |
 
 <img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
