@@ -19,6 +19,7 @@
 */
 
 #include <sys/timeb.h>
+#include <iostream>
 #include "mock_arduino.h"
 
 timeb t_start;
@@ -36,3 +37,8 @@ void delay(unsigned long ms) {
 void initialize_mock_arduino() {
   ftime(&t_start);
 }
+
+//void _putchar(char character)
+//{
+//  cout << character;
+//}

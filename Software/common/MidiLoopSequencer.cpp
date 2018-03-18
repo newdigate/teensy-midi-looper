@@ -16,19 +16,21 @@ MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPo
 }
 
 void MidiLoopSequencer::initialize() {
-  _midi_port->begin(MIDI_CHANNEL_OMNI);
-  _beats_per_minute = 120.0;
-  float seconds_per_beat = 60 / _beats_per_minute;
-  float millis_per_beat = seconds_per_beat * 1000;
-  _millis_per_16th = millis_per_beat/16;
-  
-  _milliseconds = 0;
-  _previousMilliseconds = 0;
-  _lastEventMillis = 0;
+    _midi_port->begin(MIDI_CHANNEL_OMNI);
+    _beats_per_minute = 120.0;
+    float seconds_per_beat = 60 / _beats_per_minute;
+    _millis_per_beat = seconds_per_beat * 1000;
+    _millis_per_bar = _millis_per_beat * 4;
+    _millis_per_16th = _millis_per_beat / 16;
+    _milliseconds = 0;
+    _previousMilliseconds = 0;
+    _lastEventMillis = 0;
 }
 
 void MidiLoopSequencer::tick(unsigned long millisecs) {
-  updateBarAndBeat(millisecs);
+  if (_en_play)
+    updateBarAndBeat(millisecs);
+
   processNewIncomingMidiMessages();
 }
 
@@ -111,25 +113,26 @@ void MidiLoopSequencer::processNewIncomingMidiMessages() {
 }
 
 void MidiLoopSequencer::updateBarAndBeat(unsigned long millisecs) {
-  _previousMilliseconds = _milliseconds;
-  _milliseconds = millisecs;
-  
-  if (_previousMilliseconds > _milliseconds) {     
-    // overflow occurred
-    unsigned long underflow = (0xffffffff - _previousMilliseconds);
-    _sixtyFourth = (underflow + _milliseconds) / _millis_per_16th;
-  } else {
-    _sixtyFourth = _milliseconds / _millis_per_16th;
-  }
+    _previousMilliseconds = _milliseconds;
+    _milliseconds = millisecs;
 
-    unsigned long beat = (_sixtyFourth / 16);
-    int newBar = beat / 4;
-    long newBeat = beat % 3;
-    if (newBar != _position.bar || newBeat != _position.beat) {
-        _position.bar = newBar;
-        _position.beat = newBeat;
-        onPositionChanged(_position);
+    bool positionChanged = false;
+    unsigned long deltaMillis = _milliseconds - _lastBeatMilliseconds;
+    if (deltaMillis >= _millis_per_beat) {
+        _lastBeatMilliseconds = _milliseconds;
+
+        unsigned long deltaBeats = (unsigned long)(deltaMillis / _millis_per_beat);
+        unsigned long deltaBars = deltaBeats / 4;
+        _position.beat += (deltaBeats % 4);
+        _position.bar += deltaBars;
+        if (_position.beat > 4) { 
+            _position.beat = (uint8_t)(1 + ((deltaBeats - 1) % 4));
+            _position.bar += deltaBars + 1;
+        }
+        positionChanged = true;
     }
+    if (positionChanged)
+        onPositionChanged(_position);
 }
 
 SongPosition MidiLoopSequencer::getSongPosition() {
@@ -184,7 +187,21 @@ bool MidiLoopSequencer::getPlayEnable() {
 
 
 void MidiLoopSequencer::setPlayEnable(bool play_enabled) {
-  _en_play = play_enabled;
+  if (_en_play != play_enabled) {
+    _en_play = play_enabled;
+    if (_en_play) {
+        if (_position.bar != 1 || _position.beat != 1) {
+            _position.bar = 1;
+            _position.beat = 1;
+            onPositionChanged(_position);
+        }
+        unsigned long m = millis();
+        _lastBarMilliseconds = m;
+        _lastBeatMilliseconds = m;
+
+        _milliseconds = m;
+    }
+  }
 }
 
 
