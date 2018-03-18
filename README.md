@@ -16,15 +16,17 @@ The firmware is targeting arduino-compatible architectures, focusing on the [Tee
 ## Status
 The project is a **work-in-progress** in a very **early** stage of development; 
 
-| Feature       | ```status``` | 
-| ------------- |-------------|
-| record midi record to SMF on SD| ```working``` |
-| midi read from SMF  | ```not started``` | 
-| looping  | ```not started``` | 
-| TFT emulation on x86_64 | ```basic functions``` | 
-| **TFT indicators** | ```in progress``` | 
-|   * Piano view | ```basic functions``` |
-|   * recording indicators | ```in progress``` |
+| Feature       | status | notes         |
+| ------------- | ------------- | -------------|
+| arduino sketch to record midi record to SMF on SD| ```poc working (needs attention)``` | out-of-date (needs some attention to compile) |
+| midi sequencing | ```poc in progress``` | |
+| TFT emulation on x86_64 | ```basic functions``` | requires [JUCE](https://www.juce.com "JUCE libraries") |
+| arduino sketch with tft menu using rotary encoder with switch | ```poc working, needs integration``` | |
+| midi read from SMF  | ```not started``` | |
+| midi looping | ```not started``` |  |
+| **TFT indicators** | ```in progress``` |  |
+|   * Piano view | ```basic functions``` | |
+|   * recording indicators | ```in progress``` | |
 
 <img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
