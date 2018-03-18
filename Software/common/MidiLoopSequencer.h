@@ -75,6 +75,10 @@ class MidiLoopSequencer
     int _loop_duration_bars = 16;
     unsigned long _milliseconds = 0;
     unsigned long _previousMilliseconds = 0;
+
+    unsigned long _lastBarMilliseconds  = 0;
+    unsigned long _lastBeatMilliseconds = 0;
+
     unsigned long _sixtyFourth = 0;
     unsigned long _previousSixtyFourth = 0;
     unsigned long _lastEventMillis = 0;
@@ -84,6 +88,8 @@ class MidiLoopSequencer
     byte _selectedTrackIndex = 0;
 
     float _beats_per_minute = 0;
+    float _millis_per_bar = 0;
+    float _millis_per_beat = 0;
     float _millis_per_16th = 0;
 
     void allNotesOff();

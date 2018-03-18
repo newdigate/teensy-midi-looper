@@ -19,11 +19,29 @@ public:
         _image = &image;
     }
     
-    inline int write(uint8_t u) {
-        return 0;
+    inline int write(uint8_t c) {
+        if(!gfxFont) { // 'Classic' built-in font
+            
+            if(c == '\n') {                        // Newline?
+                cursor_x  = 0;                     // Reset x to zero,
+                cursor_y += textsize * 8;          // advance y one line
+            } else if(c != '\r') {                 // Ignore carriage returns
+                if(wrap && ((cursor_x + textsize * 6) > _width)) { // Off right?
+                    cursor_x  = 0;                 // Reset x to zero,
+                    cursor_y += textsize * 8;      // advance y one line
+                }
+                drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize);
+                cursor_x += textsize * 6;          // Advance x one char
+            }
+        }
+        return 1;
     }
     
-    inline int write(unsigned char const*, unsigned long) {
+    inline int write(unsigned char const* s, unsigned long c) {
+        for(unsigned long i = 0; i < c; i++) {
+            char c = s[i];
+            print(c);
+        }
         return 0;
     }
     
