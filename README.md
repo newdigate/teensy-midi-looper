@@ -1,4 +1,4 @@
-![Teensy midi looper](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/logo.svg?sanitize=true "Teensy midi looper board")
+# ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/logo.svg?sanitize=true "Teensy midi looper board")
 
 This micro-controller project aims to create a prototype device which can:
 * **record** midi events from a physical midi input port to standard midi files (SMF) on SD-card
