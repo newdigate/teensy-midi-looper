@@ -1,7 +1,7 @@
 #ifndef MidiLoopSequencer_h
 #define MidiLoopSequencer_h
 
-#ifdef build_for_arduino
+#ifdef ARDUINO
 #include "Arduino.h"
 #else
 #include "mock_arduino.h"
