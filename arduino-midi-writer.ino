@@ -24,7 +24,7 @@ namespace std { void __throw_bad_function_call() { Serial.print("throw_bad_funct
 // Teensy 2.0: pin 0
 // Teensy++ 2.0: pin 20
 #ifndef BUILTIN_SDCARD
-#define BUILTIN_SDCARD=10
+#define BUILTIN_SDCARD 10
 #endif
 const int chipSelect = BUILTIN_SDCARD;
 const byte numOctaves = 3;
