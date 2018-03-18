@@ -3,11 +3,11 @@
 
 #ifdef ARDUINO
 #include "Arduino.h"
+#include <Adafruit_GFX.h>    // Core graphics library
 #else
 #include "mock_arduino.h"
-#endif
-
 #include "Adafruit/Adafruit_GFX.h"    // Core graphics library
+#endif
 
 class TFTPianoDisplay
 {
