@@ -15,16 +15,16 @@ matrix:
       env: 
         - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
       compiler:
-        - clang-3.7
-        - valgrind
+        - clang
       before_install:
         - cd Software/arduino/cmake-build-debug
       install:
-          - if [ "$CXX" = "clang++" ] && [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
+          # - if [ "$CXX" = "clang++" ] && [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
           - echo ${PATH}
           - echo ${CXX}
           - ${CXX} --version
           - ${CXX} -v
+          - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
          
           # Download and install recent cmake
           - |
