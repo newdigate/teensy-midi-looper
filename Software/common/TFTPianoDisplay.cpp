@@ -63,7 +63,7 @@ void TFTPianoDisplay::keyUp(byte key) {
     //Serial.printf("before OFF: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, b);
     bitClear( _keysWhichArePressed[byteNumberOfKey], bitNumberOfKey);
 
-    Serial.printf("OFF: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, _keysWhichArePressed[byteNumberOfKey]);
+    //Serial.printf("OFF: %d,%d ::%x\n", byteNumberOfKey, bitNumberOfKey, _keysWhichArePressed[byteNumberOfKey]);
     _shouldUpdatePiano = true;
 }
 
