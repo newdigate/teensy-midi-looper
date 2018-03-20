@@ -19,9 +19,11 @@
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
-// workaround for linking error 
+// workaround for linking error when including c++ std library for teensy 
 // https://forum.arduino.cc/index.php?topic=382211.0
+#if defined(TEENSY)
 namespace std { void __throw_bad_function_call() { Serial.print("throw_bad_function_call"); } }
+#endif
 
 // Teensy 3.5 & 3.6 on-board: BUILTIN_SDCARD
 // Wiz820+SD board: pin 4
