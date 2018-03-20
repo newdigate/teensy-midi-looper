@@ -12,7 +12,7 @@ matrix:
     - language: cpp
       sudo: false
       compiler:
-        - g++
+        - clang
       before_install:
         - cd Software/arduino
         - mkdir cmake-build-debug
