@@ -81,7 +81,10 @@ void setup()
     midi_writer.flush();
 
   sequencer.onKeyChanged += [&] (bool isPressed, byte key, byte velocity, byte channle) {
-      Serial.printf("key released...%d", key);
+      Serial.print("key released:");
+      Serial.print(key);
+      Serial.println();
+    
   };
 
 }
