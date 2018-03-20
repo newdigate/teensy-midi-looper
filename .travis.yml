@@ -9,6 +9,17 @@ matrix:
       script:
         - build_main_platforms
         
+    - language: cpp
+      sudo: false
+      compiler:
+        - g++
+      before_install:
+        - cd Software/arduino
+        - mkdir cmake-build-debug
+        - cd cmake-build-debug
+        - cmake ..
+        - make  
+        
 notifications:
   email:
     on_success: change
