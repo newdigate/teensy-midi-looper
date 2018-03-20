@@ -1,13 +1,15 @@
 #include <vector>
 #include <functional>
 
-#ifdef build_for_arduino
+#if ARDUINO >= 100
 #include "Arduino.h"
+#include <MIDI.h>
 #else
 #include "mock_arduino.h"
+#include "midi/MIDI.h"
 #endif
 
-#include "midi/MIDI.h"
+
 #include "MidiLoopSequencer.h"
 #include "Delegate.h"
 
@@ -125,7 +127,7 @@ void MidiLoopSequencer::updateBarAndBeat(unsigned long millisecs) {
         unsigned long deltaBars = deltaBeats / 4;
         _position.beat += (deltaBeats % 4);
         _position.bar += deltaBars;
-        if (_position.beat > 4) { 
+        if (_position.beat > 4) {
             _position.beat = (uint8_t)(1 + ((deltaBeats - 1) % 4));
             _position.bar += deltaBars + 1;
         }

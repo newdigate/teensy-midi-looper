@@ -1,5 +1,6 @@
-#ifdef build_for_arduino
+#if ARDUINO >= 100
 #include "Arduino.h"
+#include <SD.h>
 #else
 #include "../arduino/mock_arduino.h"
 #include "SD/SD.h"

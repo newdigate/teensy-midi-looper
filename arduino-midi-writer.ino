@@ -2,7 +2,11 @@
 #include <cppQueue.h>
 #include "Software/common/MidiWriter.h"
 #include "Software/common/TFTPianoDisplay.h"
-#include "Software/common/MidiLoopSequencer.h"
+#include "Software/common/MidiLoopSequencer.h" 
+
+#include "Software/common/MidiWriter.cpp"
+#include "Software/common/TFTPianoDisplay.cpp"
+#include "Software/common/MidiLoopSequencer.cpp" 
 
 #define sclk 13  // SCLK can also use pin 14
 #define mosi 11  // MOSI can also use pin 7

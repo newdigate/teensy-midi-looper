@@ -1,7 +1,7 @@
 #ifndef MidiWriter_h
 #define MidiWriter_h
 
-#ifdef ARDUINO
+#if ARDUINO >= 100
 #include "Arduino.h"
 #include <SD.h>
 #else

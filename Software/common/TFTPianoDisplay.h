@@ -1,7 +1,7 @@
 #ifndef TFTPianoDisplay_h
 #define TFTPianoDisplay_h
 
-#ifdef ARDUINO
+#if ARDUINO >= 100
 #include "Arduino.h"
 #include <Adafruit_GFX.h>    // Core graphics library
 #else

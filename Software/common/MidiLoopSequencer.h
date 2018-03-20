@@ -1,7 +1,7 @@
 #ifndef MidiLoopSequencer_h
 #define MidiLoopSequencer_h
 
-#ifdef ARDUINO
+#if ARDUINO >= 100
 #include "Arduino.h"
 #include <MIDI.h>
 #else
