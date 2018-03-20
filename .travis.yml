@@ -23,7 +23,7 @@ matrix:
         #- export CXX=/usr/bin/g++-6       
         - gcc -v && g++ -v && cmake --version
         - cd Software/arduino
-        - mkdir cmake-build-debug
+        #- mkdir cmake-build-debug
         - cd cmake-build-debug
         - cmake ..
         - make
