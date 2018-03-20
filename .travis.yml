@@ -9,6 +9,34 @@ matrix:
       script:
         - build_main_platforms
         
+    - os: linux
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+      before_install:
+        - cd Software/arduino/cmake-build-debug
+        - export CXX="clang++" CC="clang"    
+        - cmake ..
+        - make      
+      addons:
+        apt:
+          packages:
+            - g++-5
+          sources: &sources
+            - llvm-toolchain-precise-3.8
+            - ubuntu-toolchain-r-test
+            
+    - os: linux
+      env: COMPILER_NAME=clang CXX=clang++-3.8 CC=clang-3.8
+      before_install:
+        - cd Software/arduino/cmake-build-debug
+        - export CXX="clang++" CC="clang"    
+        - cmake ..
+        - make      
+      addons:
+        apt:
+          packages:
+            - clang-3.8
+          sources: *sources
+          
     - dist: trusty
       sudo: require
       language: cpp
@@ -26,6 +54,7 @@ matrix:
             export PATH=${DEPS_DIR}/cmake/bin:${PATH}
           fi
         - cd Software/arduino/cmake-build-debug
+        - export CXX="clang++" CC="clang"    
         - cmake ..
         - make
       install:
