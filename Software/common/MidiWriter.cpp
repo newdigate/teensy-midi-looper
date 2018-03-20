@@ -125,7 +125,9 @@ void MidiWriter::flush() {
   if (_bufferPos == 0) return;
   File data = SD.open(_filename, FILE_WRITE);
   if (!data) {
-    Serial.printf("Not able to open %s\n", _filename);
+    Serial.print("Not able to open ");
+    Serial.print(filename);
+    Serial.print("\n");
     return;
   }
   
