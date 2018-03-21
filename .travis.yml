@@ -9,64 +9,13 @@ matrix:
       script:
         - build_main_platforms
         
-    - os: linux
+    - os: osx
       language: cpp
-      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
       before_install:
         - cd Software/arduino/cmake-build-debug
-        #- export CXX="clang++" CC="clang"    
         - cmake ..
         - make      
-      addons:
-        apt:
-          packages:
-            - g++-5
-          sources: &sources
-            - llvm-toolchain-precise-3.8
-            - ubuntu-toolchain-r-test
-            
-    - os: linux
-      language: cpp
-      env: COMPILER_NAME=clang CXX=clang++-3.8 CC=clang-3.8
-      before_install:
-        - cd Software/arduino/cmake-build-debug
-        #- export CXX="clang++" CC="clang"    
-        - cmake ..
-        - make      
-      addons:
-        apt:
-          packages:
-            - clang-3.8
-          sources: *sources
-          
-    - dist: trusty
-      sudo: require
-      language: cpp
-      env: 
-        - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
-      compiler:
-        - clang
-      before_install:
-        # Download and install recent cmake
-        - |
-          if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
-            CMAKE_URL="http://www.cmake.org/files/v3.11/cmake-3.11.0-Linux-x86_64.tar.gz"
-            mkdir -p ${DEPS_DIR}/cmake
-            travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
-            export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-          fi
-        - cd Software/arduino/cmake-build-debug
-        - export CXX="clang++" CC="clang"    
-        - cmake ..
-        - make
-      install:
-          # - if [ "$CXX" = "clang++" ] && [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
-          - echo ${PATH}
-          - echo ${CXX}
-          - ${CXX} --version
-          - ${CXX} -v
-          - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
-          
+
 notifications:
   email:
     on_success: change
