@@ -9,19 +9,19 @@ matrix:
       script:
         - build_main_platforms
         
-    - os: osx
-      language: cpp
-      before_install:  
+    #- os: osx
+      #language: cpp
+      #before_install:  
         #install brew
-        - /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        - brew info llvm
-        - brew install --with-toolchain llvm
-        - brew update
-        - brew upgrade 
-        - cd Software/arduino/cmake-build-debug
-        - cmake ..
-      install:
-        travis_wait 60 make
+        #- /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        #- brew info llvm
+        #- brew install --with-toolchain llvm
+        #- brew update
+        #- brew upgrade 
+        #- cd Software/arduino/cmake-build-debug
+        #- cmake ..
+      #install:
+        #travis_wait 60 make
         
 
 notifications:
