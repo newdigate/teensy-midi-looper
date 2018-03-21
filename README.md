@@ -21,8 +21,8 @@ The project is a **work-in-progress** in a very **early** stage of development;
 | Feature       | status | notes         |
 | ------------- |:-------------:| -------------|
 | **arduino sketches**| | |
-| -- record midi record to SMF on SD| ```tested``` | out-of-date (needs some attention to compile) |
-| -- tft menu using rotary encoder with switch | ```poc needs integration``` | using arduino menu library |
+| -- record midi record to SMF on SD| ```tested``` | compiles on teensyduino and arduino (only esp8266) |
+| -- tft menu using rotary encoder with switch | ```proof-of-concept``` | using ```arduino menu library``` |
 | midi sequencing | ```poc in progress``` | |
 | TFT emulation on x86_64 | ```basic``` | requires [JUCE](https://www.juce.com "JUCE libraries") |
 | midi read from SMF  | ```not started``` | |
