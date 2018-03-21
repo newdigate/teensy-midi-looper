@@ -15,12 +15,13 @@ matrix:
         #install brew
         - /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         - brew info llvm
-        - travis_wait 60 brew install --with-toolchain llvm
+        - brew install --with-toolchain llvm
         - brew update
         - brew upgrade 
         - cd Software/arduino/cmake-build-debug
         - cmake ..
-        - make 
+      install:
+        travis_wait 60 make
         
 
 notifications:
