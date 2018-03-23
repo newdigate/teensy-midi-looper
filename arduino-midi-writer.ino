@@ -21,7 +21,7 @@
 
 // workaround for linking error when including c++ std library for teensy 
 // https://forum.arduino.cc/index.php?topic=382211.0
-#if defined __MK20DX256__ || defined __MKL26Z64__ || defined __MK64FX512__ || defined __MK66FX1M0__
+#if defined __MK20DX256__ || defined __MKL26Z64__ || defined __MK64FX512__ || defined __MK66FX1M0__ || __SAM3X8E__
 namespace std { void __throw_bad_function_call() { Serial.print("throw_bad_function_call"); } }
 #endif
 
