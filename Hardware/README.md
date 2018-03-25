@@ -1,4 +1,4 @@
-# Teensy midi looper - Hardware
+# Hardware
 
 ## getting started
 ### basic setup
