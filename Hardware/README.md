@@ -24,7 +24,7 @@
    ![ST7735 16bit TFT LCD breadboard view](https://github.com/newdigate/teensy-midi-looper/blob/master/Hardware/svg/st7735.svg?sanitize=true "ST7735 16bit TFT LCD display")
    
   </td>
-    <td style='valign:top'>
+    <td style="valign:top">
      ST7735 <br/> 16bit TFT LCD display <br/> 128 x 128 pixels
     </td>
     <td>
