@@ -32,11 +32,8 @@
    ![Hobbytronics.co.uk breadboard view](https://github.com/newdigate/teensy-midi-looper/blob/master/Hardware/svg/hobbytronics-midi-breakout.svg?sanitize=true "Hobbytronics.co.uk midi breakout")
    
   </td>
-    <td>
-     
-     midi breakout <br/>
-     Hobbytronics.co.uk
-     
+    <td>     
+midi breakout Hobbytronics.co.uk  
     </td>
  </tr>
  
