@@ -19,7 +19,7 @@
  
  
   <tr>
-  <td style='valign:top'>
+  <td style="valign:top">
    
    ![ST7735 16bit TFT LCD breadboard view](https://github.com/newdigate/teensy-midi-looper/blob/master/Hardware/svg/st7735.svg?sanitize=true "ST7735 16bit TFT LCD display")
    
