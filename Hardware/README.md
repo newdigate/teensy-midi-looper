@@ -12,6 +12,9 @@
     <td>
      Teensy 3.6 <br/> microprocessor
     </td>
+    <td>
+      https://www.pjrc.com/teensy/
+    </td>
  </tr>
  
  
@@ -24,6 +27,8 @@
     <td>
      ST7735 <br/> 16bit TFT LCD display <br/> 128 x 128 pixels
     </td>
+    <td>
+   </td>
  </tr>
  
    <tr>
@@ -34,6 +39,9 @@
   </td>
     <td>     
 midi breakout <br/> by Hobbytronics.co.uk  
+    </td>
+    <td>
+ http://www.hobbytronics.co.uk/audio-midi/midi-breakout
     </td>
  </tr>
  
