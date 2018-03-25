@@ -1,7 +1,7 @@
 # Teensy midi looper - Hardware
 ![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
 
-![ILI9341 TFT breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg//tft.ili9341-2.8in.display.breadboard.svg?sanitize=true "ILI9341 TFT 2.8' display")
+![minimal setup breadboard view](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/TeensyMidiLooper-Minimal.png "minimal setup breadbord")
 
 # PCB design, iteration 1
 ## Requirements
