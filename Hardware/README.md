@@ -38,7 +38,7 @@
  <tr>
  
    <td valign=top>     
-   midi breakout <br/> by Hobbytronics.co.uk  
+   Hobbytronics midi breakout 
    </td>
      
    <td  valign=top>
