@@ -22,7 +22,7 @@
    
   </td>
     <td>
-     ST7735 16bit TFT LCD display
+     ST7735 <br/> 16bit TFT LCD display <br/> 128 x 128 pixels
     </td>
  </tr>
  
@@ -33,7 +33,7 @@
    
   </td>
     <td>     
-midi breakout Hobbytronics.co.uk  
+midi breakout <br/> by Hobbytronics.co.uk  
     </td>
  </tr>
  
@@ -42,12 +42,3 @@ midi breakout Hobbytronics.co.uk
 
 ## breadboard design 
 ![minimal setup breadboard view](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/TeensyMidiLooper-Minimal.png "minimal setup breadbord")
-
-
-  * Teensy 3.6 microcontroller
-  * Connectors
-    * Midi in/out
-    * TFT display
-    * rotary encoder / switch
-    * possibly use neopixels rings as indicator for rotary encoder.
-  * 2 tactile switches (play/stop, record enabled)
