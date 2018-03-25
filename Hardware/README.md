@@ -4,43 +4,50 @@
 ### basic setup
 <table>
  <tr>
-  <td>
+   <td valign="top">
+     Teensy 3.6 <br/> microprocessor
+   </td>
+  
+   <td>
    
-   ![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
+![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
    
   </td>
-    <td valign=top>
-     Teensy 3.6 <br/> microprocessor
-    </td>
-    <td valign=top>
-      https://www.pjrc.com/teensy/
-    </td>
- </tr>
+
+  <td valign=top>
+    https://www.pjrc.com/teensy/
+  </td>
+  </tr>
  
  
   <tr>
-  <td  valign=top>
+    <td valign=top>
+    ST7735  
+    </td>
+   <td  valign=top>
    
    ![ST7735 16bit TFT LCD breadboard view](https://github.com/newdigate/teensy-midi-looper/blob/master/Hardware/svg/st7735.svg?sanitize=true "ST7735 16bit TFT LCD display")
    
-  </td>
-    <td valign=top>
-     ST7735 <br/> 16bit TFT LCD display <br/> 128 x 128 pixels
-    </td>
-    <td  valign=top>
-    </td>
+   </td>
+
+   <td  valign=top>
+      16bit TFT LCD display <br/> 128 x 128 pixels
+   </td>
  </tr>
  
-   <tr>
-     <td  valign=top>
+ <tr>
+ 
+   <td valign=top>     
+   midi breakout <br/> by Hobbytronics.co.uk  
+   </td>
+     
+   <td  valign=top>
    
    ![Hobbytronics.co.uk breadboard view](https://github.com/newdigate/teensy-midi-looper/blob/master/Hardware/svg/hobbytronics-midi-breakout.svg?sanitize=true "Hobbytronics.co.uk midi breakout")
    
   </td>
-    <td valign=top>     
-midi breakout <br/> by Hobbytronics.co.uk  
-    </td>
-    <td  valign=top>
+
+  <td  valign=top>
  http://www.hobbytronics.co.uk/audio-midi/midi-breakout
     </td>
  </tr>
