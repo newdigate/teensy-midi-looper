@@ -1,5 +1,4 @@
 # Teensy midi looper - Hardware
-![Teensy 3.6 breadboard view](https://raw.githubusercontent.com/newdigate/arduino-midi-writer/master/Hardware/svg/teensy3.6_breadboard.svg?sanitize=true "Teensy 3.6 microcontroller board")
 
 ## breadboard design 
  * minimal viable product
@@ -13,5 +12,3 @@
     * rotary encoder / switch
     * possibly use neopixels rings as indicator for rotary encoder.
   * 2 tactile switches (play/stop, record enabled)
-
-
