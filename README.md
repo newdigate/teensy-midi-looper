@@ -5,8 +5,7 @@ ARM cortex M4 micro-controller project which aims to produce a prototype device 
 * **play** smf files from SD-card to a physical midi output port
 * **display** midi input & output activity, indicators (tempo, key, signature, position) on small color TFT display 
 
-The firmware code in this project is targeting a subset of arduino-compatible architectures 
-* specifically [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
+The firmware code in this project is targeting [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
   * features a 32bit 180 MHz ARM Cortex-M4 processor
   * eco-system of source code libraries are available from arduino/teensy communities 
 
