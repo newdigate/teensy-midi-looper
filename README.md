@@ -1,32 +1,46 @@
 # ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper") [![Join the chat at https://gitter.im/newdigate/teensy-midi-looper](https://badges.gitter.im/newdigate/teensy-midi-looper.svg)](https://gitter.im/newdigate/teensy-midi-looper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Travis CI status](https://travis-ci.org/newdigate/teensy-midi-looper.svg?branch=master)](https://travis-ci.org/newdigate/teensy-midi-looper)
 
-ARM cortex M4 micro-controller project which aims to produce prototype device and firmware to
+## Teensy 3.6 32-bit ARM cortex M4 micro-controller
+### prototype device and firmware
 * **record** midi events from a physical midi input port to standard midi files (SMF) on SD-card
 * **play** smf files from SD-card to a physical midi output port
 * **display** midi input & output activity, indicators (tempo, key, signature, position) on small color TFT display 
 
-The firmware code in this project is targeting [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
-  * features a 32bit 180 MHz ARM Cortex-M4 processor
+This firmware is targeting [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
+  * features a 32-bit 180 MHz ARM Cortex-M4 processor
   * eco-system of source code libraries are available from arduino/teensy communities 
 
 ![minimal setup breadboard view](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/TeensyMidiLooper-Minimal.png "minimal setup breadbord")
-
 
 ## Status
 The project is a **work-in-progress** in a very **early** stage of development; 
 
 | Feature       | status | notes         |
 | ------------- |:-------------:| -------------|
-| **arduino sketches**| | |
-| <ul><li>record midi to SMF on SD</li></ul> | ```tested``` | compiles on:<ul><li>teensyduino</li><li>due</li><li>esp8266</li></ul> |
-| <ul><li>tft menu using rotary encoder with switch</li></ul>  | ```proof-of-concept``` | using ```arduino menu library``` |
-| midi sequencing | ```poc in progress``` | |
-| TFT emulation on x86_64 | ```basic``` | requires [JUCE](https://www.juce.com "JUCE libraries") |
-| midi read from SMF  | ```not started``` | |
-| midi looping | ```not started``` |  |
-| **TFT indicators** | ```in progress``` |  |
-|   * Piano view | ```basic functions``` | |
-|   * recording indicators | ```in progress``` | |
+| Breadboard view | ```in progress``` | Using fritzing |
+| PCB | ```not started```| |
+| Enclosure | ```not started```| decide form factor | 
+
+## Sketches
+|        | status | notes         |
+| ------------- |:-------------:| -------------|
+| record midi to SMF on SD | ```works``` | compiles on:<ul><li>teensyduino</li><li>due</li><li>esp8266</li></ul> |
+| tft menu using rotary encoder with switch | ```proof-of-concept``` | using ```arduino menu library``` |
+
+## Work in progress 
+|                 | notes         |
+| --------------- | ------------- |
+| midi sequencing |               |
+| TFT indicators |   |
+|   * Piano view | ```basic``` | 
+|   * recording indicators | ```blinking dot with filename ``` | 
+| emulation on x86_64 | basic TFT emulation works, requires [JUCE](https://www.juce.com "JUCE libraries") |
+
+## To-do
+|                 | notes         |
+| --------------- | ------------- |
+| midi read from SMF  |   |
+| midi looping |  |
 
 <img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
