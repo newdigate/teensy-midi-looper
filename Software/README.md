@@ -1,10 +1,13 @@
+# ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper") 
+
+## software
 <img src="docs/images/tft_emulator.png" width="200">
 
 This folder contains source code for: 
 * firm-ware of the ```teensy-midi-looper``` device 
 * simulation code intended for development, debugging and testing on desktop computer  
 
-#### structure
+### folder structure
 ```arduino-midi-writer/Software```
   * ```arduino```
     * c++ abstractions and implementations which allow compiling arduino code for x86_64.
@@ -16,11 +19,11 @@ This folder contains source code for:
   * ```x86```
     * application with test harness for x86_64 architecture
 
-#### compatibilty for x86 / x64 / arm 
+### compatibilty for x86 / x64 / arm 
 I am writing these c++ classes with compatibility for both x86 and arduino/teensy to allow me to debug the code without needing to upload the compiled binaries a microcontroller to test; 
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
-#### build, upload to teensy
+### build, upload to teensy
 * software requirements
   * Arduino
   * Teensyduino
@@ -39,7 +42,7 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
   * select correct serial port for teensy, under tools menu in Arduino 
   * click ```program``` button
 
-#### build, run and test on x86/x64
+### build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
   * x86_64 build system uses `cmake` https://cmake.org/
     * each directory contains a CMakeLists.txt file
@@ -80,7 +83,7 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   ```
   ./arduino_midi_writer
   ```
-#### classes
+### classes
   * MidiWriter.h
     * write simple midi events to SMF on SD card 
     * currently saves single track SMF (SMF type 0)
@@ -89,7 +92,7 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   * MidiLoopSequencer.h (work in progress)
     * manage looping / recording / playing / event callbacks
   
-#### dependencies
+### dependencies
 * arduino midi library 
   * https://github.com/PaulStoffregen/MIDI
 * cppQueue 
