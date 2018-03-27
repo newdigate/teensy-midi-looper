@@ -13,7 +13,7 @@ This firmware is targeting [Teensy 3.6](https://www.pjrc.com/store/teensy36.html
 <img src="https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/TeensyMidiLooper-Minimal.png" width="500px" title="minimal setup breadbord"/>
 
 ## Status
-The project is a **work-in-progress** in a very **early** stage of development; 
+The project is a **work-in-progress** in a very **early** stage of development; I have working prototype using breadboard, as diagram above, records successfully to smf midi file on sd card which can be read from midi players and daws.
 
 | Feature       | status | notes         |
 | ------------- |:-------------:| -------------|
