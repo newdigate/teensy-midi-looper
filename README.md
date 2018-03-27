@@ -16,19 +16,19 @@ This firmware is targeting [Teensy 3.6](https://www.pjrc.com/store/teensy36.html
 The project is a **work-in-progress** in a very **early** stage of development; I have working prototype using breadboard, as diagram above, records successfully to smf midi file on sd card which can be read from midi players and daws.
 
 | Feature       | status | notes         |
-| ------------- |:-------------:| -------------|
+| ------------- |-------------| -------------|
 | Breadboard view | ```in progress``` | Using fritzing |
 | PCB | ```not started```| |
 | Enclosure | ```not started```| decide form factor | 
 
 ## Sketches
-|        | status | notes         |
-| ------------- |:-------------:| -------------|
+|        |  |          |
+| ------------- |-------------| -------------|
 | record midi to SMF on SD | ```works``` | compiles on:<ul><li>teensyduino</li><li>due</li><li>esp8266</li></ul> |
 | tft menu using rotary encoder with switch | ```proof-of-concept``` | using ```arduino menu library``` |
 
 ## Work in progress 
-|                 | notes         |
+|                 |          |
 | --------------- | ------------- |
 | midi sequencing |               |
 | TFT indicators |   |
@@ -37,7 +37,7 @@ The project is a **work-in-progress** in a very **early** stage of development; 
 | emulation on x86_64 | basic TFT emulation works, requires [JUCE](https://www.juce.com "JUCE libraries") |
 
 ## To-do
-|                 | notes         |
+|                 |           |
 | --------------- | ------------- |
 | midi read from SMF  |   |
 | midi looping |  |
