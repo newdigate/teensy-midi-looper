@@ -20,6 +20,17 @@ This folder contains source code for:
 I am writing these c++ classes with compatibility for both x86 and arduino/teensy to allow me to debug the code without needing to upload the compiled binaries a microcontroller to test; 
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
+#### build, upload to teensy
+software requirements
+* Arduino
+* Teensyduino
+* Arduino libraries
+  * MIDI Library
+  * Queue
+  * SD
+  * Adafruit GFX Library
+  * Adafruit ST7735 Library
+  * Encoder
 
 #### build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
