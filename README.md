@@ -25,30 +25,15 @@ The project is a **work-in-progress** in a very **early** stage of development; 
 |        |  |          |
 | ------------- |-------------| -------------|
 | record midi to SMF on SD | ```works``` | compiles on:<ul><li>teensyduino</li><li>due</li><li>esp8266</li></ul> |
-| tft menu using rotary encoder with switch | ```proof-of-concept``` | using ```arduino menu library``` |
 
-## Work in progress 
-|                 |          |
-| --------------- | ------------- |
-| midi sequencing |               |
-| TFT indicators |   |
-|   * Piano view | ```basic``` | 
-|   * recording indicators | ```blinking dot with filename ``` | 
-| emulation on x86_64 | basic TFT emulation works, requires [JUCE](https://www.juce.com "JUCE libraries") |
-
-## To-do
-|                 |           |
-| --------------- | ------------- |
-| midi read from SMF  |   |
-| midi looping |  |
-
-<img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
 ## Software development
  * requirements
    * Arduino
    * Teensyduino
  * information about **compiling** and **debugging** software here: [software](Software)
+
+<img src="Software/docs/images/tft_emulator.png" width="200px"/>
 
 ## Prototype hardware requirements / compatibity:
   * teensy 3.6 microcontroller board 
@@ -79,7 +64,21 @@ more information about **hardware prototyping** and **pcb design** here: [hardwa
   * tempo detection
   * ILI9341 320x240 TFT color display integration
   * menu system
-  
+
+|                 |          |
+| --------------- | ------------- |
+| midi sequencing |               |
+| TFT indicators |   |
+|   * Piano view | ```basic``` | 
+|   * recording indicators | ```blinking dot with filename ``` | 
+| emulation on x86_64 | basic TFT emulation works, requires [JUCE](https://www.juce.com "JUCE libraries") |
+
+## To-do
+|                 |           |
+| --------------- | ------------- |
+| midi read from SMF  |   |
+| midi looping |  |
+ 
 ## Why?
 I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators on a cheep 2" TFT display: tempo; song position; midi channel in/out activity; keyboard view; play/stop/recording;
 
