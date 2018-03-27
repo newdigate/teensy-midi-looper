@@ -21,16 +21,23 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
 
 (I am thinking about implementing some form of mock tft display for use when debugging locally on my x86 platform, perhaps using JUCE)  
 #### build, upload to teensy
-software requirements
-* Arduino
-* Teensyduino
-* Arduino libraries
-  * MIDI Library
-  * Queue
-  * SD
-  * Adafruit GFX Library
-  * Adafruit ST7735 Library
-  * Encoder
+* software requirements
+  * Arduino
+  * Teensyduino
+  * Arduino libraries
+    * MIDI Library
+    * Queue
+    * SD
+    * Adafruit GFX Library
+    * Adafruit ST7735 Library
+    * Encoder
+* compile
+  * open arduino-midi-writer.ino in Arduino app
+  * select teensy 3.6 board under tools menu in Arduino
+* upload  
+  * plug your teensy into your PC via usb cable, 
+  * select correct serial port for teensy, under tools menu in Arduino 
+  * click ```program``` button
 
 #### build, run and test on x86/x64
 * You need a x86/x64 compatible c++11 toolchain installed
