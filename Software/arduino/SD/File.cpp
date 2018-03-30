@@ -18,31 +18,65 @@
 /* for debugging file open/close leaks
    uint8_t nfilecount=0;
 */
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
+std::streampos fileSize( const char* filePath ){
+    
+    std::streampos fsize = 0;
+    std::ifstream file( filePath, std::ios::binary );
+    
+    fsize = file.tellg();
+    file.seekg( 0, std::ios::end );
+    fsize = file.tellg() - fsize;
+    file.close();
+    
+    return fsize;
+}
+
+
+
+//File::File(SdFile f, const char *n) {
 File::File(SdFile f, const char *n) {
-  // oh man you are kidding me, new() doesnt exist? Ok we do it by hand!
-  _file = (SdFile *)malloc(sizeof(SdFile)); 
-  if (_file) {
-    memcpy(_file, &f, sizeof(SdFile));
+    std::string actualFileName = SDClass::_mockSDCardLocation + std::string(n);
+    cout << actualFileName;
+    mockFile.open(actualFileName);
+    _size = fileSize(actualFileName.c_str());
+}
+
+File::File(const char *n) {
+  //_file = (SdFile *)malloc(sizeof(SdFile));
     
-    strncpy(_name, n, 12);
-    _name[12] = 0;
+    std::string actualFileName = SDClass::_mockSDCardLocation + std::string(n);
+    cout << actualFileName;
+    mockFile.open(actualFileName);
+    _size = fileSize(actualFileName.c_str());
     
-    /* for debugging file open/close leaks
-       nfilecount++;
-       Serial.print("Created \"");
-       Serial.print(n);
-       Serial.print("\": ");
-       Serial.println(nfilecount, DEC);
-    */
-  }
+//  if (_file) {
+//    memcpy(_file, &f, sizeof(SdFile));
+//
+//    strncpy(_name, n, 12);
+//    _name[12] = 0;
+//
+//    /* for debugging file open/close leaks
+//       nfilecount++;
+//       Serial.print("Created \"");
+//       Serial.print(n);
+//       Serial.print("\": ");
+//       Serial.println(nfilecount, DEC);
+//    */
+//  }
 }
 
 File::File(void) {
   _file = 0;
   _name[0] = 0;
+    _size = 0;
   //Serial.print("Created empty file object");
 }
+
 
 // returns a pointer to the file name
 char *File::name(void) {
@@ -65,6 +99,11 @@ int File::write(const uint8_t *buf, size_t size) {
     //setWriteError();
     return 0;
   }
+    
+    _size += size;
+    //char * memblock = new char[size];
+    char * memblock = (char *)buf;
+   mockFile.write(memblock, size);
   _file->clearWriteError();
   t = _file->write(buf, size);
   if (_file->getWriteError()) {
@@ -84,24 +123,24 @@ int File::peek() {
 }
 
 int File::read() {
-  if (_file) 
-    return _file->read();
-  return -1;
+    char p[2];
+    mockFile.read(p, 2);
+    return p[0] << 8 | p[1];
 }
 
 // buffered read for more efficient, high speed reading
 int File::read(void *buf, uint16_t nbyte) {
-  if (_file) 
-    return _file->read(buf, nbyte);
-  return 0;
+    char *bbb = new char[nbyte];
+    mockFile.read(bbb, nbyte);
+    return nbyte;
 }
 
 int File::available() {
-  if (! _file) return 0;
+    if (! mockFile.is_open()) return 0;
+    uint32_t p = position();
+    uint32_t n = size() - p;
 
-  uint32_t n = size() - position();
-
-  return n > 0X7FFF ? 0X7FFF : n;
+    return n > 0X7FFF ? 0X7FFF : n;
 }
 
 void File::flush() {
@@ -116,16 +155,18 @@ bool File::seek(uint32_t pos) {
 }
 
 uint32_t File::position() {
-  if (! _file) return -1;
-  return _file->curPosition();
+  if (! mockFile.is_open()) return -1;
+  return mockFile.tellp();
 }
 
 uint32_t File::size() {
-  if (! _file) return 0;
-  return _file->fileSize();
+    return _size;
 }
 
 void File::close() {
+  if (mockFile.is_open())
+      mockFile.close();
+    
   if (_file) {
     _file->close();
     free(_file); 

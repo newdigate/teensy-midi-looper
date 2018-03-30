@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.9)
+
+SET(CMAKE_CXX_FLAGS_DEBUG "-O0")
+SET(CMAKE_C_FLAGS_DEBUG "-O0")
+
 project(arduino_abstraction C CXX)
 
 set(CMAKE_CXX_STANDARD 11)

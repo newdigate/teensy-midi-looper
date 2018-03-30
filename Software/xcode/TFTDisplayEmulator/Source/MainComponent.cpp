@@ -35,7 +35,7 @@
 #include "../../../arduino/mock_arduino.h"
 //==============================================================================
 /*
-    This component lives inside our window, and this is where you should put all
+    This component lives inside our window, and this is where you sh	ould put all
     your controls and content.
 */
 

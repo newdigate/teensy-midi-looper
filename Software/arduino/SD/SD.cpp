@@ -49,11 +49,15 @@
   level (e.g. open).
 
  */
-
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
 #include "SD.h"
-
+#include <dirent.h>
 namespace SDLib {
 
+const std::string SDClass::_mockSDCardLocation = "/Users/johnsmith/Development/sdcard/";
+    
 // Used by `getNextPathComponent`
 #define MAX_COMPONENT_LEN 12 // What is max length?
 #define PATH_COMPONENT_BUFFER_LEN MAX_COMPONENT_LEN+1
@@ -413,67 +417,10 @@ SdFile SDClass::getParentDir(const char *filepath, int *index) {
 
 
 File SDClass::open(const char *filepath, uint8_t mode) {
-  /*
-
-	 Open the supplied file path for reading or writing.
-
-	 The file content can be accessed via the `file` property of
-	 the `SDClass` object--this property is currently
-	 a standard `SdFile` object from `sdfatlib`.
-
-	 Defaults to read only.
-
-	 If `write` is true, default action (when `append` is true) is to
-	 append data to the end of the file.
-
-	 If `append` is false then the file will be truncated first.
-
-	 If the file does not exist and it is opened for writing the file
-	 will be created.
-
-	 An attempt to open a file for reading that does not exist is an
-	 error.
-
-   */
-
-  int pathidx;
-
-  // do the interative search
-  SdFile parentdir = getParentDir(filepath, &pathidx);
-  // no more subdirs!
-
-  filepath += pathidx;
-
-  if (! filepath[0]) {
-	// it was the directory itself!
-	return File(parentdir, "/");
-  }
-
-  // Open the file itself
-  SdFile file;
-
-  // failed to open a subdir!
-  if (!parentdir.isOpen())
-	return File();
-
-  // there is a special case for the Root directory since its a static dir
-  if (parentdir.isRoot()) {
-	if ( ! file.open(root, filepath, mode)) {
-	  // failed to open the file :(
-	  return File();
-	}
-	// dont close the root!
-  } else {
-	if ( ! file.open(parentdir, filepath, mode)) {
-	  return File();
-	}
-	// close the parent
-	parentdir.close();
-  }
-
-  if (mode & (O_APPEND | O_WRITE)) 
-	file.seekSet(file.fileSize());
-  return File(file, filepath);
+    File file = File(filepath);
+    return file;
+    //if (mode & (O_APPEND | O_WRITE))
+     //   file.seek(file.size());
 }
 
 
@@ -521,7 +468,7 @@ File SDClass::open(char *filepath, uint8_t mode) {
 //   */
 //  file.close();
 //}
-
+ 
 
 bool SDClass::exists(const char *filepath) {
   /*
@@ -529,9 +476,13 @@ bool SDClass::exists(const char *filepath) {
 	 Returns true if the supplied file path exists.
 
    */
-  return walkPath(filepath, root, callback_pathExists);
+    
+    std::string path = _mockSDCardLocation + std::string(filepath);
+    fstream file(path.c_str());
+    return (bool)file;
+//  return walkPath(filepath, root, callback_pathExists);
 }
-
+    
 
 //boolean SDClass::exists(char *filepath, SdFile& parentDir) {
 //  /*

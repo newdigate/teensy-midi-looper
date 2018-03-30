@@ -21,8 +21,6 @@
 #define HardwareSerial_h
 
 #include <inttypes.h>
-#include <streambuf>
-#include <vector>
 #include "cppQueue/cppQueue.h"
 #include "Teensy/Print.h"
 

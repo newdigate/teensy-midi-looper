@@ -22,6 +22,10 @@
 #include "utility/SdFat.h"
 #include "utility/SdFatUtil.h"
 
+#include <iostream>
+#include <fstream>
+using namespace std;
+
 #define FILE_READ O_READ
 #define FILE_WRITE (O_READ | O_WRITE | O_CREAT)
 namespace SDLib {
@@ -30,9 +34,11 @@ class File {
  private:
   char _name[13]; // our name
   SdFile *_file;  // underlying file pointer
-
+    uint32_t _size;
 public:
-  File(SdFile f, const char *name);     // wraps an underlying SdFile
+    std::fstream mockFile = std::fstream();
+  File(const char *name);
+  File(SdFile f, const char *n); // wraps an underlying SdFile
   File(void);      // 'empty' constructor
   virtual int write(uint8_t);
   virtual int write(const uint8_t *buf, size_t size);
@@ -60,11 +66,14 @@ private:
   Sd2Card card;
   SdVolume volume;
   SdFile root;
-  
+
   // my quick&dirty iterator, should be replaced
   SdFile getParentDir(const char *filepath, int *indx);
 public:
-  // This needs to be called to set up the connection to the SD card
+
+    static const std::string _mockSDCardLocation;
+  
+    // This needs to be called to set up the connection to the SD card
   // before other methods are used.
   bool begin(uint8_t csPin = 0);
   bool begin(uint32_t clock, uint8_t csPin);
