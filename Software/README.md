@@ -57,7 +57,7 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
     $cd arduino
     $mkdir cmake-build-debug
     $cd cmake-build-debug/
-    cmake ..
+    cmake -DCMAKE_BUILD_TYPE=Debug ..
     make
     ```
     * build common library (libteensy_midi_common.a)
@@ -65,15 +65,15 @@ I am writing these c++ classes with compatibility for both x86 and arduino/teens
     $cd ../../common/
     $mkdir cmake-build-debug
     $cd cmake-build-debug/
-    cmake ..
+    cmake -DCMAKE_BUILD_TYPE=Debug ..
     make
     ```  
-    * build x86/x64 application (libarduino_abstraction.a)
+    * build x86_64 test application
     ```
     $cd ../../x86/
     $mkdir cmake-build-debug
     $cd cmake-build-debug/
-    cmake ..
+    cmake -DCMAKE_BUILD_TYPE=Debug .. 
     make
     ```  
 * to run
