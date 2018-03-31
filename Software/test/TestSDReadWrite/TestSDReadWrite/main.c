@@ -12,6 +12,7 @@
 #include "../../../arduino/SD/SD.h"
 int main(int argc, const char * argv[]) {
     initialize_mock_arduino();
+    SDClass::setSDCardFolderPath("/Users/johnsmith/Development/sdcard/");
     SD.begin();
     bool exists = SD.exists("hello.txt");
     if (exists){

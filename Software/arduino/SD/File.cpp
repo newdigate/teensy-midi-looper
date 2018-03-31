@@ -31,7 +31,7 @@ std::streampos File::fileSize( const char* filePath ){
 }
 
 File::File(SdFile f, const char *n) {
-    std::string actualFileName = SDClass::getSDCardFolderPath() + std::string(n);
+    std::string actualFileName = SDClass::getSDCardFolderPath() + std::string("/") + std::string(n);
     cout << actualFileName;
     mockFile.open(actualFileName);
     _size = fileSize(actualFileName.c_str());
@@ -39,7 +39,7 @@ File::File(SdFile f, const char *n) {
 }
 
 File::File(const char *n) {
-    std::string actualFileName = SDClass::getSDCardFolderPath() + std::string(n);
+    std::string actualFileName = SDClass::getSDCardFolderPath() + std::string("/") + std::string(n);
     cout << actualFileName;
     mockFile.open(actualFileName);
     _size = fileSize(actualFileName.c_str());

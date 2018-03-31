@@ -19,7 +19,7 @@ MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPo
 
 void MidiLoopSequencer::initialize() {
     _midi_port->begin(MIDI_CHANNEL_OMNI);
-    _beats_per_minute = 120.0;
+    _beats_per_minute = 120.0;	
     float seconds_per_beat = 60 / _beats_per_minute;
     _millis_per_beat = seconds_per_beat * 1000;
     _millis_per_bar = _millis_per_beat * 4;
@@ -27,12 +27,16 @@ void MidiLoopSequencer::initialize() {
     _milliseconds = 0;
     _previousMilliseconds = 0;
     _lastEventMillis = 0;
-    char *defaultPath = const_cast<char *>("default/");
+    
+    char *defaultPath = const_cast<char *>("default");
     char *defaultFilename = const_cast<char *>("trk");
     setPath(defaultPath);
     _fileName = defaultFilename;
-    std::string fileName = std::string(_path) + std::string(_fileName);
-    midiWriter.setFilename(fileName.c_str());
+    
+    char *formatted = new char[200];
+    sprintf(formatted, "%s/%s", defaultPath, defaultFilename);
+    
+    midiWriter.setFilename(formatted);
 }
 
 void MidiLoopSequencer::tick(unsigned long millisecs) {

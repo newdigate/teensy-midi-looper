@@ -474,8 +474,9 @@ bool SDClass::exists(const char *filepath) {
 
    */
     
-    std::string path = SDClass::_sdCardFolderLocation + "/" + std::string(filepath);
-    fstream file(path.c_str());
+    char *formatted = new char[200];
+    sprintf(formatted, "%s/%s", SDClass::_sdCardFolderLocation, filepath);
+    fstream file(formatted);
     bool isFile = (bool)file;
     if (isFile)
         return true;
