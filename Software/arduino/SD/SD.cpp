@@ -414,69 +414,12 @@ SdFile SDClass::getParentDir(const char *filepath, int *index) {
 
 
 File SDClass::open(const char *filepath, uint8_t mode) {
-    
-    
-    
     File file = File(filepath, mode);
     return file;
-    //if (mode & (O_APPEND | O_WRITE))
-     //   file.seek(file.size());
 }
-
-
-/*
-File SDClass::open(char *filepath, uint8_t mode) {
-  //
-
-	 Open the supplied file path for reading or writing.
-
-	 The file content can be accessed via the `file` property of
-	 the `SDClass` object--this property is currently
-	 a standard `SdFile` object from `sdfatlib`.
-
-	 Defaults to read only.
-
-	 If `write` is true, default action (when `append` is true) is to
-	 append data to the end of the file.
-
-	 If `append` is false then the file will be truncated first.
-
-	 If the file does not exist and it is opened for writing the file
-	 will be created.
-
-	 An attempt to open a file for reading that does not exist is an
-	 error.
-
-   //
-
-  // TODO: Allow for read&write? (Possibly not, as it requires seek.)
-
-  fileOpenMode = mode;
-  walkPath(filepath, root, callback_openPath, this);
-
-  return File();
-
-}
-*/
-
-
-//boolean SDClass::close() {
-//  /*
-//
-//    Closes the file opened by the `open` method.
-//
-//   */
-//  file.close();
-//}
- 
 
 bool SDClass::exists(const char *filepath) {
-  /*
 
-	 Returns true if the supplied file path exists.
-
-   */
-    
     string path = _sdCardFolderLocation + "/" + std::string(filepath);
     const char *pathCstr = path.c_str();
     fstream file(pathCstr);
@@ -525,7 +468,16 @@ bool SDClass::rmdir(const char *filepath) {
 }
 
 bool SDClass::remove(const char *filepath) {
-  return walkPath(filepath, root, callback_remove);
+    if (_sdCardFolderLocation.size() == 0)
+        return false;
+    
+    std::string path = _sdCardFolderLocation + "/" + std::string(filepath);
+    if (exists(filepath)) {
+        std::string cmd = std::string("rm -rf ") + std::string(path);
+        system(cmd.c_str());
+        return true;
+    }
+    return true;
 }
 
 SDClass SD;
