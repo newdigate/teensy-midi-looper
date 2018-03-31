@@ -516,7 +516,7 @@ bool SDClass::rmdir(const char *filepath) {
         return false;
 
     std::string path = _sdCardFolderLocation + "/" + std::string(filepath);
-    if (exists(path.c_str())) {
+    if (exists(filepath)) {
         std::string cmd = std::string("rm -rf ") + std::string(path);
         system(cmd.c_str());
         return true;
