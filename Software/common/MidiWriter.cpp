@@ -122,26 +122,27 @@ void MidiWriter::addEvent(unsigned int deltaticks, byte type, byte data1, byte d
 }
 
 void MidiWriter::flush() {
-  if (_bufferPos == 0) return;
-  File data = SD.open(_filename, FILE_WRITE);
-  if (!data) {
-    Serial.print("Not able to open ");
-    Serial.print(_filename);
-    Serial.print("\n");
-    return;
-  }
-  
-  for (byte b = 0; b < _bufferPos; b++) {
+    if (_bufferPos == 0) return;
+    File data = SD.open(_filename, FILE_WRITE);
+    if (!data) {
+        char *notAbleToOpen = const_cast<char *>("Not able to open ");
+        Serial.print(notAbleToOpen);
+        Serial.print(_filename);
+        Serial.println();
+        return;
+    }
+
+    for (byte b = 0; b < _bufferPos; b++) {
     data.write(_buffer[b]);
-  } 
-  _bufferPos = 0;
-  
-  data.seek(18);
-  write_buf_int(trackSize);
-  for (byte b = 0; b < _bufferPos; b++) {
+    }
+    _bufferPos = 0;
+
+    data.seek(18);
+    write_buf_int(trackSize);
+    for (byte b = 0; b < _bufferPos; b++) {
     data.write(_buffer[b]);
-  } 
-  _bufferPos = 0;
-  
-  data.close();
+    }
+    _bufferPos = 0;
+
+    data.close();
 }

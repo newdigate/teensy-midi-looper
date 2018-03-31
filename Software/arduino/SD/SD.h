@@ -24,6 +24,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <stdint.h>
+
 using namespace std;
 
 #define FILE_READ O_READ
@@ -32,85 +34,85 @@ namespace SDLib {
 
 class File {
  private:
-  char _name[13]; // our name
-  SdFile *_file;  // underlying file pointer
+    char _name[13];
     uint32_t _size;
+    bool _isDirectory;
+    std::streampos fileSize( const char* filePath );
+    bool is_directory( const char* pzPath );
+
 public:
     std::fstream mockFile = std::fstream();
-  File(const char *name);
-  File(SdFile f, const char *n); // wraps an underlying SdFile
-  File(void);      // 'empty' constructor
-  virtual int write(uint8_t);
-  virtual int write(const uint8_t *buf, size_t size);
-  virtual int read();
-  virtual int peek();
-  virtual int available();
-  virtual void flush();
-  int read(void *buf, uint16_t nbyte);
-  bool seek(uint32_t pos);
-  uint32_t position();
-  uint32_t size();
-  void close();
-  operator bool();
-  char * name();
+    File(const char *name);
+    File(SdFile f, const char *n); // wraps an underlying SdFile
+    File(void);      // 'empty' constructor
+    virtual int write(uint8_t);
+    virtual int write(const uint8_t *buf, size_t size);
+    virtual int read();
+    virtual int peek();
+    virtual int available();
+    virtual void flush();
+    int read(void *buf, uint16_t nbyte);
+    bool seek(uint32_t pos);
+    uint32_t position();
+    uint32_t size();
+    void close();
+    operator bool();
+    char * name();
 
-  bool isDirectory(void);
-  File openNextFile(uint8_t mode = O_RDONLY);
-  void rewindDirectory(void);
+    bool isDirectory(void);
 };
 
 class SDClass {
-
 private:
   // These are required for initialisation and use of sdfatlib
-  Sd2Card card;
-  SdVolume volume;
-  SdFile root;
+    Sd2Card card;
+    SdVolume volume;
+    SdFile root;
 
-  // my quick&dirty iterator, should be replaced
-  SdFile getParentDir(const char *filepath, int *indx);
+    // my quick&dirty iterator, should be replaced
+    SdFile getParentDir(const char *filepath, int *indx);
 public:
 
     static const std::string _mockSDCardLocation;
   
     // This needs to be called to set up the connection to the SD card
-  // before other methods are used.
-  bool begin(uint8_t csPin = 0);
-  bool begin(uint32_t clock, uint8_t csPin);
-  
-  // Open the specified file/directory with the supplied mode (e.g. read or
-  // write, etc). Returns a File object for interacting with the file.
-  // Note that currently only one file can be open at a time.
-  File open(const char *filename, uint8_t mode = FILE_READ);
-  File open(const std::string &filename, uint8_t mode = FILE_READ) { return open( filename.c_str(), mode ); }
+    // before other methods are used.
+    bool begin(uint8_t csPin = 0);
+    bool begin(uint32_t clock, uint8_t csPin);
 
-  // Methods to determine if the requested file path exists.
-  bool exists(const char *filepath);
-  bool exists(const std::string &filepath) { return exists(filepath.c_str()); }
+    // Open the specified file/directory with the supplied mode (e.g. read or
+    // write, etc). Returns a File object for interacting with the file.
+    // Note that currently only one file can be open at a time.
+    File open(const char *filename, uint8_t mode = FILE_READ);
+    File open(const std::string &filename, uint8_t mode = FILE_READ) { return open( filename.c_str(), mode ); }
 
-  // Create the requested directory heirarchy--if intermediate directories
-  // do not exist they will be created.
-  bool mkdir(const char *filepath);
-  bool mkdir(const std::string &filepath) { return mkdir(filepath.c_str()); }
-  
-  // Delete the file.
-  bool remove(const char *filepath);
-  bool remove(const std::string &filepath) { return remove(filepath.c_str()); }
-  
-  bool rmdir(const char *filepath);
-  bool rmdir(const std::string &filepath) { return rmdir(filepath.c_str()); }
+    // Methods to determine if the requested file path exists.
+    bool exists(const char *filepath);
+    bool exists(const std::string &filepath) { return exists(filepath.c_str()); }
+
+    // Create the requested directory heirarchy--if intermediate directories
+    // do not exist they will be created.
+    bool mkdir(const char *filepath);
+    bool mkdir(const std::string &filepath) { return mkdir(filepath.c_str()); }
+
+    // Delete the file.
+    bool remove(const char *filepath);
+    bool remove(const std::string &filepath) { return remove(filepath.c_str()); }
+
+    bool rmdir(const char *filepath);
+    bool rmdir(const std::string &filepath) { return rmdir(filepath.c_str()); }
 
 private:
 
-  // This is used to determine the mode used to open a file
-  // it's here because it's the easiest place to pass the 
-  // information through the directory walking function. But
-  // it's probably not the best place for it.
-  // It shouldn't be set directly--it is set via the parameters to `open`.
-  int fileOpenMode;
-  
-  friend class File;
-  friend bool callback_openPath(SdFile&, const char *, bool, void *);
+    // This is used to determine the mode used to open a file
+    // it's here because it's the easiest place to pass the
+    // information through the directory walking function. But
+    // it's probably not the best place for it.
+    // It shouldn't be set directly--it is set via the parameters to `open`.
+    int fileOpenMode;
+
+    friend class File;
+    friend bool callback_openPath(SdFile&, const char *, bool, void *);
 };
 
 extern SDClass SD;

@@ -13,17 +13,11 @@
  */
 
 #include "SD.h"
-#include "utility/SdFat.h"
+#include <dirent.h>
 
-/* for debugging file open/close leaks
-   uint8_t nfilecount=0;
-*/
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
 using namespace std;
 
-std::streampos fileSize( const char* filePath ){
+std::streampos File::fileSize( const char* filePath ){
     
     std::streampos fsize = 0;
     std::ifstream file( filePath, std::ios::binary );
@@ -36,47 +30,25 @@ std::streampos fileSize( const char* filePath ){
     return fsize;
 }
 
-
-
-//File::File(SdFile f, const char *n) {
 File::File(SdFile f, const char *n) {
     std::string actualFileName = SDClass::_mockSDCardLocation + std::string(n);
     cout << actualFileName;
     mockFile.open(actualFileName);
     _size = fileSize(actualFileName.c_str());
+    _isDirectory = is_directory(actualFileName.c_str());
 }
 
 File::File(const char *n) {
-  //_file = (SdFile *)malloc(sizeof(SdFile));
-    
     std::string actualFileName = SDClass::_mockSDCardLocation + std::string(n);
     cout << actualFileName;
     mockFile.open(actualFileName);
     _size = fileSize(actualFileName.c_str());
-    
-//  if (_file) {
-//    memcpy(_file, &f, sizeof(SdFile));
-//
-//    strncpy(_name, n, 12);
-//    _name[12] = 0;
-//
-//    /* for debugging file open/close leaks
-//       nfilecount++;
-//       Serial.print("Created \"");
-//       Serial.print(n);
-//       Serial.print("\": ");
-//       Serial.println(nfilecount, DEC);
-//    */
-//  }
 }
 
 File::File(void) {
-  _file = 0;
   _name[0] = 0;
     _size = 0;
-  //Serial.print("Created empty file object");
 }
-
 
 // returns a pointer to the file name
 char *File::name(void) {
@@ -85,41 +57,31 @@ char *File::name(void) {
 
 // a directory is a special type of file
 bool File::isDirectory(void) {
-  return (_file && _file->isDir());
+  return _isDirectory;
 }
 
-
 int File::write(uint8_t val) {
-  return write(&val, 1);
+    return write(&val, 1);
 }
 
 int File::write(const uint8_t *buf, size_t size) {
-  size_t t;
-  if (!_file) {
-    //setWriteError();
-    return 0;
-  }
+    size_t t;
+    if (!mockFile.is_open()) {
+        return 0;
+    }
     
     _size += size;
-    //char * memblock = new char[size];
     char * memblock = (char *)buf;
-   mockFile.write(memblock, size);
-  _file->clearWriteError();
-  t = _file->write(buf, size);
-  if (_file->getWriteError()) {
-    //setWriteError();
-    return 0;
-  }
-  return t;
+    mockFile.write(memblock, size);
+
+    return t;
 }
 
 int File::peek() {
-  if (! _file) 
+  if (! mockFile.is_open())
     return 0;
 
-  int c = _file->read();
-  if (c != -1) _file->seekCur(-1);
-  return c;
+  return mockFile.peek();
 }
 
 int File::read() {
@@ -144,19 +106,19 @@ int File::available() {
 }
 
 void File::flush() {
-  if (_file)
-    _file->sync();
+  if (mockFile.is_open())
+      mockFile.flush();
 }
 
 bool File::seek(uint32_t pos) {
-  if (! _file) return false;
-
-  return _file->seekSet(pos);
+    if (! mockFile.is_open()) return false;
+    mockFile.seekp(pos, ios_base::seekdir::cur);
+    return true;
 }
 
 uint32_t File::position() {
-  if (! mockFile.is_open()) return -1;
-  return mockFile.tellp();
+    if (! mockFile.is_open()) return -1;
+    return mockFile.tellp();
 }
 
 uint32_t File::size() {
@@ -164,25 +126,28 @@ uint32_t File::size() {
 }
 
 void File::close() {
-  if (mockFile.is_open())
-      mockFile.close();
-    
-  if (_file) {
-    _file->close();
-    free(_file); 
-    _file = 0;
-
-    /* for debugging file open/close leaks
-    nfilecount--;
-    Serial.print("Deleted ");
-    Serial.println(nfilecount, DEC);
-    */
-  }
+    if (mockFile.is_open())
+        mockFile.close();
 }
 
 File::operator bool() {
-  if (_file) 
-    return  _file->isOpen();
-  return false;
+    return  mockFile.is_open();
 }
 
+bool File::is_directory( const char* pzPath )
+{
+    if ( pzPath == NULL) return false;
+
+    DIR *pDir;
+    bool bExists = false;
+
+    pDir = opendir (pzPath);
+
+    if (pDir != NULL)
+    {
+        bExists = true;
+        (void) closedir (pDir);
+    }
+
+    return bExists;
+}

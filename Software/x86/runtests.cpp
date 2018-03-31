@@ -23,6 +23,7 @@
 #include "../common/TFTPianoDisplay.h"
 #include "AdafruitTFTMock.h"
 #include <unistd.h>
+#include <stdint.h>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ void run_tests2();
 int main(int argc, char **argv){
 	std::cout << "starting app...\n";
     initialize_mock_arduino();
-    run_tests2();
+    run_tests();
 }
 
 uint8_t tab[][3] = {

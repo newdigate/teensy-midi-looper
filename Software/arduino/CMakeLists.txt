@@ -41,6 +41,4 @@ add_library(arduino_abstraction STATIC
         SD/utility/SdFile.cpp
         SD/utility/SdInfo.h
         SD/utility/SdVolume.cpp
-        #mpland/printf.h
-        #mpland/printf.c
         Adafruit/TFTColorHelper.cpp Adafruit/TFTColorHelper.h)
