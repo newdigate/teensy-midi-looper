@@ -37,11 +37,15 @@ File::File(SdFile f, const char *n) {
     _size = fileSize(actualFileName.c_str());
     _isDirectory = is_directory(actualFileName.c_str());
 }
-
-File::File(const char *n) {
+File::File(const char *n, uint8_t mode) {
     std::string actualFileName = SDClass::getSDCardFolderPath() + std::string("/") + std::string(n);
     cout << actualFileName;
-    mockFile.open(actualFileName);
+    switch (mode) {
+        case O_READ : mockFile.open(actualFileName); break;
+        case O_WRITE : mockFile.open(actualFileName, std::fstream::out | std::fstream::app); break;
+        default:
+            break;
+    }
     _size = fileSize(actualFileName.c_str());
 }
 
@@ -85,9 +89,9 @@ int File::peek() {
 }
 
 int File::read() {
-    char p[2];
-    mockFile.read(p, 2);
-    return p[0] << 8 | p[1];
+    char p[1];
+    mockFile.read(p, 1);
+    return p[0];
 }
 
 // buffered read for more efficient, high speed reading

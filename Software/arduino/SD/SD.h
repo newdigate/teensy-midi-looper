@@ -42,7 +42,7 @@ class File {
 
 public:
     std::fstream mockFile = std::fstream();
-    File(const char *name);
+    File(const char *name, uint8_t mode = O_READ);
     File(SdFile f, const char *n); // wraps an underlying SdFile
     File(void);      // 'empty' constructor
     virtual int write(uint8_t);

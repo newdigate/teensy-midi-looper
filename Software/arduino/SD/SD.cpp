@@ -414,7 +414,10 @@ SdFile SDClass::getParentDir(const char *filepath, int *index) {
 
 
 File SDClass::open(const char *filepath, uint8_t mode) {
-    File file = File(filepath);
+    
+    
+    
+    File file = File(filepath, mode);
     return file;
     //if (mode & (O_APPEND | O_WRITE))
      //   file.seek(file.size());
@@ -474,14 +477,14 @@ bool SDClass::exists(const char *filepath) {
 
    */
     
-    char *formatted = new char[200];
-    sprintf(formatted, "%s/%s", SDClass::_sdCardFolderLocation, filepath);
-    fstream file(formatted);
+    string path = _sdCardFolderLocation + "/" + std::string(filepath);
+    const char *pathCstr = path.c_str();
+    fstream file(pathCstr);
     bool isFile = (bool)file;
     if (isFile)
         return true;
 
-    bool is_Directory = File::is_directory (path.c_str());
+    bool is_Directory = File::is_directory (pathCstr);
     return is_Directory;
 }
 
@@ -513,7 +516,7 @@ bool SDClass::rmdir(const char *filepath) {
         return false;
 
     std::string path = _sdCardFolderLocation + "/" + std::string(filepath);
-    if (!exists(path.c_str())) {
+    if (exists(path.c_str())) {
         std::string cmd = std::string("rm -rf ") + std::string(path);
         system(cmd.c_str());
         return true;
