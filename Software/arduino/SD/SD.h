@@ -38,7 +38,7 @@ class File {
     uint32_t _size;
     bool _isDirectory;
     std::streampos fileSize( const char* filePath );
-    bool is_directory( const char* pzPath );
+
 
 public:
     std::fstream mockFile = std::fstream();
@@ -60,6 +60,7 @@ public:
     char * name();
 
     bool isDirectory(void);
+    static bool is_directory( const char* pzPath );
 };
 
 class SDClass {
@@ -71,10 +72,14 @@ private:
 
     // my quick&dirty iterator, should be replaced
     SdFile getParentDir(const char *filepath, int *indx);
+
+    static std::string _sdCardFolderLocation;
 public:
 
-    static const std::string _mockSDCardLocation;
-  
+    static std::string getSDCardFolderPath();
+
+    static void setSDCardFolderPath(std::string path);
+
     // This needs to be called to set up the connection to the SD card
     // before other methods are used.
     bool begin(uint8_t csPin = 0);

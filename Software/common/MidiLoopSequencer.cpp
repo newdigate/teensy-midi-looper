@@ -4,16 +4,16 @@
 #if ARDUINO >= 100
 #include "Arduino.h"
 #include <MIDI.h>
+#include <SD.h>
 #else
 #include "mock_arduino.h"
 #include "midi/MIDI.h"
+#include "SD/SD.h"
 #endif
 
-
 #include "MidiLoopSequencer.h"
-#include "Delegate.h"
 
-MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort) {
+MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  : midiWriter() {
   _midi_port = midiPort;
 }
 
@@ -27,6 +27,12 @@ void MidiLoopSequencer::initialize() {
     _milliseconds = 0;
     _previousMilliseconds = 0;
     _lastEventMillis = 0;
+    char *defaultPath = const_cast<char *>("default/");
+    char *defaultFilename = const_cast<char *>("trk");
+    setPath(defaultPath);
+    _fileName = defaultFilename;
+    std::string fileName = std::string(_path) + std::string(_fileName);
+    midiWriter.setFilename(fileName.c_str());
 }
 
 void MidiLoopSequencer::tick(unsigned long millisecs) {
@@ -181,6 +187,18 @@ char* MidiLoopSequencer::getFilename() {
 void MidiLoopSequencer::setFilename(char* filename) {
   _fileName = filename;
 }
+
+char* MidiLoopSequencer::getPath() {
+    return _path;
+}
+
+void MidiLoopSequencer::setPath(char* path) {
+    if (!SD.exists(path)) {
+        SD.mkdir(path);
+    }
+    _path = path;
+}
+
 
 
 bool MidiLoopSequencer::getPlayEnable() {

@@ -18,12 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.  
 */
 
+#include <stdint.h>
 #include <iostream>
 #include "../common/MidiLoopSequencer.h"
 #include "../common/TFTPianoDisplay.h"
+#include "SD/SD.h"
 #include "AdafruitTFTMock.h"
 #include <unistd.h>
-#include <stdint.h>
 
 using namespace std;
 
@@ -64,6 +65,10 @@ uint8_t tab[][3] = {
 };
 
 void run_tests() {
+
+    std::string mockSDCardPath = std::string("/Users/nicnewdigate/Development/sdcard");
+    SDClass::setSDCardFolderPath(mockSDCardPath);
+
     //millis_test();
     midi::MidiInterface<HardwareSerial> *midi = new midi::MidiInterface<HardwareSerial>(Serial);
     MidiLoopSequencer midiLoopSequencer(midi);

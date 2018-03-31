@@ -53,11 +53,8 @@
 #include <iostream>
 #include <fstream>
 #include "SD.h"
-#include <dirent.h>
 namespace SDLib {
 
-const std::string SDClass::_mockSDCardLocation = "/Users/johnsmith/Development/sdcard/";
-    
 // Used by `getNextPathComponent`
 #define MAX_COMPONENT_LEN 12 // What is max length?
 #define PATH_COMPONENT_BUFFER_LEN MAX_COMPONENT_LEN+1
@@ -477,44 +474,50 @@ bool SDClass::exists(const char *filepath) {
 
    */
     
-    std::string path = _mockSDCardLocation + std::string(filepath);
+    std::string path = SDClass::_sdCardFolderLocation + "/" + std::string(filepath);
     fstream file(path.c_str());
-    return (bool)file;
-//  return walkPath(filepath, root, callback_pathExists);
+    bool isFile = (bool)file;
+    if (isFile)
+        return true;
+
+    bool is_Directory = File::is_directory (path.c_str());
+    return is_Directory;
 }
-    
 
-//boolean SDClass::exists(char *filepath, SdFile& parentDir) {
-//  /*
-//
-//     Returns true if the supplied file path rooted at `parentDir`
-//     exists.
-//
-//   */
-//  return walkPath(filepath, parentDir, callback_pathExists);
-//}
+std::string SDClass::getSDCardFolderPath() {
+    return _sdCardFolderLocation;
+}
 
+void SDClass::setSDCardFolderPath(std::string path) {
+    _sdCardFolderLocation = path;
+}
+
+std::string SDClass::_sdCardFolderLocation = std::string("~/Users/sdcard/");
 
 bool SDClass::mkdir(const char *filepath) {
-  /*
-  
-	Makes a single directory or a heirarchy of directories.
+    if (_sdCardFolderLocation.size() == 0)
+        return false;
 
-	A rough equivalent to `mkdir -p`.
-  
-   */
-  return walkPath(filepath, root, callback_makeDirPath);
+    std::string path = _sdCardFolderLocation + "/" + std::string(filepath);
+    if (!exists(path.c_str())) {
+        std::string cmd = std::string("mkdir -p ") + std::string(path);
+        system(cmd.c_str());
+        return true;
+    }
+    return true;
 }
 
 bool SDClass::rmdir(const char *filepath) {
-  /*
-  
-	Remove a single directory or a heirarchy of directories.
+    if (_sdCardFolderLocation.size() == 0)
+        return false;
 
-	A rough equivalent to `rm -rf`.
-  
-   */
-  return walkPath(filepath, root, callback_rmdir);
+    std::string path = _sdCardFolderLocation + "/" + std::string(filepath);
+    if (!exists(path.c_str())) {
+        std::string cmd = std::string("rm -rf ") + std::string(path);
+        system(cmd.c_str());
+        return true;
+    }
+    return true;
 }
 
 bool SDClass::remove(const char *filepath) {

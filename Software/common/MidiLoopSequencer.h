@@ -10,6 +10,7 @@
 #endif
 
 #include "Delegate.h"
+#include "MidiWriter.h"
 #include <vector>
 #include <functional>
 
@@ -49,7 +50,10 @@ class MidiLoopSequencer
     
     char* getFilename();
     void setFilename(char* filename);
-    
+
+    char* getPath();
+    void setPath(char* filename);
+
     bool getPlayEnable();
     void setPlayEnable(bool play_enabled);
     
@@ -61,8 +65,11 @@ class MidiLoopSequencer
     
   private: 
     midi::MidiInterface<HardwareSerial> *_midi_port;
+    MidiWriter midiWriter;
 
     char *_fileName;
+    char *_path;
+
     bool 
       _en_loop = false, 
       _en_rec = false, 
