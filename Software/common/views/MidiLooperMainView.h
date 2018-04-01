@@ -53,6 +53,7 @@ private:
     TFTPianoDisplay _topPianoDisplay;
     TFTPianoDisplay _bottomPianoDisplay;
     TFTSongTimeIndicator _songTimeIndicator;
+    uint64_t _lastPianoDisplayUpdate = 0;
 };
 
 #endif //ARDUINO_ABSTRACTION_MIDILOOPERMAINVIEW_H
