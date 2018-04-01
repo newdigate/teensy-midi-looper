@@ -26,10 +26,13 @@ private:
     byte _offsetKeyZero;
     unsigned int _octaves, _startOctave;
 
-    bool _shouldUpdatePiano = true;
+    bool _shouldUpdatePiano, _forceFullKeyboardRedraw  = true;
     byte _keysWhichArePressed[22];
+    byte _oldkeysWhichArePressed[22];
 
     bool isKeyPressed(byte key);
+    bool wasKeyPressed(byte key);
+    void setWasKeyPressed(byte key, bool value);
     bool isAnyKeyPressed(byte key);
 };
 

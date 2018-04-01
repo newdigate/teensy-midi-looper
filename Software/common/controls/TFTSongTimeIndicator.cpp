@@ -2,7 +2,7 @@
 // Created by Nicholas Newdigate on 01/04/2018.
 //
 const char *minutefmtString = "%02d:";
-const char *hundredsfmtString = "%02d";
+const char *hundredsfmtString = "%d";
 const char *secondfmtString = "%02d.";
 const char *hoursfmtString = "%02d:";
 
@@ -12,7 +12,7 @@ void TFTSongTimeIndicator::update(unsigned long millis) {
     uint32_t hours = (millis / (1000 * 60 * 60)) % 24;
     uint32_t minutes = (millis / (1000 * 60)) % 60;
     uint32_t seconds = (millis / 1000) % 60;
-    uint32_t hundreds = (millis / 10) % 100;
+    uint32_t hundreds = (millis / 100) % 10;
     if (hours != _hours ) {
 
         _tft->setCursor(_x, _y);

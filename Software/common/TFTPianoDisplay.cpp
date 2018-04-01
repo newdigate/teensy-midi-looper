@@ -22,11 +22,12 @@ TFTPianoDisplay::TFTPianoDisplay(Adafruit_GFX &tft, byte octaves, byte startOcta
 
     for (unsigned int i=0; i < sizeof(_keysWhichArePressed); i++) {
         _keysWhichArePressed[i] = 0x00;
+        _oldkeysWhichArePressed[i] = 0x00;
     }
 }
 
 bool TFTPianoDisplay::displayNeedsUpdating() {
-    return _shouldUpdatePiano;
+    return _shouldUpdatePiano || _forceFullKeyboardRedraw;
 }
 
 void TFTPianoDisplay::setPosition(byte x, byte y) {
@@ -77,6 +78,25 @@ bool TFTPianoDisplay::isKeyPressed(byte key) {
     return bitRead( _keysWhichArePressed[byteNumberOfKey], bitNumberOfKey);
 }
 
+bool TFTPianoDisplay::wasKeyPressed(byte key) {
+    if (key < _offsetKeyZero) return false;
+    if (key >= _offsetKeyZero+(_octaves*12)) return false;
+
+    byte index = key - _offsetKeyZero;
+    byte byteNumberOfKey = index / 8;
+    byte bitNumberOfKey = index % 8;
+    return bitRead( _oldkeysWhichArePressed[byteNumberOfKey], bitNumberOfKey);
+}
+void TFTPianoDisplay::setWasKeyPressed(byte key, bool value) {
+    if (key < _offsetKeyZero) return;
+    if (key >= _offsetKeyZero+(_octaves*12)) return;
+
+    byte index = key - _offsetKeyZero;
+    byte byteNumberOfKey = index / 8;
+    byte bitNumberOfKey = index % 8;
+    bitWrite( _oldkeysWhichArePressed[byteNumberOfKey], bitNumberOfKey, value);
+}
+
 void TFTPianoDisplay::drawPiano() {
     /*
       for (int i=0; i< 14; i++) {
@@ -92,17 +112,15 @@ void TFTPianoDisplay::drawPiano() {
         for (int i=0; i<7; i++) {
             byte key = b[i] + (octave * 12) + _offsetKeyZero;
             bool isDown = isKeyPressed(key);
-            //Serial.printf("(%d) ", key);
-            /*if (isDown)
-              Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, DOWN]\n", i, mod, key);
-            else
-              Serial.printf("[i=%d, i%%7 = %d, b[i%%7]=%d, UP]\n", i, mod, key);
-      */
+            bool wasKeyDown = wasKeyPressed(key);
+            if (!_forceFullKeyboardRedraw && isDown == wasKeyDown)
+                continue;
 
             if (isDown)
                 _tft->fillRect(_x + i*5 + (octave*5*7), _y, 4, 32, ST7735_BLUE);
             else
                 _tft->fillRect(_x + i*5 + (octave*5*7), _y, 4, 32, ST7735_WHITE);
+            setWasKeyPressed(key, isDown);
         }
         Serial.print('\n');
         const byte blackKeys[] = {/* C# */ 1, /* D# */ 3, /*Skip*/ 0, /* F# */ 6, /* G# */ 8, /* A# */ 10, /*Skip*/ 0};
@@ -111,8 +129,17 @@ void TFTPianoDisplay::drawPiano() {
         for (int i=0; i<6; i++){
             if ( i==2 ) continue;
             byte key = blackKeys[i] + (octave * 12) + _offsetKeyZero;
-            _tft->fillRect( _x+3 + (5*i) + (octave*5*7), _y, 3, 16, isKeyPressed(key)? ST7735_BLUE : ST7735_BLACK);
+
+            bool isDown = isKeyPressed(key);
+            bool wasKeyDown = wasKeyPressed(key);
+            if (!_forceFullKeyboardRedraw && isDown == wasKeyDown)
+                continue;
+            setWasKeyPressed(key, isDown);
+            _tft->fillRect( _x+3 + (5*i) + (octave*5*7), _y, 3, 16, isDown? ST7735_BLUE : ST7735_BLACK);
         }
     }
+    if(_forceFullKeyboardRedraw)
+        _forceFullKeyboardRedraw = false;
+
     _shouldUpdatePiano = false;
 }

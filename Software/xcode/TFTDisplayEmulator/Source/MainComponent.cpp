@@ -46,7 +46,9 @@ uint8_t tab[][3] = {
     {0x80, 0x76, 0x64}
 };
 
-class MainContentComponent   : public AnimatedAppComponent, public MidiInputCallback,  public MidiKeyboardStateListener
+
+
+class MainContentComponent   : public AnimatedAppComponent, public MidiInputCallback,  public MidiKeyboardStateListener, public MultiTimer
 {
 public:
     //==============================================================================
@@ -56,7 +58,7 @@ public:
     {
         setOpaque (true);
         setSize (_tft_emulatorWidth, _tft_emulatorHeight+_headerHeight);
-        setFramesPerSecond (100);
+        setFramesPerSecond (10);
         initialize_mock_arduino();
         SDClass::setSDCardFolderPath("/Users/nicnewdigate/Development/sdcard");
         sequencer.initialize();
@@ -65,7 +67,7 @@ public:
             // cout << keyOn << " " << key << " " << velocity << " " << channel << "\n";
         };
         sequencer.onPositionChanged += [] (SongPosition p) {
-            printf( "P: %d : %d \n", p.bar, p.beat);
+            //printf( "P: %d : %d \n", p.bar, p.beat);
         };
         
         addAndMakeVisible (midiInputListLabel);
@@ -114,6 +116,15 @@ public:
         //_tftScreenWindow->setContentOwned(this, true);// InformationComponent is my GUI editor component (the visual editor of JUCE)
         //_tftScreenWindow->centreWithSize(_tftScreenWindow->getWidth(), _tftScreenWindow->getHeight());
         _tftScreenWindow->setVisible(true);
+        
+        MultiTimer::startTimer(0, 10);
+    }
+    
+    void timerCallback (int timerID) override {
+        if (timerID==0) {
+            unsigned long m = millis();
+            this->mainView.update(m);
+        }
     }
     
     void handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message) override
@@ -179,16 +190,13 @@ public:
         (new IncomingMessageCallback (this, message, source))->post();
     }
     
+
+    
     void update() override
     {
         // ff.drawPiano();
-        unsigned long m = millis();
-        //cout << "milis: " << m << "\n";
-        // This function is called at the frequency specified by the setFramesPerSecond() call
-        // in the constructor. You can use it to update counters, animate values, etc.
         
-        mainView.update(m);
-        _t++;
+        //_t++;
         /*
         if (_t % 50 == 10) {
             //cout << "<- note on";
@@ -230,27 +238,27 @@ public:
 
     void addMessageToList (const MidiMessage& message, const String& source)
     {
-        auto time = message.getTimeStamp() - startTime;
+        //auto time = message.getTimeStamp() - startTime;
         const uint8_t *m = message.getRawData();
         Serial._inputBuffer.push(m++);
         Serial._inputBuffer.push(m++);
         Serial._inputBuffer.push(m++);
         
-        auto hours   = ((int) (time / 3600.0)) % 24;
-        auto minutes = ((int) (time / 60.0)) % 60;
-        auto seconds = ((int) time) % 60;
-        auto millis  = ((int) (time * 1000.0)) % 1000;
+        //auto hours   = ((int) (time / 3600.0)) % 24;
+        //auto minutes = ((int) (time / 60.0)) % 60;
+        //auto seconds = ((int) time) % 60;
+        //auto millis  = ((int) (time * 1000.0)) % 1000;
         
-        auto timecode = String::formatted ("%02d:%02d:%02d.%03d",
-                                           hours,
-                                           minutes,
-                                           seconds,
-                                           millis);
+        //auto timecode = String::formatted ("%02d:%02d:%02d.%03d",
+        //                                   hours,
+        //                                   minutes,
+        //                                   seconds,
+        //                                   millis);
         
-        auto description = getMidiMessageDescription (message);
+        //auto description = getMidiMessageDescription (message);
         
-        String midiMessageString (timecode + "  -  " + description + " (" + source + ")"); // [7]
-        logMessage (midiMessageString);
+        //String midiMessageString (timecode + "  -  " + description + " (" + source + ")"); // [7]
+        //logMessage (midiMessageString);
     }
 
 private:
@@ -311,6 +319,7 @@ private:
     double startTime;
     AudioDeviceManager deviceManager;
     ComboBox midiInputList;
+    
     
     TFTScreenEmulatorWindow *_tftScreenWindow;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

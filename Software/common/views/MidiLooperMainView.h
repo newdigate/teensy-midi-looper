@@ -13,16 +13,16 @@
 #include "../controls/TFTSongTimeIndicator.h"
 #include <hardware_serial.h>
 #include <iostream>
-
+#include <cstdint>
 class MidiLooperMainView {
 public:
     inline MidiLooperMainView(
             Adafruit_GFX &tft,
             midi::MidiInterface<HardwareSerial> &midiInterface,
             MidiLoopSequencer &sequencer) :
-                _recordingIndicator(&tft, 8, 100),
-                _topPianoDisplay(tft, 3, 0, 0, 16),
-                _bottomPianoDisplay(tft, 3, 2, 0, 56),
+                _recordingIndicator(&tft, (6*8), 0),
+                _topPianoDisplay(tft, 3, 2, 0, 16),
+                _bottomPianoDisplay(tft, 3, 5, 0, 56),
                 _songPositionIndicator(&tft, 0, 0),
                 _songTimeIndicator(&tft, 0, 8)
     {
@@ -54,6 +54,8 @@ private:
     TFTPianoDisplay _bottomPianoDisplay;
     TFTSongTimeIndicator _songTimeIndicator;
     uint64_t _lastPianoDisplayUpdate = 0;
+    uint64_t _lastUpdate = 0;
+
 };
 
 #endif //ARDUINO_ABSTRACTION_MIDILOOPERMAINVIEW_H

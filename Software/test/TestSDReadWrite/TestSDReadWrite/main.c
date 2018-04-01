@@ -18,7 +18,7 @@ int main(int argc, const char * argv[]) {
     SD.begin();
     bool exists = SD.exists("hello.txt");
     if (exists){
-        File f = SD.open("hello.txt", O_READ);
+        File f = SD.open("hello.txt", xO_READ);
         while (f.available()) {
             int x = f.read();
             char a = x >> 8;
@@ -41,13 +41,14 @@ void testWriteRead() {
     if (SD.exists(filename))
         SD.rmdir(filename);
     
-    File f = SD.open(filename, O_WRITE);
+    File f = SD.open(filename, xO_WRITE);
     for (uint8_t i=0; i<255; i++)
         f.write(i);
+    f.write((uint8_t)255);
     f.flush();
     f.close();
     
-    f = SD.open(filename, O_READ);
+    f = SD.open(filename, xO_READ);
     for (uint8_t i=0; i<255; i++) {
         int j = f.read();
         char c = (char)j;
