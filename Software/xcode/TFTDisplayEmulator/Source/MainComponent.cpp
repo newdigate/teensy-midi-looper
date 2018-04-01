@@ -55,7 +55,7 @@ public:
     {
         setOpaque (true);
         setSize (_tft_emulatorWidth, _tft_emulatorHeight+_headerHeight);
-        setFramesPerSecond (50);
+        setFramesPerSecond (100);
         initialize_mock_arduino();
         SDClass::setSDCardFolderPath("/Users/nicnewdigate/Development/sdcard");
         sequencer.initialize();
@@ -178,9 +178,10 @@ public:
         //cout << "milis: " << m << "\n";
         // This function is called at the frequency specified by the setFramesPerSecond() call
         // in the constructor. You can use it to update counters, animate values, etc.
+        
         mainView.update(m);
         _t++;
-        
+        /*
         if (_t % 50 == 10) {
             //cout << "<- note on";
             Serial._inputBuffer.push(tab[0] + 0);
@@ -191,7 +192,7 @@ public:
             Serial._inputBuffer.push(tab[1] + 0);
             Serial._inputBuffer.push(tab[1] + 1);
             Serial._inputBuffer.push(tab[1] + 2);
-        }
+        } */
         
     }
 

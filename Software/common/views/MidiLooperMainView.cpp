@@ -16,4 +16,5 @@ void MidiLooperMainView::update(unsigned long millis) {
 
     _loopSequencer->tick(millis);
     _songPositionIndicator.setSongPosition(_loopSequencer->getSongPosition());
+    _songTimeIndicator.update(millis);
 }

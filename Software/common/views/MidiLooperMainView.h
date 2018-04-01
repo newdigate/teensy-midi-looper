@@ -10,6 +10,7 @@
 #include "../TFTPianoDisplay.h"
 #include "../MidiLoopSequencer.h"
 #include "../controls/TFTSongPositionIndicator.h"
+#include "../controls/TFTSongTimeIndicator.h"
 #include <hardware_serial.h>
 #include <iostream>
 
@@ -19,14 +20,25 @@ public:
             Adafruit_GFX &tft,
             midi::MidiInterface<HardwareSerial> &midiInterface,
             MidiLoopSequencer &sequencer) :
-                _recordingIndicator(&tft, 8, 64),
-                _topPianoDisplay(tft, 3, 0, 0, 0),
-                _bottomPianoDisplay(tft, 3, 2, 0, 40),
-                _songPositionIndicator(&tft, 0, 100)
+                _recordingIndicator(&tft, 8, 100),
+                _topPianoDisplay(tft, 3, 0, 0, 16),
+                _bottomPianoDisplay(tft, 3, 2, 0, 56),
+                _songPositionIndicator(&tft, 0, 0),
+                _songTimeIndicator(&tft, 0, 8)
     {
         _tft = &tft;
         _midiInterface = &midiInterface;
         _loopSequencer = &sequencer;
+        _loopSequencer->onKeyChanged += [&] (bool keyOn, byte key, byte velocity, byte channel) {
+            if (keyOn) {
+                _bottomPianoDisplay.keyDown(key);
+                _topPianoDisplay.keyDown(key);
+            }
+            else {
+                _bottomPianoDisplay.keyUp(key);
+                _topPianoDisplay.keyUp(key);
+            }
+        };
     }
 
     void update(unsigned long millis);
@@ -40,6 +52,7 @@ private:
     TFTSongPositionIndicator _songPositionIndicator;
     TFTPianoDisplay _topPianoDisplay;
     TFTPianoDisplay _bottomPianoDisplay;
+    TFTSongTimeIndicator _songTimeIndicator;
 };
 
 #endif //ARDUINO_ABSTRACTION_MIDILOOPERMAINVIEW_H
