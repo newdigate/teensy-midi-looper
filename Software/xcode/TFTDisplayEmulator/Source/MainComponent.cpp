@@ -187,7 +187,12 @@ public:
     
     void postMessageToList (const MidiMessage& message, const String& source)
     {
-        (new IncomingMessageCallback (this, message, source))->post();
+        const uint8_t *m = message.getRawData();
+        Serial._inputBuffer.push(m++);
+        Serial._inputBuffer.push(m++);
+        Serial._inputBuffer.push(m++);
+
+        //(new IncomingMessageCallback (this, message, source))->post();
     }
     
 
@@ -239,10 +244,6 @@ public:
     void addMessageToList (const MidiMessage& message, const String& source)
     {
         //auto time = message.getTimeStamp() - startTime;
-        const uint8_t *m = message.getRawData();
-        Serial._inputBuffer.push(m++);
-        Serial._inputBuffer.push(m++);
-        Serial._inputBuffer.push(m++);
         
         //auto hours   = ((int) (time / 3600.0)) % 24;
         //auto minutes = ((int) (time / 60.0)) % 60;
