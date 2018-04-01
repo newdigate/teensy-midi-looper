@@ -29,6 +29,7 @@ public:
         setOpaque (true);
         setSize (160, 160);
         startTimer(50);
+        setResizable(true, false);
     }
     
     void closeButtonPressed() override
