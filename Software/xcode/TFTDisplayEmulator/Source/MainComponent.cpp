@@ -34,6 +34,7 @@
 #include "../../../common/MidiLoopSequencer.h"
 #include "../../../arduino/mock_arduino.h"
 #include <SD/SD.h>
+#include "TFTScreenEmulatorWindow.hpp"
 //==============================================================================
 /*
     This component lives inside our window, and this is where you sh	ould put all
@@ -106,6 +107,13 @@ public:
         
         addAndMakeVisible (keyboardComponent);
         keyboardState.addListener (this);
+        
+        _tftScreenWindow = new TFTScreenEmulatorWindow("TFT emulator", Colours::grey, DocumentWindow::allButtons, &image);
+        
+        _tftScreenWindow->setUsingNativeTitleBar(true);
+        //_tftScreenWindow->setContentOwned(this, true);// InformationComponent is my GUI editor component (the visual editor of JUCE)
+        //_tftScreenWindow->centreWithSize(_tftScreenWindow->getWidth(), _tftScreenWindow->getHeight());
+        _tftScreenWindow->setVisible(true);
     }
     
     void handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message) override
@@ -206,9 +214,9 @@ public:
     void paint (Graphics& g) override
     {
         g.fillAll (Colours::black);
-        g.drawImage ( image,
-                    0, _headerHeight, _tft_emulatorWidth, _headerHeight + _tft_emulatorHeight,
-                    0, 0, 160, 160, false);
+//        g.drawImage ( image,
+//                    0, _headerHeight, _tft_emulatorWidth, _headerHeight + _tft_emulatorHeight,
+//                    0, 0, 160, 160, false);
     }
     
     void resized() override
@@ -303,6 +311,8 @@ private:
     double startTime;
     AudioDeviceManager deviceManager;
     ComboBox midiInputList;
+    
+    TFTScreenEmulatorWindow *_tftScreenWindow;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
 
