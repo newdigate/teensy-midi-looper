@@ -14,4 +14,10 @@ add_library(teensy_midi_common STATIC
 		MidiWriter.h
 		Delegate.h
         TFTPianoDisplay.cpp
-        TFTPianoDisplay.h views/MidiLooperMainView.cpp views/MidiLooperMainView.h controls/TFTFlashingIndicator.cpp controls/TFTFlashingIndicator.h)
+        TFTPianoDisplay.h
+        views/MidiLooperMainView.cpp
+        views/MidiLooperMainView.h
+        controls/TFTSongPositionIndicator.h
+        controls/TFTSongPositionIndicator.cpp
+        controls/TFTFlashingIndicator.cpp
+        controls/TFTFlashingIndicator.h)

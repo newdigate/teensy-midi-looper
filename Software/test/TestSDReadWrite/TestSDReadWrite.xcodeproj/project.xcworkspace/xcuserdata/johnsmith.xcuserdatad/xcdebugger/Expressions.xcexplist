@@ -8,7 +8,13 @@
             <PersistentString
                value = "(bool)file">
             </PersistentString>
+            <PersistentString
+               value = "formatted">
+            </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SDLib::File::File(char const*):File.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

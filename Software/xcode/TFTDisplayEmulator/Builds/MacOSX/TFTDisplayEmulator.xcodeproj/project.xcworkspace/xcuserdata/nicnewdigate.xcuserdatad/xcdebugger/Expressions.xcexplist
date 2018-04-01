@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface&lt;HardwareSerial, midi::DefaultSettings&gt;*):MidiLoopSequencer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "Delegate&lt;SongPosition&gt;::operator()(SongPosition):Delegate.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "_listeners">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HardwareSerial::available():hardware_serial.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MidiLoopSequencer::setPlayEnable(bool):MidiLoopSequencer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_milliseconds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MidiLoopSequencer::initialize():MidiLoopSequencer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_millis_per_16th">
+            </PersistentString>
+            <PersistentString
+               value = "_midi_port">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MidiLoopSequencer::updateBarAndBeat(unsigned long):MidiLoopSequencer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_lastBeatMilliseconds - _milliseconds">
+            </PersistentString>
+            <PersistentString
+               value = "_previousMilliseconds">
+            </PersistentString>
+            <PersistentString
+               value = "_milliseconds">
+            </PersistentString>
+            <PersistentString
+               value = "_lastBeatMilliseconds">
+            </PersistentString>
+            <PersistentString
+               value = "_position">
+            </PersistentString>
+            <PersistentString
+               value = "_sixtyFourth">
+            </PersistentString>
+            <PersistentString
+               value = "(uint64_t)(_milliseconds / _millis_per_16th)">
+            </PersistentString>
+            <PersistentString
+               value = "_millis_per_16th">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TFTFlashingIndicator::update(unsigned long):TFTFlashingIndicator.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "millis - _last_millis">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "midi::MidiInterface&lt;HardwareSerial, midi::DefaultSettings&gt;::read():MIDI.hpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "mInputChannel">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Adafruit_GFX::drawChar(short, short, unsigned char, unsigned short, unsigned short, unsigned char):Adafruit_GFX.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "gfxFont">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

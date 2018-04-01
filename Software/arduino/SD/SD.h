@@ -19,7 +19,6 @@
 #include "utility/SdFat.h"
 #include "../Teensy/Print.h"
 #include <cstdio>
-#include "utility/SdFat.h"
 #include "utility/SdFatUtil.h"
 
 #include <iostream>
@@ -28,8 +27,8 @@
 
 using namespace std;
 
-#define FILE_READ O_READ
-#define FILE_WRITE (O_READ | O_WRITE | O_CREAT)
+#define FILE_READ xO_READ
+#define FILE_WRITE (xO_READ | xO_WRITE | xO_CREAT)
 namespace SDLib {
 
 class File {
@@ -42,7 +41,7 @@ class File {
 
 public:
     std::fstream mockFile = std::fstream();
-    File(const char *name, uint8_t mode = O_READ);
+    File(const char *name, uint8_t mode = xO_READ);
     File(SdFile f, const char *n); // wraps an underlying SdFile
     File(void);      // 'empty' constructor
     virtual int write(uint8_t);

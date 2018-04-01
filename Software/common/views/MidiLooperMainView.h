@@ -9,15 +9,20 @@
 #include "../controls/TFTFlashingIndicator.h"
 #include "../TFTPianoDisplay.h"
 #include "../MidiLoopSequencer.h"
+#include "../controls/TFTSongPositionIndicator.h"
 #include <hardware_serial.h>
 #include <iostream>
 
 class MidiLooperMainView {
 public:
-    inline MidiLooperMainView(Adafruit_GFX &tft, midi::MidiInterface<HardwareSerial> &midiInterface, MidiLoopSequencer &sequencer) :
+    inline MidiLooperMainView(
+            Adafruit_GFX &tft,
+            midi::MidiInterface<HardwareSerial> &midiInterface,
+            MidiLoopSequencer &sequencer) :
                 _recordingIndicator(&tft, 8, 64),
                 _topPianoDisplay(tft, 3, 0, 0, 0),
-                _bottomPianoDisplay(tft, 3, 2, 0, 40)
+                _bottomPianoDisplay(tft, 3, 2, 0, 40),
+                _songPositionIndicator(&tft, 0, 100)
     {
         _tft = &tft;
         _midiInterface = &midiInterface;
@@ -32,6 +37,7 @@ private:
     MidiLoopSequencer *_loopSequencer;
 
     TFTFlashingIndicator _recordingIndicator;
+    TFTSongPositionIndicator _songPositionIndicator;
     TFTPianoDisplay _topPianoDisplay;
     TFTPianoDisplay _bottomPianoDisplay;
 };

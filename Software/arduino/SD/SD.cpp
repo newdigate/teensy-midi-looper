@@ -189,7 +189,7 @@ bool walkPath(const char *filepath, SdFile& parentDir,
 	  break;
 	}
 
-	bool exists = (*p_child).open(*p_parent, buffer, O_RDONLY);
+	bool exists = (*p_child).open(*p_parent, buffer, xO_RDONLY);
 
 	// If it's one we've created then we
 	// don't need the parent handle anymore.
@@ -245,7 +245,7 @@ bool callback_pathExists(SdFile& parentDir, const char *filePathComponent,
   */
   SdFile child;
 
-  bool exists = child.open(parentDir, filePathComponent, O_RDONLY);
+  bool exists = child.open(parentDir, filePathComponent, xO_RDONLY);
   
   if (exists) {
 	 child.close();
@@ -324,7 +324,7 @@ bool callback_rmdir(SdFile& parentDir, const char *filePathComponent,
 			bool isLastComponent, void * /* object */) {
   if (isLastComponent) {
 	SdFile f;
-	if (!f.open(parentDir, filePathComponent, O_READ)) return false;
+	if (!f.open(parentDir, filePathComponent, xO_READ)) return false;
 	return f.rmDir();
   }
   return true;
@@ -391,7 +391,7 @@ SdFile SDClass::getParentDir(const char *filepath, int *index) {
 
 	// close the subdir (we reuse them) if open
 	subdir->close();
-	if (! subdir->open(parent, subdirname, O_READ)) {
+	if (! subdir->open(parent, subdirname, xO_READ)) {
 	  // failed to open one of the subdirectories
 	  return SdFile();
 	}

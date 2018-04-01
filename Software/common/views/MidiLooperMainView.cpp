@@ -15,4 +15,5 @@ void MidiLooperMainView::update(unsigned long millis) {
         _bottomPianoDisplay.drawPiano();
 
     _loopSequencer->tick(millis);
+    _songPositionIndicator.setSongPosition(_loopSequencer->getSongPosition());
 }

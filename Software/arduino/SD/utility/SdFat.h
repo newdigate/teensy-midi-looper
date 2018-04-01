@@ -50,27 +50,27 @@ uint8_t const LS_R = 4;
 
 // use the gnu style oflag in open()
 /** open() oflag for reading */
-uint8_t const O_READ = 0X01;
+uint8_t const xO_READ = 0X01;
 /** open() oflag - same as O_READ */
-uint8_t const O_RDONLY = O_READ;
+uint8_t const xO_RDONLY = xO_READ;
 /** open() oflag for write */
-uint8_t const O_WRITE = 0X02;
+uint8_t const xO_WRITE = 0X02;
 /** open() oflag - same as O_WRITE */
-uint8_t const O_WRONLY = O_WRITE;
+uint8_t const xO_WRONLY = xO_WRITE;
 /** open() oflag for reading and writing */
-uint8_t const O_RDWR = (O_READ | O_WRITE);
+uint8_t const xO_RDWR = (xO_READ | xO_WRITE);
 /** open() oflag mask for access modes */
-uint8_t const O_ACCMODE = (O_READ | O_WRITE);
+uint8_t const xO_ACCMODE = (xO_READ | xO_WRITE);
 /** The file offset shall be set to the end of the file prior to each write. */
-uint8_t const O_APPEND = 0X04;
+uint8_t const xO_APPEND = 0X04;
 /** synchronous writes - call sync() after each write */
-uint8_t const O_SYNC = 0X08;
+uint8_t const xO_SYNC = 0X08;
 /** create the file if nonexistent */
-uint8_t const O_CREAT = 0X10;
+uint8_t const xO_CREAT = 0X10;
 /** If O_CREAT and O_EXCL are set, open() shall fail if the file exists */
-uint8_t const O_EXCL = 0X20;
+uint8_t const xO_EXCL = 0X20;
 /** truncate the file to zero length */
-uint8_t const O_TRUNC = 0X40;
+uint8_t const xO_TRUNC = 0X40;
 
 // flags for timestamp
 /** set the file's last access date */
@@ -337,7 +337,7 @@ class SdFile : public Print {
   }
   /** \deprecated  Do not use in new apps */
   uint8_t open(SdFile& dirFile, const char* fileName) {  // NOLINT
-    return open(dirFile, fileName, O_RDWR);
+    return open(dirFile, fileName, xO_RDWR);
   }
   /** \deprecated Use:
    * uint8_t SdFile::open(SdFile* dirFile, uint16_t index, uint8_t oflag);
@@ -371,7 +371,7 @@ class SdFile : public Print {
  private:
   // bits defined in flags_
   // should be 0XF
-  static uint8_t const F_OFLAG = (O_ACCMODE | O_APPEND | O_SYNC);
+  static uint8_t const F_OFLAG = (xO_ACCMODE | xO_APPEND | xO_SYNC);
   // available bits
   static uint8_t const F_UNUSED = 0X30;
   // use unbuffered SD read
