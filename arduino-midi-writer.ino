@@ -3,10 +3,20 @@
 #include "Software/common/MidiWriter.h"
 #include "Software/common/TFTPianoDisplay.h"
 #include "Software/common/MidiLoopSequencer.h" 
+#include "Software/common/views/MidiLooperMainView.h"
+#include "Software/common/controls/TFTFlashingIndicator.h"
+#include "Software/common/controls/TFTSongPositionIndicator.h"
+#include "Software/common/controls/TFTSongTimeIndicator.h"
+#include "Software/common/utils/TFTColorHelper.h"
 
 #include "Software/common/MidiWriter.cpp"
 #include "Software/common/TFTPianoDisplay.cpp"
 #include "Software/common/MidiLoopSequencer.cpp" 
+#include "Software/common/views/MidiLooperMainView.cpp"
+#include "Software/common/controls/TFTFlashingIndicator.cpp"
+#include "Software/common/controls/TFTSongPositionIndicator.cpp"
+#include "Software/common/controls/TFTSongTimeIndicator.cpp"
+#include "Software/common/utils/TFTColorHelper.cpp"
 
 #define sclk 13  // SCLK can also use pin 14
 #define mosi 11  // MOSI can also use pin 7
@@ -36,15 +46,14 @@ const int chipSelect = BUILTIN_SDCARD;
 const byte numOctaves = 3;
 const byte startOctave = 2;
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
-TFTPianoDisplay piano(tft, numOctaves, startOctave, 5, 24);
-TFTPianoDisplay piano2(tft, numOctaves, startOctave+numOctaves, 5, 80);
+
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
 
 bool _sdCardFound = false;
 
 MidiLoopSequencer sequencer( &midiA );
-
+MidiLooperMainView mainView( tft, midiA, sequencer );
 void setup()
 {
   tft.initR(INITR_GREENTAB); // initialize a ST7735R chip, green tab
@@ -58,6 +67,8 @@ void setup()
     Serial.println("hello!");
 
     sequencer.initialize();
+    Serial.println("hello2");
+    sequencer.setPlayEnable(true);
     // Initiate MIDI communications, listen to all channels
     // midiA.begin(MIDI_CHANNEL_OMNI);
     //Serial.println("midi has begun!");
@@ -117,8 +128,8 @@ const bool enableMidiThru = true;
 void loop() {
   
     unsigned long currentTime = millis();
-
-    sequencer.tick(currentTime);
+    mainView.update(currentTime);
+    //sequencer.tick(currentTime);
     
     unsigned long sixtyFourth = 0;
     if (previous > currentTime) {     
@@ -128,16 +139,6 @@ void loop() {
       sixtyFourth = currentTime / millis_per_16th;
     }
     previous = currentTime;
-    
-  
-        
-    if (piano.displayNeedsUpdating()) {
-      piano.drawPiano();
-    } 
-    
-    if (piano2.displayNeedsUpdating()) {
-      piano2.drawPiano();
-    } else
     
     if (_sdCardFound && (lastDisplayFilenameUpdate == 0 || currentTime - lastDisplayFilenameUpdate > 10000)) {
         tft.setCursor(16,64);
@@ -188,52 +189,13 @@ void loop() {
         lastsdCardCheck = millis();
       }
     }
-    if (currentTime - lastDisplayUpdate > 50) {
-      // update display
-      beat = (sixtyFourth / 16);
-      bar = beat / 4;
-      beat %= 4;
-      
-      
-      
-      if (beat != lastbeat ) {
+    
 
-        //tft.fillScreen(ST7735_BLACK);
-        tft.setCursor(0,0);
-        tft.setTextSize(3);
-        tft.setTextColor(ST7735_BLACK);
-        char c[] = "     ";
-        itoa(lastbar,c,10);
-        tft.print(c);
-        tft.print(":");
-        itoa(lastbeat+1,c,10);    
-        tft.print(c); 
-
-
-
-        tft.setCursor(0,0);
-
-        //tft.setTextSize(3);
-        tft.setTextColor(ST7735_GREEN);
-        
-        itoa(bar,c,10);
-        tft.print(c);
-        tft.print(":");
-        itoa(beat+1,c,10);    
-        tft.print(c); 
-
-        lastDisplayUpdate = currentTime; 
-        lastbeat = beat;
-        lastbar = bar;
-      }
-
-    if (currentTime - lastEvent > 30000) {
-        midi_writer.setFilename("rec");
-        midi_writer.writeHeader();
-        midi_writer.flush(); 
-        firstNote = true;    
-    }
-
-  }
+    //if (currentTime - lastEvent > 30000) {
+    //    midi_writer.setFilename("rec");
+    //    midi_writer.writeHeader();
+    //    midi_writer.flush(); 
+    //    firstNote = true;    
+   // }
 
 }

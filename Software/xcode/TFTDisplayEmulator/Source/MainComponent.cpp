@@ -297,15 +297,15 @@ private:
     
     //==============================================================================
     unsigned long _t = 0;
-    const int _tft_width = 160;
-    const int _tft_height = 160;
+    const int _tft_width = 128;
+    const int _tft_height = 128;
     const int _headerHeight = 200;
-    const int _tft_emulatorWidth = 160 * 8;
-    const int _tft_emulatorHeight = 160 * 8;
+    const int _tft_emulatorWidth = 128 * 8;
+    const int _tft_emulatorHeight = 128 * 8;
     // Your private member variables go here...
     juce::Image image = Image(juce::Image::PixelFormat::RGB, _tft_width, _tft_height, true);
     Byte octaves = 2, startOctave = 2, x = 10, y = 10;
-    Adafruit_GFX_juce juceTFT = Adafruit_GFX_juce(160, 160, image);
+    Adafruit_GFX_juce juceTFT = Adafruit_GFX_juce(128, 128, image);
     midi::MidiInterface<HardwareSerial> midi = midi::MidiInterface<HardwareSerial>(Serial);
     MidiLoopSequencer sequencer = MidiLoopSequencer(&midi);
     MidiLooperMainView mainView = MidiLooperMainView(juceTFT, midi, sequencer);

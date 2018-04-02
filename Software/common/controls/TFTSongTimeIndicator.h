@@ -5,10 +5,14 @@
 #ifndef TEENSY_MIDI_COMMON_TFTSONGTIMEINDICATOR_H
 #define TEENSY_MIDI_COMMON_TFTSONGTIMEINDICATOR_H
 
+#if ARDUINO >= 100
+#include <Adafruit_GFX.h>    // Core graphics library
+#else
+#include "Adafruit/Adafruit_GFX.h"    // Core graphics library
+#endif
 
 #include <cstdint>
-#include <Adafruit/Adafruit_GFX.h>
-#include <Adafruit/TFTColorHelper.h>
+#include "../utils/TFTColorHelper.h"
 
 class TFTSongTimeIndicator {
 public:

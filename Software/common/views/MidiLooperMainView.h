@@ -5,15 +5,24 @@
 #ifndef ARDUINO_ABSTRACTION_MIDILOOPERMAINVIEW_H
 #define ARDUINO_ABSTRACTION_MIDILOOPERMAINVIEW_H
 
+#if ARDUINO >= 100
+#include "Arduino.h"
+#include <Adafruit_GFX.h>    // Core graphics library
+#include <MIDI.h>    // Core graphics library
+#else
+#include "mock_arduino.h"
+#include "Adafruit/Adafruit_GFX.h"    // Core graphics library
 #include "../../arduino/midi/MIDI.h"
+#include <hardware_serial.h>
+#endif
+
 #include "../controls/TFTFlashingIndicator.h"
 #include "../TFTPianoDisplay.h"
 #include "../MidiLoopSequencer.h"
 #include "../controls/TFTSongPositionIndicator.h"
 #include "../controls/TFTSongTimeIndicator.h"
-#include <hardware_serial.h>
-#include <iostream>
 #include <cstdint>
+
 class MidiLooperMainView {
 public:
     inline MidiLooperMainView(

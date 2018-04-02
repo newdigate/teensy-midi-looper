@@ -26,8 +26,8 @@ public:
                              juce::Image *image) : DocumentWindow (name, backgroundColour, buttonsNeeded), Timer()
     {
         _image = image;
-        setOpaque (true);
-        setSize (160, 160);
+        //setOpaque (true);
+        setSize (128, 128);
         startTimer(50);
         setResizable(true, false);
     }
@@ -42,7 +42,7 @@ public:
         g.fillAll (Colours::black);
         g.drawImage ( *_image,
                      0, 0, getWidth(), getHeight(),
-                     0, 0, 160, 160, false);
+                     0, 0, 128, 128, false);
     }
     
     void timerCallback() override

@@ -20,4 +20,8 @@ add_library(teensy_midi_common STATIC
         controls/TFTSongPositionIndicator.h
         controls/TFTSongPositionIndicator.cpp
         controls/TFTFlashingIndicator.cpp
-        controls/TFTFlashingIndicator.h controls/TFTSongTimeIndicator.cpp controls/TFTSongTimeIndicator.h)
+        controls/TFTFlashingIndicator.h
+        controls/TFTSongTimeIndicator.cpp
+        controls/TFTSongTimeIndicator.h
+        utils/TFTColorHelper.cpp
+        utils/TFTColorHelper.h)

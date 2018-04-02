@@ -4,8 +4,15 @@
 
 #ifndef ARDUINO_ABSTRACTION_TFTFLASHINGINDICATOR_H
 #define ARDUINO_ABSTRACTION_TFTFLASHINGINDICATOR_H
-#include <Adafruit/Adafruit_GFX.h>
-#include <Adafruit/TFTColorHelper.h>
+
+#if ARDUINO >= 100
+#include <Adafruit_GFX.h>    // Core graphics library
+#else
+#include "Adafruit/Adafruit_GFX.h"    // Core graphics library
+#endif
+
+#include "../utils/TFTColorHelper.h"
+
 class TFTFlashingIndicator {
 public:
     inline TFTFlashingIndicator(Adafruit_GFX *tft, int x, int y) {

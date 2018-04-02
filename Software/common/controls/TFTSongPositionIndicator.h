@@ -4,9 +4,15 @@
 
 #ifndef ARDUINO_ABSTRACTION_TFTFSONGPOSITIONINDICATOR_H
 #define ARDUINO_ABSTRACTION_TFTFSONGPOSITIONINDICATOR_H
-#include <Adafruit/Adafruit_GFX.h>
-#include <Adafruit/TFTColorHelper.h>
+
+#if ARDUINO >= 100
+#include <Adafruit_GFX.h>    // Core graphics library
+#else
+#include "Adafruit/Adafruit_GFX.h"    // Core graphics library
+#endif
+
 #include "../MidiLoopSequencer.h"
+#include "../utils/TFTColorHelper.h"
 
 class TFTSongPositionIndicator{
 public:

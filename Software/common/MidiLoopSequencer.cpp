@@ -197,9 +197,9 @@ char* MidiLoopSequencer::getPath() {
 }
 
 void MidiLoopSequencer::setPath(char* path) {
-    if (!SD.exists(path)) {
-        SD.mkdir(path);
-    }
+    //if (!SD.exists(path)) {
+    //    SD.mkdir(path);
+    //}
     _path = path;
 }
 

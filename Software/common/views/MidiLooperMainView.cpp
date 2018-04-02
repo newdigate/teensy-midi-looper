@@ -5,10 +5,10 @@
 #include "MidiLooperMainView.h"
 
 void MidiLooperMainView::update(unsigned long millis) {
+    _loopSequencer->tick(millis);
+
     if (_lastUpdate == 0 || millis - _lastUpdate > 10) {
         _recordingIndicator.update(millis);
-        _loopSequencer->tick(millis);
-
         _songPositionIndicator.setSongPosition(_loopSequencer->getSongPosition());
         _songTimeIndicator.update(millis);
         _lastUpdate = millis;
