@@ -22,7 +22,7 @@ public:
             MidiLoopSequencer &sequencer) :
                 _recordingIndicator(&tft, (6*8), 0),
                 _topPianoDisplay(tft, 3, 2, 0, 16),
-                _bottomPianoDisplay(tft, 3, 5, 0, 56),
+                _bottomPianoDisplay(tft, 3, 5, 0, 30),
                 _songPositionIndicator(&tft, 0, 0),
                 _songTimeIndicator(&tft, 0, 8)
     {

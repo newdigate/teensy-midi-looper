@@ -6,8 +6,9 @@
 
 #include "TFTPianoDisplay.h"
 const int16_t ST7735_WHITE = 0xFFFF;
-const int16_t ST7735_BLUE = 0xFA00;
-const int16_t ST7735_BLACK = 0x000;
+const int16_t ST7735_BLUE = 0x19F0;
+const int16_t ST7735_BLACK = 0x0000;
+const int16_t ST7735_RED = 0xF920;
 
 TFTPianoDisplay::TFTPianoDisplay(Adafruit_GFX &tft, byte octaves, byte startOctave, byte x, byte y){
     _tft = &tft;
@@ -98,46 +99,138 @@ void TFTPianoDisplay::setWasKeyPressed(byte key, bool value) {
 }
 
 void TFTPianoDisplay::drawPiano() {
-    /*
-      for (int i=0; i< 14; i++) {
-        char c[] = "         ";
-        itoa(keysWhichArePressed[i],c,2);
-        Serial.printf("%d: %s\n", i, c);
-      }
-      Serial.println();
-      */
-    const byte b[] = {/* C */ 0, /* D */ 2, /* E */ 4, /* F */ 5, /* G */ 7, /* A */ 9, /* B */ 11 };
-    //Draw the white keys on the keyboard
+
     for (unsigned int octave=0; octave < _octaves; octave++) {
-        for (int i=0; i<7; i++) {
-            byte key = b[i] + (octave * 12) + _offsetKeyZero;
+        const int octaveOffset = (octave * _whiteKeyWidth * 7)/10;
+
+        for (int i = 0; i < 12; i++) {
+            int key = i + (octave * 12) + _offsetKeyZero;
+            bool add = false;
             bool isDown = isKeyPressed(key);
-            bool wasKeyDown = wasKeyPressed(key);
-            if (!_forceFullKeyboardRedraw && isDown == wasKeyDown)
-                continue;
+            if (_forceFullKeyboardRedraw)
+                add = true;
+            else {
 
-            if (isDown)
-                _tft->fillRect(_x + i*5 + (octave*5*7), _y, 4, 32, ST7735_BLUE);
-            else
-                _tft->fillRect(_x + i*5 + (octave*5*7), _y, 4, 32, ST7735_WHITE);
-            setWasKeyPressed(key, isDown);
-        }
-        Serial.print('\n');
-        const byte blackKeys[] = {/* C# */ 1, /* D# */ 3, /*Skip*/ 0, /* F# */ 6, /* G# */ 8, /* A# */ 10, /*Skip*/ 0};
+                bool wasKeyDown = wasKeyPressed(key);
 
-        //Draw the black keys on the keyboard
-        for (int i=0; i<6; i++){
-            if ( i==2 ) continue;
-            byte key = blackKeys[i] + (octave * 12) + _offsetKeyZero;
+                if (isDown != wasKeyDown)
+                    add = true;
+            }
 
-            bool isDown = isKeyPressed(key);
-            bool wasKeyDown = wasKeyPressed(key);
-            if (!_forceFullKeyboardRedraw && isDown == wasKeyDown)
-                continue;
-            setWasKeyPressed(key, isDown);
-            _tft->fillRect( _x+3 + (5*i) + (octave*5*7), _y, 3, 16, isDown? ST7735_BLUE : ST7735_BLACK);
+            if (add) {
+                int16_t color = isDown ? ST7735_RED : ST7735_WHITE;
+                int16_t color2 = isDown ? ST7735_RED : ST7735_BLACK;
+
+                switch (i % 12) {
+                    case 0: //c
+                        _tft->fillRect(_x + octaveOffset + _key_offset_c, _y,
+                                       _key_offset_c_sharp, _two_thirds_key_height,
+                                       color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_c, _y + _two_thirds_key_height,
+                                       _key_offset_d-_key_offset_c-1, _one_thirds_key_height,
+                                       color);
+                        break;
+
+                    case 2: //d
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_c_sharp_end, _y,
+                                       _key_offset_d_sharp - _key_offset_c_sharp_end,  _two_thirds_key_height,
+                                       color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_d, _y + _two_thirds_key_height,
+                                       _key_offset_e-_key_offset_d-1, _one_thirds_key_height,
+                                       color);
+                        break;
+
+                    case 4: //e
+                        _tft->fillRect(_x + octaveOffset + _key_offset_d_sharp_end, _y,
+                                       _key_offset_f-_key_offset_d_sharp_end-1, _two_thirds_key_height,
+                                       color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_e, _y + _two_thirds_key_height,
+                                       _key_offset_f-_key_offset_e-1, _one_thirds_key_height,
+                                       color);
+                        break;
+
+                    case 5: //f
+                        _tft->fillRect(_x + octaveOffset + _key_offset_f, _y,
+                                       _key_offset_f_sharp-_key_offset_f, _two_thirds_key_height,
+                                       color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_f, _y + _two_thirds_key_height,
+                                       _key_offset_g-_key_offset_f-1, _one_thirds_key_height,
+                                       color);
+                        break;
+
+                    case 7: //g
+                        _tft->fillRect(_x + octaveOffset + _key_offset_f_sharp_end, _y,
+                                       _key_offset_g_sharp - _key_offset_f_sharp_end, _two_thirds_key_height,
+                                       color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_g, _y + _two_thirds_key_height,
+                                       _key_offset_a-_key_offset_g-1, _one_thirds_key_height,
+                                       color);
+                        break;
+
+                    case 9: // a
+                       _tft->fillRect(_x + octaveOffset + _key_offset_g_sharp_end, _y,
+                                       _key_offset_a_sharp - _key_offset_g_sharp_end, _two_thirds_key_height,
+                                       color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_a, _y + _two_thirds_key_height,
+                                       _key_offset_b-_key_offset_a-1, _one_thirds_key_height,
+                                       color);
+                        break;
+
+                    case 11: // b white note
+                            _tft->fillRect(_x + octaveOffset + _key_offset_a_sharp_end, _y,
+                                           _key_offset_b_end-_key_offset_a_sharp_end, _two_thirds_key_height,
+                                           color);
+
+                        _tft->fillRect(_x + octaveOffset + _key_offset_b, _y + _two_thirds_key_height,
+                                       _key_offset_b_end-_key_offset_b, _one_thirds_key_height,
+                                       color);
+                        break;
+
+/*--------------------------------------------------------------------------------------*/
+                    case 1: // c#
+                        _tft->fillRect(_x + octaveOffset + _key_offset_c_sharp, _y,
+                                       _blackKeyWidth1/10, _two_thirds_key_height,
+                                       color2);
+                        break;
+
+                    case 3: // d#
+                        _tft->fillRect(_x + octaveOffset + _key_offset_d_sharp, _y,
+                                       _blackKeyWidth1/10, _two_thirds_key_height,
+                                       color2);
+                        break;
+
+                    case 6: // f#
+                        _tft->fillRect(_x + octaveOffset + _key_offset_f_sharp, _y,
+                                       _blackKeyWidth2/10, _two_thirds_key_height,
+                                       color2);
+                        break;
+
+                    case 8: // g#
+                        _tft->fillRect(_x + octaveOffset + _key_offset_g_sharp, _y,
+                                       _blackKeyWidth2/10, _two_thirds_key_height,
+                                       color2);
+                        break;
+
+                    case 10: // a#
+                        _tft->fillRect(_x + octaveOffset + _key_offset_a_sharp, _y,
+                                       _blackKeyWidth2/10, _two_thirds_key_height,
+                                       color2);
+                        break;
+                }
+            }
         }
     }
+    
+    for (int j=0; j<22; j++)
+        _oldkeysWhichArePressed[j] = _keysWhichArePressed[j];
+    
     if(_forceFullKeyboardRedraw)
         _forceFullKeyboardRedraw = false;
 
