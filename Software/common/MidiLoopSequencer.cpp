@@ -63,7 +63,7 @@ bool MidiLoopSequencer::isNoteEvent(byte msgType) {
 }
 
 void MidiLoopSequencer::processNewIncomingMidiMessages() {
-  if (_midi_port->read()) {
+  while (_midi_port->read()) {
      
     if (_en_midiThru) {
       _midi_port->send(
