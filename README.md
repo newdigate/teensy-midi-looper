@@ -1,13 +1,20 @@
 # ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper") [![Join the chat at https://gitter.im/newdigate/teensy-midi-looper](https://badges.gitter.im/newdigate/teensy-midi-looper.svg)](https://gitter.im/newdigate/teensy-midi-looper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Travis CI status](https://travis-ci.org/newdigate/teensy-midi-looper.svg?branch=master)](https://travis-ci.org/newdigate/teensy-midi-looper)
 
-## Microcontroller midi sequencer
-### prototype device
+## Microcontroller-based midi performance sequencer
+### prototype device, iteration 1
 * **record** midi events from a physical midi input port to standard midi files (SMF) on SD-card
 * **play** smf files from SD-card to a physical midi output port
 * **display** midi input & output activity, indicators (tempo, key, signature, position) on small color TFT display 
+### hardware 
+* ```Teensy 3.6 dev board```
+  * ```32-bit 180 MHz ARM Cortex-M4 processor```
+  * ```sd-card built-in```
+* ```1x Rotary encoder with built-in switch```
+* ```ST7735 128x128 pixel 16bit color TFT LCD display```
+* ```De-coupling midi break-out board```
+  * [midi-breakout](http://www.hobbytronics.co.uk/midi-breakout "midi-breakout") by **[hobbytronics.co.uk](hobbytronics.co.uk "hobbytronics.co.uk")**
 
-The firmware is targeting [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
-  * ```32-bit 180 MHz ARM Cortex-M4 processor``` 
+[Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
 
 <img src="https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/Breadboard.layout.png" width="500px" title="minimal setup breadbord"/>
 
