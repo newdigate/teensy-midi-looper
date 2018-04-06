@@ -18,7 +18,7 @@
 #include "Software/common/controls/TFTSongTimeIndicator.cpp"
 #include "Software/common/utils/TFTColorHelper.cpp"
 
-#define sclk 13  // SCLK can also use pin 14
+#define sclk 14  // SCLK can also use pin 14
 #define mosi 11  // MOSI can also use pin 7
 #define cs   10  // CS & DC can use pins 2, 6, 9, 10, 15, 20, 21, 22, 23
 #define dc   9   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
@@ -45,7 +45,7 @@ namespace std { void __throw_bad_function_call() { Serial.print("throw_bad_funct
 const int chipSelect = BUILTIN_SDCARD;
 const byte numOctaves = 3;
 const byte startOctave = 2;
-Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
+Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, mosi, sclk, rst);
 
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
