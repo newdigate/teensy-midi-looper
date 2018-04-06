@@ -12,7 +12,7 @@
 * ```1x Rotary encoder with built-in switch```
 * ```ST7735 128x128 pixel 16bit color TFT LCD display```
 * ```De-coupling midi break-out board```
-  * [midi-breakout](http://www.hobbytronics.co.uk/midi-breakout "midi-breakout") by **[hobbytronics.co.uk](hobbytronics.co.uk "hobbytronics.co.uk")**
+  * [midi-breakout](http://www.hobbytronics.co.uk/midi-breakout "midi-breakout")
 
 [Teensy 3.6](https://www.pjrc.com/store/teensy36.html "Teensy 3.6") microcontroller board by **[pjrc.com](https://www.pjrc.com "pjrc.com")**  
 
