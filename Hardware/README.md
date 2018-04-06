@@ -56,4 +56,4 @@
 
 
 ## breadboard design 
-![minimal setup breadboard view](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/TeensyMidiLooper-Minimal.png "minimal setup breadbord")
+![minimal setup breadboard view](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/Breadboard.layout.png "minimal setup breadbord")
