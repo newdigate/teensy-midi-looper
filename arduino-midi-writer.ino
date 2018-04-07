@@ -8,6 +8,8 @@
 #include "Software/common/controls/TFTSongPositionIndicator.h"
 #include "Software/common/controls/TFTSongTimeIndicator.h"
 #include "Software/common/utils/TFTColorHelper.h"
+#include "Software/common/sequencer/Tempo.h"
+#include "Software/common/sequencer/SequencerTrack.h"
 
 #include "Software/common/MidiWriter.cpp"
 #include "Software/common/TFTPianoDisplay.cpp"
@@ -17,6 +19,8 @@
 #include "Software/common/controls/TFTSongPositionIndicator.cpp"
 #include "Software/common/controls/TFTSongTimeIndicator.cpp"
 #include "Software/common/utils/TFTColorHelper.cpp"
+#include "Software/common/sequencer/Tempo.cpp"
+#include "Software/common/sequencer/SequencerTrack.cpp"
 
 #define sclk 14  // SCLK can also use pin 14
 #define mosi 11  // MOSI can also use pin 7
