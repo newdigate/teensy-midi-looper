@@ -35,6 +35,7 @@ private:
     uint16_t _indicatorOffColor = 0;
     Adafruit_GFX *_tft;
     int _x, _y;
+    char _char_buf[5] = "    ";
 };
 
 

@@ -33,9 +33,8 @@ void MidiLoopSequencer::initialize() {
     setPath(defaultPath);
     _fileName = defaultFilename;
     
-    char *formatted = new char[200];
+    char formatted[200];
     sprintf(formatted, "%s/%s", defaultPath, defaultFilename);
-    
     midiWriter.setFilename(formatted);
 }
 

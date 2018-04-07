@@ -11,33 +11,31 @@ void TFTSongPositionIndicator::setSongPosition(SongPosition position) {
     if (_currentPosition.bar !=  position.bar) {
 
         _tft->setCursor(_x, _y);
-        char *c = new char[5];
-        sprintf(c, "%04d:", _currentPosition.bar);
+        sprintf(_char_buf, "%04d:", _currentPosition.bar);
         _tft->setTextColor(_indicatorOffColor);
-        _tft->print(c);
+        _tft->print(_char_buf);
 
         _currentPosition.bar = position.bar;
 
         _tft->setCursor(_x, _y);
-        sprintf(c, "%04d:", _currentPosition.bar);
+        sprintf(_char_buf, "%04d:", _currentPosition.bar);
         _tft->setTextColor(_indicatorOnColor);
-        _tft->print(c);
+        _tft->print(_char_buf);
     }
 
     if ( _currentPosition.beat != position.beat) {
         uint8_t offset = (6*5);
         _tft->setCursor(_x+offset, _y);
-        char *c = new char[5];
-        sprintf(c, "%d", _currentPosition.beat);
+        sprintf(_char_buf, "%d", _currentPosition.beat);
         _tft->setTextColor(_indicatorOffColor);
-        _tft->print(c);
+        _tft->print(_char_buf);
 
         _currentPosition.beat = position.beat;
 
         _tft->setCursor(_x+offset, _y);
-        sprintf(c, "%d", _currentPosition.beat);
+        sprintf(_char_buf, "%d", _currentPosition.beat);
         _tft->setTextColor(_indicatorOnColor);
-        _tft->print(c);
+        _tft->print(_char_buf);
     }
 
 }
