@@ -19,6 +19,22 @@
 
 <img src="https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Hardware/png/Breadboard.layout.png" width="500px" title="minimal setup breadbord"/>
 
+### connections
+```
+// TFT
+#define sclk 14  // SCLK can also use pin 13 (14 is compatibile with audio shield and teensy guitar audio shield
+#define mosi 11  // MOSI can also use pin 7
+#define cs   10  // CS & DC can use pins 2, 6, 9, 10, 15, 20, 21, 22, 23
+#define dc   9   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
+#define rst  8   // RST can use any pin
+
+// rotary encoder
+#define rotary_enc1   3   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
+#define rotary_enc2   4   // RST can use any pin
+#define rotary_switch 5   // RST can use any pin
+```
+
+
 ### Status
 The project is a **work-in-progress** in a very **early** stage of development; I have working prototype using breadboard, as diagram above, records successfully to smf midi file on sd card which can be read from midi players and daws.
 
