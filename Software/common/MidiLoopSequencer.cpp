@@ -13,7 +13,7 @@
 
 #include "MidiLoopSequencer.h"
 
-MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  : midiWriter() {
+MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  : tempo(120), midiWriter(), _track1(&tempo) {
   _midi_port = midiPort;
 }
 

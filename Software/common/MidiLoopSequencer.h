@@ -11,16 +11,16 @@
 
 #include "Delegate.h"
 #include "MidiWriter.h"
+#include "sequencer/SequencerTrack.h"
+#include "sequencer/Tempo.h"
 #include <vector>
 #include <functional>
-
 using namespace std;
 
 struct SongPosition {
   int bar;
   int8_t beat;
 };
-
 
 class MidiLoopSequencer
 {
@@ -63,9 +63,11 @@ class MidiLoopSequencer
     bool getStepRecordEnabled();
     void setStepRecordEnabled(bool step_record_enabled);
     
-  private: 
+  private:
+    Tempo tempo;
     midi::MidiInterface<HardwareSerial> *_midi_port;
     MidiWriter midiWriter;
+    SequencerTrack _track1;
 
     char *_fileName;
     char *_path;

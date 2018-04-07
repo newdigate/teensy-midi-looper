@@ -24,4 +24,4 @@ add_library(teensy_midi_common STATIC
         controls/TFTSongTimeIndicator.cpp
         controls/TFTSongTimeIndicator.h
         utils/TFTColorHelper.cpp
-        utils/TFTColorHelper.h)
+        utils/TFTColorHelper.h controls/TFTLoopIndicator.cpp controls/TFTLoopIndicator.h sequencer/SequencerTrack.cpp sequencer/SequencerTrack.h sequencer/Tempo.h sequencer/Tempo.cpp)
