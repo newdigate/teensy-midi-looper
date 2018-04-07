@@ -32,7 +32,7 @@ private:
     Adafruit_GFX *_tft;
     int _x, _y;
 
-    char _char_buf[8] = "       ";
+    char _char_buf[8] = {' ',' ',' ',' ',' ', ' ', ' ', '\0'};
 };
 
 
