@@ -1,6 +1,6 @@
 # ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper") 
 
-<img src="docs/images/teensy-midi-looper-emulation.gif" width="128">
+<img src="docs/images/teensy-midi-looper-emulation2.gif" width="128">
 
 ## software
 
