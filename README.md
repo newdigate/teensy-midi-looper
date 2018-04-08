@@ -56,7 +56,7 @@ The project is a **work-in-progress** in a very **early** stage of development; 
    * Teensyduino
  * information about **compiling** and **debugging** software here: [software](Software)
 
-<img src="Software/docs/images/screenshot.gif" width="200px"/>
+<img src="Software/docs/images/teensy-midi-looper-emulation.gif" width="128px"/>
 
 ### Prototype hardware requirements / compatibity:
   * teensy 3.6 microcontroller board 
