@@ -21,6 +21,8 @@
 #include "../MidiLoopSequencer.h"
 #include "../controls/TFTSongPositionIndicator.h"
 #include "../controls/TFTSongTimeIndicator.h"
+#include "../controls/TFTLoopIndicator.h"
+
 #include <cstdint>
 
 class MidiLooperMainView {
@@ -33,11 +35,12 @@ public:
                 _topPianoDisplay(tft, 3, 2, 0, 16),
                 _bottomPianoDisplay(tft, 3, 5, 0, 30),
                 _songPositionIndicator(&tft, 0, 0),
-                _songTimeIndicator(&tft, 0, 8)
+                _songTimeIndicator(&tft, 0, 8),
+                _loopSequencer(&sequencer),
+                _trackLoopIndicator(&tft, _loopSequencer->_track1, 80, 56)
     {
         _tft = &tft;
         _midiInterface = &midiInterface;
-        _loopSequencer = &sequencer;
         _loopSequencer->onKeyChanged += [&] (bool keyOn, byte key, byte velocity, byte channel) {
             if (keyOn) {
                 _bottomPianoDisplay.keyDown(key);
@@ -62,6 +65,7 @@ private:
     TFTPianoDisplay _topPianoDisplay;
     TFTPianoDisplay _bottomPianoDisplay;
     TFTSongTimeIndicator _songTimeIndicator;
+    TFTLoopIndicator _trackLoopIndicator;
     uint64_t _lastPianoDisplayUpdate = 0;
     uint64_t _lastUpdate = 0;
 

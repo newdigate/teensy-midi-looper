@@ -13,7 +13,7 @@
 
 #include "MidiLoopSequencer.h"
 
-MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  : tempo(120), midiWriter(), _track1(&tempo) {
+MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  : _tempo(120), midiWriter(), _track1(_tempo) {
   _midi_port = midiPort;
 }
 
@@ -39,10 +39,14 @@ void MidiLoopSequencer::initialize() {
 }
 
 void MidiLoopSequencer::tick(unsigned long millisecs) {
-  if (_en_play)
-    updateBarAndBeat(millisecs);
+  if (_en_play) {
+      updateBarAndBeat(millisecs);
+  }
 
   processNewIncomingMidiMessages();
+  if (_en_play) {
+      _track1.update(millisecs);
+  }
 }
 
 bool MidiLoopSequencer::isNoteEvent(byte msgType) {

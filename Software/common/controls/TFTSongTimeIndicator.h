@@ -27,7 +27,7 @@ public:
 
 private:
     int32_t _hours, _minutes, _seconds, _hundreds = 0;
-    uint16_t _indicatorOnColor = TFTColorHelper::ConvertRGBto565(0,0,255);
+    uint16_t _indicatorOnColor = TFTColorHelper::ConvertRGBto565(255,0,255);
     uint16_t _indicatorOffColor = 0;
     Adafruit_GFX *_tft;
     int _x, _y;

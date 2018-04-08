@@ -58,7 +58,7 @@ public:
     {
         setOpaque (true);
         setSize (_tft_emulatorWidth, _tft_emulatorHeight+_headerHeight);
-        setFramesPerSecond (10);
+        setFramesPerSecond (30);
         initialize_mock_arduino();
         SDClass::setSDCardFolderPath("/Users/nicnewdigate/Development/sdcard");
         sequencer.initialize();
@@ -118,12 +118,13 @@ public:
         _tftScreenWindow->setVisible(true);
         
         MultiTimer::startTimer(0, 10);
+        
     }
     
     void timerCallback (int timerID) override {
         if (timerID==0) {
-            unsigned long m = millis();
-            this->mainView.update(m);
+            //std::cout << ",";
+            
         }
     }
     
@@ -199,6 +200,8 @@ public:
     
     void update() override
     {
+        unsigned long m = millis();
+        this->mainView.update(m);
         // ff.drawPiano();
         
         //_t++;

@@ -7,23 +7,27 @@
 
 #include <cstdint>
 #include "Tempo.h"
+#include "../Delegate.h"
 
 class SequencerTrack {
 public:
-    SequencerTrack(Tempo *tempo) {
-        _tempo = tempo;
-        _milliseconds_per_tick = _tempo->milliseconds_per_tick();
+    SequencerTrack(Tempo &tempo) :
+        _tempo(tempo),
+        onPhaseChanged()
+    {
+        _milliseconds_per_tick = _tempo.milliseconds_per_tick();
     }
 
     void update(unsigned long millis);
-    uint8_t _loop_phase = 0;
+    volatile uint8_t _loop_phase = 0;
+    Delegate<const SequencerTrack&> onPhaseChanged;
 
 private:
     unsigned long _epoch = 0;
 
-    Tempo *_tempo;
-    uint8_t _durationBars = 4;
-    uint16_t _position_ticks = 0,_durationTicks = 64 * _durationBars * 4 * 4;
+    Tempo &_tempo;
+    uint8_t _durationBars = 1;
+    uint16_t _position_ticks = 0, _durationTicks = 64 * _durationBars * 4;
     unsigned int _milliseconds_per_tick = 0;
     unsigned long _last_tick_milliseconds = 0;
 

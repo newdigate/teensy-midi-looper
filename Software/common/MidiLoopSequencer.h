@@ -62,12 +62,13 @@ class MidiLoopSequencer
     
     bool getStepRecordEnabled();
     void setStepRecordEnabled(bool step_record_enabled);
-    
-  private:
-    Tempo tempo;
+
+    Tempo _tempo;
+    SequencerTrack _track1;
+
+private:
     midi::MidiInterface<HardwareSerial> *_midi_port;
     MidiWriter midiWriter;
-    SequencerTrack _track1;
 
     char *_fileName;
     char *_path;

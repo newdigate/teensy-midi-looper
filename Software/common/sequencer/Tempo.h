@@ -12,9 +12,9 @@ struct Tempo {
     int _beats_per_minute = 120;
 
     unsigned int milliseconds_per_tick() {
-        float seconds_per_beat = 60 / _beats_per_minute;
-        int millis_per_beat = seconds_per_beat * 1000;
-        int millis_per_tick = (millis_per_beat / 4) / 64;
+        float seconds_per_beat = 60.0 / _beats_per_minute;
+        int millis_per_beat = seconds_per_beat * 1000.0;
+        int millis_per_tick = millis_per_beat / 64;
         return millis_per_tick;
     }
 };
