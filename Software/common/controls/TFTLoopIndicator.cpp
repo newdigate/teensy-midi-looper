@@ -6,29 +6,29 @@
 #include "TFTLoopIndicator.h"
 
 void TFTLoopIndicator::update(unsigned long millis) {
-    if (_needs_refresh) {
-    //Serial.print(".");
-    //Serial.flush();
-        //std::cout << (uint16_t)_track->_loop_phase << "\n";
-        uint16_t segments = (_track._loop_phase * _width ) / 256;
-        //_tft->fillRect( _x, _y, segments, _height, _indicatorOnColor );
-        //_tft->fillRect( _x + segments + 1, _y, _width-segments, _height, _indicatorOffColor );
-        uint16_t segments_360 = (_track._loop_phase * 360 ) / 256;
-        uint16_t segments_120 = (_track._loop_phase * 120 ) / 256;
-       
-        //Serial.printf("%d\n", (unsigned long)segments );
-       
 
-        
-        if (_lastSegment > segments_120)
-            fillArc2(_x, _y, 0, 120, 12, 12, 2, _indicatorOffColor );
-        else
-            if (segments_120 - _lastSegment < 2)
+    if (_needs_refresh) {
+        uint8_t &phase = _track._loop_phase;
+        if (_last_phase > phase) {
+
+            fillArc2(_x, _y, 0, 120, _width, _height, 2, _indicatorOffColor);
+            fillArc2(_x, _y, 0, phase*120/256, _width, _height, 2, _indicatorOnColor );
+
+            _needs_refresh = true;
+            _last_phase = phase;
+        } else {
+            // phase increase
+
+            if (phase - _last_phase < 5) {
                 return;
-        
-        fillArc2(_x, _y, _lastSegment*3, segments_120-_lastSegment, 12, 12, 2, _indicatorOnColor );
-        _lastSegment = segments_120;
-        _needs_refresh = false;
+            }
+
+            uint8_t delta_phase = phase - _last_phase;
+
+            fillArc2(_x, _y, _last_phase*360/256, delta_phase*120/256, _width, _height, 2, _indicatorOnColor );
+            _needs_refresh = false;
+            _last_phase = phase;
+        }
     }
 }
 
@@ -57,8 +57,8 @@ int TFTLoopIndicator::fillArc2(int x, int y, int start_angle, int seg_count, int
     float sy = sin((start_angle - 90) * DEG2RAD);
     uint16_t x0 = sx * (rx - w) + x;
     uint16_t y0 = sy * (ry - w) + y;
-    uint16_t x1 = sx * rx + x;
-    uint16_t y1 = sy * ry + y;
+    //uint16_t x1 = sx * rx + x;
+    //uint16_t y1 = sy * ry + y;
 
     // Draw colour blocks every inc degrees
     for (int i = start_angle; i < start_angle + seg * seg_count; i += inc) {
@@ -66,19 +66,19 @@ int TFTLoopIndicator::fillArc2(int x, int y, int start_angle, int seg_count, int
         // Calculate pair of coordinates for segment end
         float sx2 = cos((i + seg - 90) * DEG2RAD);
         float sy2 = sin((i + seg - 90) * DEG2RAD);
-        int x2 = sx2 * (rx - w) + x;
-        int y2 = sy2 * (ry - w) + y;
-        int x3 = sx2 * rx + x;
-        int y3 = sy2 * ry + y;
+        uint16_t x2 = sx2 * (rx - w) + x;
+        uint16_t y2 = sy2 * (ry - w) + y;
+        //int x3 = sx2 * rx + x;
+        //int y3 = sy2 * ry + y;
 
-        _tft->fillTriangle(x0, y0, x1, y1, x2, y2, colour);
-        _tft->fillTriangle(x1, y1, x2, y2, x3, y3, colour);
-
+        //_tft->fillTriangle(x0, y0, x1, y1, x2, y2, colour);
+        //_tft->fillTriangle(x1, y1, x2, y2, x3, y3, colour);
+        _tft->drawLine(x0, y0, x2, y2, colour);
         // Copy segment end to sgement start for next segment
         x0 = x2;
         y0 = y2;
-        x1 = x3;
-        y1 = y3;
+        //x1 = x3;
+        //y1 = y3;
     }
     return 0;
 }

@@ -26,7 +26,7 @@ public :
         _oldPosition = 0;
         _currentPosition = 0;
         _maxPosition = 64*_numBars*4;
-        _lastSegment = 0;
+        _last_phase = 0;
         _track.onPhaseChanged += [&] (const SequencerTrack& track) {
             //Serial.printf(">>%x\n", (unsigned long)this);
             this->phaseChanged();
@@ -36,18 +36,17 @@ public :
     void update(unsigned long millis);
     
     inline void phaseChanged() {
-        //Serial.printf("::%x\n", (unsigned long)this);
         _needs_refresh = true;
     }
-    volatile bool _needs_refresh = true;
+    bool _needs_refresh = true;
 
 private:
-    uint16_t _indicatorOnColor = TFTColorHelper::ConvertRGBto565(255,255,0);
+    uint16_t _indicatorOnColor = TFTColorHelper::ConvertRGBto565(0,255,0);
     uint16_t _indicatorOffColor = TFTColorHelper::ConvertRGBto565(0,0,0);
     Adafruit_GFX *_tft;
     int _x, _y, _width, _height, _numBars, _currentPosition, _oldPosition, _maxPosition;
     SequencerTrack &_track;
-    uint16_t _lastSegment;
+    uint8_t _last_phase;
     int fillArc2(int x, int y, int start_angle, int seg_count, int rx, int ry, int w, unsigned int colour);
 };
 

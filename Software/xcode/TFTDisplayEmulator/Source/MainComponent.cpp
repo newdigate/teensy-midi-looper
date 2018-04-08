@@ -57,7 +57,7 @@ public:
         startTime (Time::getMillisecondCounterHiRes() * 0.001)
     {
         setOpaque (true);
-        setSize (_tft_emulatorWidth, _tft_emulatorHeight+_headerHeight);
+        setSize (_tft_emulatorWidth, _tft_emulatorHeight);
         setFramesPerSecond (30);
         initialize_mock_arduino();
         SDClass::setSDCardFolderPath("/Users/nicnewdigate/Development/sdcard");
@@ -96,6 +96,7 @@ public:
             setMidiInput (0);
         //image.setPixelAt(0, 0, juce::Colour(100,100,250));
         
+        /*
         addAndMakeVisible (midiMessagesBox);
         midiMessagesBox.setMultiLine (true);
         midiMessagesBox.setReturnKeyStartsNewLine (true);
@@ -105,7 +106,7 @@ public:
         midiMessagesBox.setPopupMenuEnabled (true);
         midiMessagesBox.setColour (TextEditor::backgroundColourId, Colour (0x32ffffff));
         midiMessagesBox.setColour (TextEditor::outlineColourId, Colour (0x1c000000));
-        midiMessagesBox.setColour (TextEditor::shadowColourId, Colour (0x16000000));
+        midiMessagesBox.setColour (TextEditor::shadowColourId, Colour (0x16000000)); */
         
         addAndMakeVisible (keyboardComponent);
         keyboardState.addListener (this);
@@ -114,7 +115,7 @@ public:
         
         _tftScreenWindow->setUsingNativeTitleBar(true);
         //_tftScreenWindow->setContentOwned(this, true);// InformationComponent is my GUI editor component (the visual editor of JUCE)
-        //_tftScreenWindow->centreWithSize(_tftScreenWindow->getWidth(), _tftScreenWindow->getHeight());
+        this->centreWithSize(this->getWidth(), this->getHeight());
         _tftScreenWindow->setVisible(true);
         
         MultiTimer::startTimer(0, 10);
@@ -304,7 +305,7 @@ private:
     const int _tft_height = 128;
     const int _headerHeight = 200;
     const int _tft_emulatorWidth = 128 * 8;
-    const int _tft_emulatorHeight = 128 * 8;
+    const int _tft_emulatorHeight = 128;
     // Your private member variables go here...
     juce::Image image = Image(juce::Image::PixelFormat::RGB, _tft_width, _tft_height, true);
     Byte octaves = 2, startOctave = 2, x = 10, y = 10;

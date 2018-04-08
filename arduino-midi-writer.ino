@@ -7,10 +7,10 @@
 #include "Software/common/controls/TFTFlashingIndicator.h"
 #include "Software/common/controls/TFTSongPositionIndicator.h"
 #include "Software/common/controls/TFTSongTimeIndicator.h"
-#include "Software/common/controls/TFTLoopIndicator.h"
 #include "Software/common/utils/TFTColorHelper.h"
 #include "Software/common/sequencer/Tempo.h"
 #include "Software/common/sequencer/SequencerTrack.h"
+#include "Software/common/controls/TFTLoopIndicator.h"
 
 #include "Software/common/MidiWriter.cpp"
 #include "Software/common/TFTPianoDisplay.cpp"

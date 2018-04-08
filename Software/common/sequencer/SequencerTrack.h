@@ -19,7 +19,7 @@ public:
     }
 
     void update(unsigned long millis);
-    volatile uint8_t _loop_phase = 0;
+    uint8_t _loop_phase = 0;
     Delegate<const SequencerTrack&> onPhaseChanged;
 
 private:
