@@ -31,6 +31,10 @@
 #define dc   9   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
 #define rst  8   // RST can use any pin
 
+// midi in/out (rx/tx)
+#define midi_in_pin 1  // rx  
+#define midi_out_pin 2 // tx
+
 // rotary encoder
 #define rotary_enc1   3   
 #define rotary_enc2   4   
