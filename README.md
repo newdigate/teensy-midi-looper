@@ -32,9 +32,9 @@
 #define rst  8   // RST can use any pin
 
 // rotary encoder
-#define rotary_enc1   3   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
-#define rotary_enc2   4   // RST can use any pin
-#define rotary_switch 5   // RST can use any pin
+#define rotary_enc1   3   
+#define rotary_enc2   4   
+#define rotary_switch 5   
 ```
 
 
