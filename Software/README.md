@@ -1,5 +1,7 @@
 # ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper") 
 
+<img src="docs/images/teensy-midi-looper-emulation2.gif" width="128">
+
 ## software
 
 This folder contains source code for: 
@@ -103,4 +105,3 @@ open terminal to arduino_midi_writer/Software/x86/cmake-build-debug/
   * https://github.com/adafruit/Adafruit-ST7735-Library
 * https://github.com/mpaland/printf
 
-<img src="docs/images/tft_emulator.png" width="200">

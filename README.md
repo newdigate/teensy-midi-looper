@@ -1,6 +1,9 @@
 # ![Teensy midi looper](https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/logo.svg?sanitize=true "Teensy midi looper") [![Join the chat at https://gitter.im/newdigate/teensy-midi-looper](https://badges.gitter.im/newdigate/teensy-midi-looper.svg)](https://gitter.im/newdigate/teensy-midi-looper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Travis CI status](https://travis-ci.org/newdigate/teensy-midi-looper.svg?branch=master)](https://travis-ci.org/newdigate/teensy-midi-looper)
 
 ## Microcontroller-based midi performance sequencer
+
+<img src="Software/docs/images/teensy-midi-looper-emulation2.gif" width="128px"/>
+
 ### prototype device, iteration 1
 * **record** midi events from a physical midi input port to standard midi files (SMF) on SD-card
 * **play** smf files from SD-card to a physical midi output port
@@ -28,10 +31,14 @@
 #define dc   9   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
 #define rst  8   // RST can use any pin
 
+// midi in/out (rx/tx)
+#define midi_in_pin 1  // rx  
+#define midi_out_pin 2 // tx
+
 // rotary encoder
-#define rotary_enc1   3   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
-#define rotary_enc2   4   // RST can use any pin
-#define rotary_switch 5   // RST can use any pin
+#define rotary_enc1   3   
+#define rotary_enc2   4   
+#define rotary_switch 5   
 ```
 
 
@@ -55,54 +62,3 @@ The project is a **work-in-progress** in a very **early** stage of development; 
    * Arduino
    * Teensyduino
  * information about **compiling** and **debugging** software here: [software](Software)
-
-<img src="Software/docs/images/screenshot.gif" width="200px"/>
-
-### Prototype hardware requirements / compatibity:
-  * teensy 3.6 microcontroller board 
-    * onboard SD Card using SDIO
-    * https://www.pjrc.com/store/teensy36.html
-  * Any Adafruit_GFX compatible tft should work theorerically,
-    * Im using 2.2" Adafruit_ST7735 TFT 16-bit color display 160x160
-  * rotary encoder with built-in switch
-  * MIDI break-out board 
-    * http://www.hobbytronics.co.uk/midi-breakout
-    
-more information about **hardware prototyping** and **pcb design** here: [hardware](Hardware)
-
-### TFT display
-  * indicators
-    * displays notes received via midi on a piano keyboard view
-    * song position (beats / bars)
-    * indicates if SD card is missing
-  * working on integrating with arduino menu
-    * using rotary encoder and switch input
-
-### Work in progress
-  * recording (mostly working, tested lightly)
-  * playback (not started)
-  * looping
-  * step record
-  * multi-track loop recording
-  * tempo detection
-  * ILI9341 320x240 TFT color display integration
-  * menu system
-
-|                 |          |
-| --------------- | ------------- |
-| midi sequencing |               |
-| TFT indicators |   |
-|   * Piano view | ```basic``` | 
-|   * recording indicators | ```blinking dot with filename ``` | 
-| emulation on x86_64 | basic TFT emulation works, requires [JUCE](https://www.juce.com "JUCE libraries") |
-
-### To-do
-|                 |           |
-| --------------- | ------------- |
-| midi read from SMF  |   |
-| midi looping |  |
- 
-### Why?
-I'd like a portable battery-powered device with physical midi input and output port (5-pin DIN connector) which can play and record to/from SD-card. And I'd like it to display various indicators on a cheep 2" TFT display: tempo; song position; midi channel in/out activity; keyboard view; play/stop/recording;
-
-Eventually I'd like looping/step-recording/multi-track sequencing and recording/tempo detection, quantization. A live midi peformance tool, basically. 
