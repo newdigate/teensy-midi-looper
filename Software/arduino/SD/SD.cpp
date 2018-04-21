@@ -420,7 +420,7 @@ File SDClass::open(const char *filepath, uint8_t mode) {
 
 bool SDClass::exists(const char *filepath) {
 
-    string path = _sdCardFolderLocation + "/" + std::string(filepath);
+    const string path = _sdCardFolderLocation + "/" + std::string(filepath);
     const char *pathCstr = path.c_str();
     fstream file(pathCstr);
     bool isFile = (bool)file;

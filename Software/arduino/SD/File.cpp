@@ -96,7 +96,7 @@ int File::read() {
 
 // buffered read for more efficient, high speed reading
 int File::read(void *buf, uint16_t nbyte) {
-    char *bbb = new char[nbyte];
+    char *bbb = (char *)buf;
     mockFile.read(bbb, nbyte);
     return nbyte;
 }
@@ -113,7 +113,6 @@ void File::flush() {
   if (mockFile.is_open())
       mockFile.flush();
 }
-
 bool File::seek(uint32_t pos) {
     if (! mockFile.is_open()) return false;
     mockFile.seekp(pos, ios_base::seekdir::cur);
