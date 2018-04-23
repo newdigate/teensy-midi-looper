@@ -170,7 +170,6 @@ bool MidiReader::open(const char *filename) {
                 }
 
             }
-            break;
         }
 
     }
