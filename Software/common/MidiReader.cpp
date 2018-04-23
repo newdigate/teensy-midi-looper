@@ -80,7 +80,7 @@ bool MidiReader::open(const char *filename) {
 
         _track_offset[i] = _midifile.position();
         _track_size[i] = track_length;
-        _midifile.seek(track_length);
+        //_midifile.seek(track_length);
 
         _track_buffer[i] = new Queue(sizeof(MidiMessage), TRACK_EVENT_BUFFER_SIZE, FIFO);
         _track_position[i] = 0;
@@ -94,31 +94,83 @@ bool MidiReader::open(const char *filename) {
             _midifile.read(buffer, 1);
             _track_position[i]++;
             unsigned char status_byte = buffer[0];
-
+            unsigned char key, velocity, nextByte;
+            uint32_t length = 0 ;
+            MidiMessage midiMessage;
+            char *text;
             switch (status_byte & 0xF0) {
+                // Channel Voice Messages ( 3 bytes )
                 case 0x80:
                 case 0x90:
+                case 0xA0:  // Polyphonic Key Pressure (Aftertouch).
+                case 0xB0:  // Control Change (and/or Channel Mode Message)
+                case 0xC0:  // Program Change
+                case 0xD0:  // Channel Pressure (After-touch).
+                case 0xE0:  // Pitch Wheel Change.
+                {
                     //bool noteOn = (status_byte & 0xF0 == 0x80);
                     //unsigned char channel = status_byte & 0x0F;
 
                     _midifile.read(buffer, 1);
                     _track_position[i]++;
-                    unsigned char key = buffer[0];
+                    key = buffer[0];
 
                     _midifile.read(buffer, 1);
                     _track_position[i]++;
-                    unsigned char velocity = buffer[0];
+                    velocity = buffer[0];
 
-                    MidiMessage midiMessage = MidiMessage();
+                    midiMessage = MidiMessage();
                     midiMessage.status = status_byte;
                     midiMessage.delta_ticks = delta_ticks;
                     midiMessage.key = key;
                     midiMessage.velocity = velocity;
-                    _track_buffer[i]->push(&midiMessage);
 
+                    _track_buffer[i]->push(&midiMessage);
+                    break;
+                }
+
+                case 0xF0: { // System Common Messages, and System Real-Time Messages
+                    switch (status_byte) {
+                        case 0xF0 : {
+                            progress = 0;
+                            length = varfieldGet(_midifile, progress);
+                            _track_position[i] += progress;
+                            _midifile.seek(length);
+                            _track_position[i] += length;
+                            break;
+                        }
+
+                        case 0xFF : {
+                            nextByte = _midifile.read();
+
+                            switch (nextByte & 0x0F) {
+                                case 00: {// Sequence Number
+                                    break;
+                                }
+
+                                default: {
+                                    readMetaText(i);
+                                    break;
+                                }
+
+                            }
+                            break;
+                        }
+
+                        default: {
+                            break;
+                        }
+
+                    }
                     break;
 
+                }
+                default: {
+                    break;
+                }
+
             }
+            break;
         }
 
     }
@@ -126,6 +178,17 @@ bool MidiReader::open(const char *filename) {
 
 
     return true;
+}
+
+void MidiReader::readMetaText(uint16_t track_index) {
+    uint16_t progress = 0;
+    uint32_t length = varfieldGet(_midifile, progress);
+    _track_position[track_index] += progress;
+    char *text = new char[length];
+    _midifile.read(text, length);
+    delete[] text;
+//                                    _midifile.seek(length);
+    _track_position[track_index] += length;
 }
 
 bool MidiReader::read(unsigned char trackNumber) {
@@ -139,9 +202,11 @@ uint32_t varfieldGet(File &file, uint16_t &progress)
 
     for (;;)
     {
-        if (file.available())
+        if (file.available()) {
             // return error
             byte_in = file.read();
+            progress++;
+        }
         ret = (ret << 7) | (byte_in & 0x7f);
         if (!(byte_in & 0x80))
             return ret;

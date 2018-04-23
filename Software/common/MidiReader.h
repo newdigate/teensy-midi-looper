@@ -51,6 +51,8 @@ private:
     unsigned long _track_offset[MAX_MIDI_TRACKS];
     unsigned long _track_position[MAX_MIDI_TRACKS];
     Queue *_track_buffer[MAX_MIDI_TRACKS];
+
+    void readMetaText(uint16_t track_index);
 };
 
 
