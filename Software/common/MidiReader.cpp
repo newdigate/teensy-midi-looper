@@ -143,13 +143,28 @@ bool MidiReader::open(const char *filename) {
                         case 0xFF : {
                             nextByte = _midifile.read();
 
-                            switch (nextByte & 0x0F) {
-                                case 00: {// Sequence Number
+                            switch (nextByte) {
+                                case 0x00: {// Sequence Number
+                                    break;
+                                }
+                                case 0x58:  {
+                                    // 04 - Time Signature
+                                    char c = _midifile.read();
+                                    _track_position[i]++;
+                                    if (c == 4) {
+                                        // nn dd cc bb
+                                        uint8_t nn =_midifile.read();
+                                        uint8_t dd =_midifile.read();
+                                        uint8_t cc =_midifile.read();
+                                        uint8_t bb =_midifile.read();
+                                        _track_position[i]+=4;
+                                    }
                                     break;
                                 }
 
                                 default: {
-                                    readMetaText(i);
+                                    if ((1 <= nextByte) && (nextByte <= 0xF))
+                                        readMetaText(i);
                                     break;
                                 }
 
@@ -186,7 +201,6 @@ void MidiReader::readMetaText(uint16_t track_index) {
     char *text = new char[length];
     _midifile.read(text, length);
     delete[] text;
-//                                    _midifile.seek(length);
     _track_position[track_index] += length;
 }
 
