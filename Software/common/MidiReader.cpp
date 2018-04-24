@@ -142,9 +142,32 @@ bool MidiReader::open(const char *filename) {
 
                         case 0xFF : {
                             nextByte = _midifile.read();
+                            _track_position[i]++;
 
                             switch (nextByte) {
                                 case 0x00: {// Sequence Number
+                                    break;
+                                }
+                                case 0x2F: {
+                                    // End of Track -> FF 2F 00
+                                    uint8_t nn =_midifile.read();
+                                    _track_position[i]++;
+                                    break;
+                                }
+                                case 0x51: {
+                                    // FF 51 03 tttttt Set Tempo
+                                    char c = _midifile.read();
+                                    _track_position[i]++;
+                                    if (c == 3) {
+                                        // nn dd cc bb
+                                        uint8_t nn =_midifile.read();
+                                        uint8_t dd =_midifile.read(); // denomiator = 2^dd
+                                        uint8_t cc =_midifile.read(); //
+                                        uint64_t microseconds_per_quarter_note = nn << 16 | dd << 8 | cc;
+                                        float millieconds_per_quarter_note = microseconds_per_quarter_note / 1000;
+                                        float bpm = 60000 / millieconds_per_quarter_note;
+                                        _track_position[i]+=3;
+                                    }
                                     break;
                                 }
                                 case 0x58:  {
@@ -154,8 +177,8 @@ bool MidiReader::open(const char *filename) {
                                     if (c == 4) {
                                         // nn dd cc bb
                                         uint8_t nn =_midifile.read();
-                                        uint8_t dd =_midifile.read();
-                                        uint8_t cc =_midifile.read();
+                                        uint8_t dd =_midifile.read(); // denomiator = 2^dd
+                                        uint8_t cc =_midifile.read(); //
                                         uint8_t bb =_midifile.read();
                                         _track_position[i]+=4;
                                     }
