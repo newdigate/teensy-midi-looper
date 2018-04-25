@@ -24,6 +24,7 @@ struct MidiMessage {
     unsigned char status;
     unsigned char key;
     unsigned char velocity;
+    unsigned char channel;
 };
 
 class MidiReader {

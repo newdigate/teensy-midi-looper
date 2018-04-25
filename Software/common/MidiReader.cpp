@@ -84,30 +84,39 @@ bool MidiReader::open(const char *filename) {
 
         _track_buffer[i] = new Queue(sizeof(MidiMessage), TRACK_EVENT_BUFFER_SIZE, FIFO);
         _track_position[i] = 0;
-
+        uint8_t channel = 0;
+        unsigned char status_byte = 0;
+        bool running_status = false;
         while (_track_position[i] < track_length && !_track_buffer[i]->isFull()) {
+
+            //Serial.printf("position: %d\n", _track_position[i] + _track_offset[i]);
 
             uint16_t progress = 0;
             uint32_t delta_ticks = varfieldGet(_midifile, progress);
             _track_position[i] += progress;
 
-            _midifile.read(buffer, 1);
-            _track_position[i]++;
-            unsigned char status_byte = buffer[0];
+            if (running_status || status_byte == 0 || status_byte == 0xFF) {
+                _midifile.read(buffer, 1);
+                status_byte = buffer[0];
+                _track_position[i]++;
+                channel = status_byte & 0x0F;
+                if ( (status_byte & 0x80) == 0 ) {
+                    running_status = 1;
+                }
+            }
+
             unsigned char key, velocity, nextByte;
-            uint32_t length = 0 ;
-            MidiMessage midiMessage;
-            char *text;
-            switch (status_byte & 0xF0) {
-                // Channel Voice Messages ( 3 bytes )
-                case 0x80:
-                case 0x90:
-                case 0xA0:  // Polyphonic Key Pressure (Aftertouch).
-                case 0xB0:  // Control Change (and/or Channel Mode Message)
-                case 0xC0:  // Program Change
-                case 0xD0:  // Channel Pressure (After-touch).
-                case 0xE0:  // Pitch Wheel Change.
-                {
+            uint32_t length = 0;
+            if (status_byte < 0xF0) {
+                    // Channel Voice Messages ( 3 bytes )
+                    //case 0x80:
+                    //case 0x90:
+                    //case 0xA0:  // Polyphonic Key Pressure (Aftertouch).
+                    //case 0xB0:  // Control Change (and/or Channel Mode Message)
+                    //case 0xC0:  // Program Change
+                    //case 0xD0:  // Channel Pressure (After-touch).
+                    //case 0xE0:  // Pitch Wheel Change.
+
                     //bool noteOn = (status_byte & 0xF0 == 0x80);
                     //unsigned char channel = status_byte & 0x0F;
 
@@ -119,97 +128,100 @@ bool MidiReader::open(const char *filename) {
                     _track_position[i]++;
                     velocity = buffer[0];
 
-                    midiMessage = MidiMessage();
+                    MidiMessage midiMessage = MidiMessage();
                     midiMessage.status = status_byte;
                     midiMessage.delta_ticks = delta_ticks;
                     midiMessage.key = key;
                     midiMessage.velocity = velocity;
+                    midiMessage.channel = channel;
 
                     _track_buffer[i]->push(&midiMessage);
-                    break;
-                }
+                    Serial.printf("delta: %d st:0x%x ch:%d key:%d vel:%d\n", midiMessage.delta_ticks,
+                                  midiMessage.status, midiMessage.channel, midiMessage.key, midiMessage.velocity);
+            } else {
 
-                case 0xF0: { // System Common Messages, and System Real-Time Messages
-                    switch (status_byte) {
-                        case 0xF0 : {
-                            progress = 0;
-                            length = varfieldGet(_midifile, progress);
-                            _track_position[i] += progress;
-                            _midifile.seek(length);
-                            _track_position[i] += length;
-                            break;
-                        }
-
-                        case 0xFF : {
-                            nextByte = _midifile.read();
-                            _track_position[i]++;
-
-                            switch (nextByte) {
-                                case 0x00: {// Sequence Number
-                                    break;
-                                }
-                                case 0x2F: {
-                                    // End of Track -> FF 2F 00
-                                    uint8_t nn =_midifile.read();
-                                    _track_position[i]++;
-                                    break;
-                                }
-                                case 0x51: {
-                                    // FF 51 03 tttttt Set Tempo
-                                    char c = _midifile.read();
-                                    _track_position[i]++;
-                                    if (c == 3) {
-                                        // nn dd cc bb
-                                        uint8_t nn =_midifile.read();
-                                        uint8_t dd =_midifile.read(); // denomiator = 2^dd
-                                        uint8_t cc =_midifile.read(); //
-                                        uint64_t microseconds_per_quarter_note = nn << 16 | dd << 8 | cc;
-                                        float millieconds_per_quarter_note = microseconds_per_quarter_note / 1000;
-                                        float bpm = 60000 / millieconds_per_quarter_note;
-                                        _track_position[i]+=3;
-                                    }
-                                    break;
-                                }
-                                case 0x58:  {
-                                    // 04 - Time Signature
-                                    char c = _midifile.read();
-                                    _track_position[i]++;
-                                    if (c == 4) {
-                                        // nn dd cc bb
-                                        uint8_t nn =_midifile.read();
-                                        uint8_t dd =_midifile.read(); // denomiator = 2^dd
-                                        uint8_t cc =_midifile.read(); //
-                                        uint8_t bb =_midifile.read();
-                                        _track_position[i]+=4;
-                                    }
-                                    break;
-                                }
-
-                                default: {
-                                    if ((1 <= nextByte) && (nextByte <= 0xF))
-                                        readMetaText(i);
-                                    break;
-                                }
-
-                            }
-                            break;
-                        }
-
-                        default: {
-                            break;
-                        }
-
+                switch (status_byte) {
+                    case 0xF0 : {
+                        progress = 0;
+                        length = varfieldGet(_midifile, progress);
+                        Serial.printf("sysex length:%d\n",length);
+                        _track_position[i] += progress;
+                        _midifile.seek(length);
+                        _track_position[i] += length;
+                        break;
                     }
-                    break;
 
-                }
-                default: {
-                    break;
+                    case 0xFF : {
+                        nextByte = _midifile.read();
+                        _track_position[i]++;
+
+                        switch (nextByte) {
+                            case 0x00: {// Sequence Number
+                                Serial.printf("sequence number:\n");
+                                break;
+                            }
+                            case 0x2F: {
+                                // End of Track -> FF 2F 00
+                                uint8_t nn =_midifile.read();
+                                Serial.printf("end of track\n");
+                                _track_position[i]++;
+                                break;
+                            }
+                            case 0x51: {
+                                // FF 51 03 tttttt Set Tempo
+                                char c = _midifile.read();
+                                _track_position[i]++;
+                                if (c == 3) {
+                                    // nn dd cc bb
+                                    uint8_t nn =_midifile.read();
+                                    uint8_t dd =_midifile.read(); // denomiator = 2^dd
+                                    uint8_t cc =_midifile.read(); //
+                                    uint64_t microseconds_per_quarter_note = nn << 16 | dd << 8 | cc;
+                                    float millieconds_per_quarter_note = microseconds_per_quarter_note / 1000;
+                                    float bpm = 60000 / millieconds_per_quarter_note;
+                                    Serial.printf("tempo : %f\n", bpm);
+                                    _track_position[i]+=3;
+                                }
+                                break;
+                            }
+                            case 0x58:  {
+                                // 04 - Time Signature
+                                char c = _midifile.read();
+                                _track_position[i]++;
+                                if (c == 4) {
+                                    // nn dd cc bb
+                                    uint8_t nn =_midifile.read();
+                                    uint8_t dd =_midifile.read(); // denomiator = 2^dd
+                                    uint8_t cc =_midifile.read(); //
+                                    uint8_t bb =_midifile.read();
+                                    uint8_t denominator = 2^dd;
+                                    _track_position[i]+=4;
+                                    Serial.printf("Time Signature: %d / %d, %d %d", nn, denominator, cc, bb);
+                                }
+                                break;
+                            }
+
+                            default: {
+                                if ((1 <= nextByte) && (nextByte <= 0xF))
+                                    readMetaText(i);
+                                else
+                                    Serial.printf("Unread - %x %d\n", nextByte, nextByte);
+                                break;
+                            }
+
+                        }
+                        break;
+                    }
+
+                    default: {
+                        Serial.printf("unread - status_byte %x %d\n", status_byte, status_byte);
+                        break;
+                    }
+
                 }
 
             }
         }
-
     }
     _pulses_per_quater_note = header.division;
 
@@ -223,6 +235,9 @@ void MidiReader::readMetaText(uint16_t track_index) {
     _track_position[track_index] += progress;
     char *text = new char[length];
     _midifile.read(text, length);
+    Serial.printf("text: ");
+    Serial.print(text);
+    Serial.println();
     delete[] text;
     _track_position[track_index] += length;
 }
