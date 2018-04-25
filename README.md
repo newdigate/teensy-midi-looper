@@ -55,7 +55,7 @@ The project is a **work-in-progress** in a very **early** stage of development; 
 |        |  |          |
 | ------------- |-------------| -------------|
 | record midi to SMF on SD | ```works (needs attention)``` | compiles on:<ul><li>teensyduino</li><li>due</li><li>esp8266</li></ul> |
-| read, play, loop SMF from SD | ```in progress``` | compiles on:<ul><li>teensyduino</li><li>due</li><li>esp8266</li></ul> |
+| read, play, loop SMF from SD | ```in progress``` |  |
 
 ### Software development
  * requirements
