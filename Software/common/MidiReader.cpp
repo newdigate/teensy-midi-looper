@@ -184,6 +184,22 @@ bool MidiReader::open(const char *filename) {
                                 }
                                 break;
                             }
+                            case 0x54: {
+                                // FF 54 05 hr mn se fr ff SMPTE Offset
+                                char c = _midifile.read();
+                                _track_position[i]++;
+                                if (c == 5) {
+                                    uint8_t hr =_midifile.read();
+                                    uint8_t mn =_midifile.read();
+                                    uint8_t se =_midifile.read();
+                                    uint8_t fr =_midifile.read();
+                                    uint8_t ff =_midifile.read();
+                                    Serial.printf("SMPTE Offset : %02d:%02d:%02d:%02d:%02d\n", hr, mn, se, fr, ff);
+                                    _track_position[i]+=5;
+                                }
+
+                                break;
+                            }
                             case 0x58:  {
                                 // 04 - Time Signature
                                 char c = _midifile.read();
@@ -196,16 +212,40 @@ bool MidiReader::open(const char *filename) {
                                     uint8_t bb =_midifile.read();
                                     uint8_t denominator = 2^dd;
                                     _track_position[i]+=4;
-                                    Serial.printf("Time Signature: %d / %d, %d %d", nn, denominator, cc, bb);
+                                    Serial.printf("Time Signature: %d / %d, %d %d\n", nn, denominator, cc, bb);
+                                }
+                                break;
+                            }
+
+                            case 0x59: {
+                                // FF 59 02 sf mi Key Signature
+                                char c = _midifile.read();
+                                _track_position[i]++;
+                                if (c == 2) {
+                                    // nn dd cc bb
+                                    uint8_t sf =_midifile.read();
+                                    uint8_t mi =_midifile.read();
+
+                                    _track_position[i]+=2;
+                                    Serial.printf("Key Signature: %d %d\n", sf, mi);
                                 }
                                 break;
                             }
 
                             default: {
-                                if ((1 <= nextByte) && (nextByte <= 0xF))
+                                if ((1 <= nextByte) && (nextByte <= 0x0F))
                                     readMetaText(i);
-                                else
-                                    Serial.printf("Unread - %x %d\n", nextByte, nextByte);
+                                else {
+                                    uint8_t nn =_midifile.read();
+                                    _track_position[i]++;
+
+                                    for (uint8_t jjj=0; jjj<nn; jjj++) {
+                                        uint8_t xx =_midifile.read();
+                                        _track_position[i]++;
+                                    }
+
+                                    Serial.printf("Meta - 0x%x 0x%x 0x%02x\n", status_byte, nextByte, nn);
+                                }
                                 break;
                             }
 

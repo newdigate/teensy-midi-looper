@@ -133,14 +133,14 @@ void MidiWriter::flush() {
     }
 
     for (byte b = 0; b < _bufferPos; b++) {
-    data.write(_buffer[b]);
+        data.write(_buffer[b]);
     }
     _bufferPos = 0;
 
     data.seek(18);
     write_buf_int(trackSize);
     for (byte b = 0; b < _bufferPos; b++) {
-    data.write(_buffer[b]);
+        data.write(_buffer[b]);
     }
     _bufferPos = 0;
 

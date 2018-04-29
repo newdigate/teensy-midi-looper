@@ -25,6 +25,7 @@
 #include "SD/SD.h"
 #include "AdafruitTFTMock.h"
 #include <unistd.h>
+#include <MidiReader.h>
 
 using namespace std;
 
@@ -52,11 +53,13 @@ void delay_test() {
 
 void run_tests();
 void run_tests2();
+void run_tests_sd_card_read_midi();
 
 int main(int argc, char **argv){
 	std::cout << "starting app...\n";
     initialize_mock_arduino();
-    run_tests();
+    run_tests_sd_card_read_midi();
+    //run_tests();
 }
 
 uint8_t tab[][3] = {
@@ -111,4 +114,20 @@ void run_tests2() {
     mock.print("hello");
     string in;
     cin >> in;
+}
+
+void run_tests_sd_card_read_midi() {
+
+    const char *sdcardlocation = const_cast<const char *>("/Users/nicnewdigate/Development/sdcard");
+
+    SD.setSDCardFolderPath(sdcardlocation);
+
+    std::string path = std::string("A.mid");
+    bool exists = SD.exists(path);
+
+    Serial.println();
+
+    MidiReader midiReader = MidiReader();
+    bool opened = midiReader.open("jsbwv549.mid");
+    //bool opened = midiReader.open("a.mid");
 }

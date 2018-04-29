@@ -39,7 +39,7 @@ File::File(SdFile f, const char *n) {
 }
 File::File(const char *n, uint8_t mode) {
     std::string actualFileName = SDClass::getSDCardFolderPath() + std::string("/") + std::string(n);
-    cout << actualFileName;
+    // cout << actualFileName;
     switch (mode) {
         case xO_READ : mockFile.open(actualFileName); break;
         case xO_WRITE : mockFile.open(actualFileName, std::fstream::out | std::fstream::app); break;

@@ -37,7 +37,16 @@ public:
                 _songPositionIndicator(&tft, 0, 0),
                 _songTimeIndicator(&tft, 0, 8),
                 _loopSequencer(&sequencer),
-                _trackLoopIndicator(&tft, _loopSequencer->_track1, 80, 56)
+                _trackLoopIndicators {
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[0], 0, 56),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[1], 32, 56),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[2], 64, 56),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[3], 96, 56),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[4], 0, 80),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[5], 32, 80),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[6], 64, 80),
+                        TFTLoopIndicator(&tft, _loopSequencer->_tracks[7], 96, 80)
+                }
     {
         _tft = &tft;
         _midiInterface = &midiInterface;
@@ -65,7 +74,7 @@ private:
     TFTPianoDisplay _topPianoDisplay;
     TFTPianoDisplay _bottomPianoDisplay;
     TFTSongTimeIndicator _songTimeIndicator;
-    TFTLoopIndicator _trackLoopIndicator;
+    TFTLoopIndicator _trackLoopIndicators[8];
     uint64_t _lastPianoDisplayUpdate = 0;
     uint64_t _lastUpdate = 0;
 

@@ -32,7 +32,7 @@ Queue::Queue(const uint16_t size_rec, const uint16_t nb_recs, const QueueType ty
 	impl = type;
 	ovw = overwrite;
 	
-	if (queue)	{ free(queue); }	// Free existing data (if any)
+	//if (queue)	{ free(queue); }	// Free existing data (if any)
 	queue = (uint8_t *) malloc(nb_recs * size_rec);
 
 	clean();

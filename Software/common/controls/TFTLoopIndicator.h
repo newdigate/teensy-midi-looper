@@ -27,8 +27,7 @@ public :
         _currentPosition = 0;
         _maxPosition = 64*_numBars*4;
         _last_phase = 0;
-        _track.onPhaseChanged += [&] (const SequencerTrack& track) {
-            //Serial.printf(">>%x\n", (unsigned long)this);
+        _track.onPhaseChanged += [&] () {
             this->phaseChanged();
         };
     }

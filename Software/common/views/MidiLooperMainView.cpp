@@ -11,7 +11,8 @@ void MidiLooperMainView::update(unsigned long millis) {
         _recordingIndicator.update(millis);
         _songPositionIndicator.setSongPosition(_loopSequencer->getSongPosition());
         _songTimeIndicator.update(millis);
-        _trackLoopIndicator.update(millis);
+        for (uint8_t i=0; i<8; i++)
+            _trackLoopIndicators[i].update(millis);
         _lastUpdate = millis;
     }
     if (_lastPianoDisplayUpdate - millis > 50) {

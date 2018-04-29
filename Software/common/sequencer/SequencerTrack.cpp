@@ -23,6 +23,6 @@ void SequencerTrack::tick(unsigned int delta_ticks) {
     uint8_t delta_loop_phase = delta_ticks * 256/ _durationTicks;
     if (delta_loop_phase > 0) {
         _loop_phase += delta_loop_phase;
-        onPhaseChanged(*this);
+        onPhaseChanged();
     }
 }

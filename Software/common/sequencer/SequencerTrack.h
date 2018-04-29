@@ -11,20 +11,19 @@
 
 class SequencerTrack {
 public:
-    SequencerTrack(Tempo &tempo) :
-        _tempo(tempo),
-        onPhaseChanged()
+    SequencerTrack(Tempo &tempo, uint8_t durationBars = 4) :
+            _tempo(tempo),
+            _durationBars(durationBars),
+            onPhaseChanged()
     {
         _milliseconds_per_tick = _tempo.milliseconds_per_tick();
     }
 
     void update(unsigned long millis);
     uint8_t _loop_phase = 0;
-    Delegate<const SequencerTrack&> onPhaseChanged;
+    Delegate<> onPhaseChanged;
 
 private:
-    unsigned long _epoch = 0;
-
     Tempo &_tempo;
     uint8_t _durationBars = 1;
     uint16_t _position_ticks = 0, _durationTicks = 64 * _durationBars * 4;

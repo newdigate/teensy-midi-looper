@@ -64,7 +64,7 @@ class MidiLoopSequencer
     void setStepRecordEnabled(bool step_record_enabled);
 
     Tempo _tempo;
-    SequencerTrack _track1;
+    SequencerTrack _tracks[8];
 
 private:
     midi::MidiInterface<HardwareSerial> *_midi_port;

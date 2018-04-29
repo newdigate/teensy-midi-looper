@@ -35,7 +35,7 @@ private:
     void setWasKeyPressed(byte key, bool value);
     bool isAnyKeyPressed(byte key);
 
-    const int _sizeFactor = 5;
+    const int _sizeFactor = 6;
     int _whiteKeyWidth = (35*10)/_sizeFactor;
     int _blackKeyWidth1 = (21*10)/_sizeFactor;
     int _blackKeyWidth2 = (20*10)/_sizeFactor;

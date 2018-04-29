@@ -5,7 +5,8 @@
 #include "Arduino.h"
 #include <SD.h>
 #else
-#include "mock_arduino.h"
+#include "../arduino/mock_arduino.h"
+#include "SD/SD.h"
 #endif
 
 class MidiWriter

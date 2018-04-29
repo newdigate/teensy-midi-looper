@@ -13,8 +13,21 @@
 
 #include "MidiLoopSequencer.h"
 
-MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  : _tempo(120), midiWriter(), _track1(_tempo) {
-  _midi_port = midiPort;
+MidiLoopSequencer::MidiLoopSequencer(midi::MidiInterface<HardwareSerial> *midiPort)  :
+        _midi_port(midiPort),
+        _tempo(120),
+        midiWriter(),
+        _tracks {
+            SequencerTrack(_tempo,1),
+            SequencerTrack(_tempo,2),
+            SequencerTrack(_tempo,4),
+            SequencerTrack(_tempo,8),
+            SequencerTrack(_tempo,16),
+            SequencerTrack(_tempo,32),
+            SequencerTrack(_tempo,64),
+            SequencerTrack(_tempo,128)
+        }
+{
 }
 
 void MidiLoopSequencer::initialize() {
@@ -45,7 +58,9 @@ void MidiLoopSequencer::tick(unsigned long millisecs) {
 
   processNewIncomingMidiMessages();
   if (_en_play) {
-      _track1.update(millisecs);
+      for (uint8_t i=0;i<8;i++) {
+          _tracks[i].update(millisecs);
+      }
   }
 }
 
