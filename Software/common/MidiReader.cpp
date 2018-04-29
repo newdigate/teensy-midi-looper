@@ -95,7 +95,7 @@ bool MidiReader::open(const char *filename) {
             uint32_t delta_ticks = varfieldGet(_midifile, progress);
             _track_position[i] += progress;
 
-            if (running_status || status_byte == 0 || status_byte == 0xFF) {
+            if (running_status || status_byte == 0 || status_byte == 0xFF || status_byte == 0xC0 || status_byte == 0xD0) {
                 _midifile.read(buffer, 1);
                 status_byte = buffer[0];
                 _track_position[i]++;
@@ -108,36 +108,48 @@ bool MidiReader::open(const char *filename) {
             unsigned char key, velocity, nextByte;
             uint32_t length = 0;
             if (status_byte < 0xF0) {
-                    // Channel Voice Messages ( 3 bytes )
+                bool read_second_byte = true;
+                switch (status_byte >> 4) {
+                    // Channel Voice Messages ( 3 bytes / or 2 bytes )
                     //case 0x80:
                     //case 0x90:
                     //case 0xA0:  // Polyphonic Key Pressure (Aftertouch).
-                    //case 0xB0:  // Control Change (and/or Channel Mode Message)
-                    //case 0xC0:  // Program Change
                     //case 0xD0:  // Channel Pressure (After-touch).
                     //case 0xE0:  // Pitch Wheel Change.
+                    case 0xC:   // Control Change (and/or Channel Mode Message
+                    case 0xD: {  // Program Change
+                        read_second_byte = false;
+                        break;
+                    }
 
-                    //bool noteOn = (status_byte & 0xF0 == 0x80);
-                    //unsigned char channel = status_byte & 0x0F;
+                    default:
+                        break;
 
-                    _midifile.read(buffer, 1);
-                    _track_position[i]++;
-                    key = buffer[0];
+                }
+                //bool noteOn = (status_byte & 0xF0 == 0x80);
+                //unsigned char channel = status_byte & 0x0F;
 
+                _midifile.read(buffer, 1);
+                _track_position[i]++;
+                key = buffer[0];
+
+                if (read_second_byte) {
                     _midifile.read(buffer, 1);
                     _track_position[i]++;
                     velocity = buffer[0];
+                } else
+                    velocity = 0;
 
-                    MidiMessage midiMessage = MidiMessage();
-                    midiMessage.status = status_byte;
-                    midiMessage.delta_ticks = delta_ticks;
-                    midiMessage.key = key;
-                    midiMessage.velocity = velocity;
-                    midiMessage.channel = channel;
+                MidiMessage midiMessage = MidiMessage();
+                midiMessage.status = status_byte;
+                midiMessage.delta_ticks = delta_ticks;
+                midiMessage.key = key;
+                midiMessage.velocity = velocity;
+                midiMessage.channel = channel;
 
-                    _track_buffer[i]->push(&midiMessage);
-                    Serial.printf("delta: %d st:0x%x ch:%d key:%d vel:%d\n", midiMessage.delta_ticks,
-                                  midiMessage.status, midiMessage.channel, midiMessage.key, midiMessage.velocity);
+                _track_buffer[i]->push(&midiMessage);
+                Serial.printf("delta: 0x%04x (%04d) \t\t\tst:(%02x): %s \t\t\t ch:%02d \tkey:%03d \tvel:%03d\n", midiMessage.delta_ticks, midiMessage.delta_ticks,
+                              midiMessage.status, voice_message_status_name(midiMessage.status), midiMessage.channel+1, midiMessage.key, midiMessage.velocity);
             } else {
 
                 switch (status_byte) {
@@ -312,4 +324,17 @@ bool MidiReader::seek(unsigned char trackNumber, unsigned long milliseconds) {
     Serial.print(quarter_note);
 
     return false;
+}
+
+const char* MidiReader::voice_message_status_name(unsigned char status) {
+    switch (status & 0xF0) {
+        case 0x80 : return "note off";
+        case 0x90 : return "note on";
+        case 0xA0 : return "after touch";
+        case 0xB0 : return "control change";
+        case 0xC0 : return "program change";
+        case 0xD0 : return "channel pressure";
+        case 0xE0 : return "pitch wheel";
+    }
+    return "[?]";
 }

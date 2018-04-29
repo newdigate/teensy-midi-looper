@@ -54,6 +54,8 @@ private:
     Queue *_track_buffer[MAX_MIDI_TRACKS];
 
     void readMetaText(uint16_t track_index);
+
+    const char * voice_message_status_name(unsigned char status);
 };
 
 
