@@ -95,15 +95,16 @@ bool MidiReader::open(const char *filename) {
             uint32_t delta_ticks = varfieldGet(_midifile, progress);
             _track_position[i] += progress;
 
-            if (running_status || status_byte == 0 || status_byte == 0xFF || status_byte == 0xC0 || status_byte == 0xD0) {
-                _midifile.read(buffer, 1);
-                status_byte = buffer[0];
-                _track_position[i]++;
-                channel = status_byte & 0x0F;
-                if ( (status_byte & 0x80) == 0 ) {
-                    running_status = 1;
-                }
-            }
+            _midifile.read(buffer, 1);
+            unsigned char new_status_byte = buffer[0];
+            _track_position[i]++;
+
+            if (new_status_byte >= 0x80) {
+                status_byte = new_status_byte;
+                channel = new_status_byte & 0x0f;
+                running_status = false;
+            } else
+                running_status = true;
 
             unsigned char key, velocity, nextByte;
             uint32_t length = 0;
@@ -129,9 +130,13 @@ bool MidiReader::open(const char *filename) {
                 //bool noteOn = (status_byte & 0xF0 == 0x80);
                 //unsigned char channel = status_byte & 0x0F;
 
-                _midifile.read(buffer, 1);
-                _track_position[i]++;
-                key = buffer[0];
+                if (running_status)
+                    key = new_status_byte;
+                else {
+                    _midifile.read(buffer, 1);
+                    _track_position[i]++;
+                    key = buffer[0];
+                }
 
                 if (read_second_byte) {
                     _midifile.read(buffer, 1);
