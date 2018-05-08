@@ -19,10 +19,12 @@ class ID3Reader {
 public:
     ID3Reader() :
             _filename(),
-            _file() {
+            _file(),
+            onID3Tag(){
     };
 
     bool open(const char* filename);
+    std::function<void(char*, char*)> onID3Tag;
 
 private:
     File _file;
