@@ -14,13 +14,29 @@
 #endif
 
 #include <string>
+#include <functional>
+
+const char ID3HeaderFlags_None = 0;
+const char ID3HeaderFlags_Unsynchronisation = 0x80;
+const char ID3HeaderFlags_ExtendedHeader = 0x40;
+const char ID3HeaderFlags_ExperimentalIndicator = 0x20;
+const char ID3HeaderFlags_FooterPresent = 0x10;
+
+class ID3Header {
+public:
+    char major_version;
+    char revision_number;
+    char flags;
+    unsigned int tag_size;
+};
 
 class ID3Reader {
 public:
     ID3Reader() :
             _filename(),
             _file(),
-            onID3Tag(){
+            onID3Tag(),
+            _header() {
     };
 
     bool open(const char* filename);
@@ -29,6 +45,13 @@ public:
 private:
     File _file;
     char* _filename;
+    ID3Header _header;
+
+    bool readHeader();
+    bool readTags();
+
+    unsigned long readUnsigned7bitsX4(const unsigned char *buffer) const;
+    unsigned int bytesToUInt64(unsigned char buffer[4]);
 };
 
 

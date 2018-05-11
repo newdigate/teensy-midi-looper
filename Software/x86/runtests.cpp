@@ -26,7 +26,8 @@
 #include "AdafruitTFTMock.h"
 #include <unistd.h>
 #include <MidiReader.h>
-
+#include "../common/ID3Reader.h"
+#include <dirent.h>
 using namespace std;
 
 void millis_test() {
@@ -54,11 +55,16 @@ void delay_test() {
 void run_tests();
 void run_tests2();
 void run_tests_sd_card_read_midi();
+void run_mp3_id3_reader_tests();
+void run_mp3_id3_reader_testvs_1();
 
 int main(int argc, char **argv){
 	std::cout << "starting app...\n";
     initialize_mock_arduino();
-    run_tests_sd_card_read_midi();
+    //run_mp3_id3_reader_testvs_1();
+    run_mp3_id3_reader_tests();
+    std::cout << "complete...\n";
+    //run_tests_sd_card_read_midi();
     //run_tests();
 }
 
@@ -119,7 +125,6 @@ void run_tests2() {
 void run_tests_sd_card_read_midi() {
 
     const char *sdcardlocation = const_cast<const char *>("/Users/nicnewdigate/Development/sdcard");
-
     SD.setSDCardFolderPath(sdcardlocation);
 
     std::string path = std::string("A.mid");
@@ -130,4 +135,64 @@ void run_tests_sd_card_read_midi() {
     MidiReader midiReader = MidiReader();
     bool opened = midiReader.open("jsbwv549.mid");
     //bool opened = midiReader.open("a.mid");
+}
+void printDirectory();
+
+void run_mp3_id3_reader_tests() {
+
+    const char *sdcardlocation = const_cast<const char *>("/Volumes/SILVER/Music/Classic/Johann Sebastian Bach");
+    SD.setSDCardFolderPath(sdcardlocation);
+
+    printDirectory();
+}
+
+void run_mp3_id3_reader_testvs_1() {
+
+    const char *sdcardlocation = const_cast<const char *>("/Volumes/SILVER/Music/Classic/Johan Sebastian Bach/");
+    SD.setSDCardFolderPath(sdcardlocation);
+    string filename = string("07 Symphony No. 3 in E flat major ('Eroica'), Op. 55- Allegro vivace.mp3");
+    cout << filename << std::endl;
+
+    ID3Reader id3reader = ID3Reader();
+    id3reader.onID3Tag = [] (char *tag, char *text) {
+        Serial.printf("%s : %s\n", tag, text);
+    };
+    bool result = id3reader.open(filename.c_str());
+    Serial.printf("SUCCESS: %x\n",result);
+}
+
+
+void printDirectory() {
+    DIR *dir;
+
+    if ((dir = opendir ("/Volumes/SILVER/Music/Classic/Johann Sebastian Bach/")) != NULL) {
+        dirent *ent;
+        while ((ent = readdir (dir)) != NULL) {
+            //printf ("%s\n", ent->d_name);
+            if ((ent->d_name[0] == '_')  || ( (ent->d_name[0] == '.'))) continue;
+            std::string filename = std::string(ent->d_name);
+            if(filename.substr(filename.find_last_of(".") + 1) == "mp3") {
+                cout << "mp3: ";
+                cout << filename << std::endl;
+
+                ID3Reader id3reader = ID3Reader();
+                id3reader.onID3Tag = [] (char *tag, char *text) {
+                    Serial.printf("%s : %s\n", tag, text);
+                };
+                bool result = id3reader.open(filename.c_str());
+                Serial.printf("SUCCESS: %x\n",result);
+            } else if (filename.substr(filename.find_last_of(".") + 1) == "tag") {
+                    cout << "tag: ";
+                    cout << filename << std::endl;
+
+                    ID3Reader id3reader = ID3Reader();
+                    id3reader.onID3Tag = [] (char *tag, char *text) {
+                        Serial.printf("%s : %s", tag, text);
+                    };
+                    bool result = id3reader.open(filename.c_str());
+                    Serial.printf("%x\n",result);
+                }
+        }
+
+    }
 }
