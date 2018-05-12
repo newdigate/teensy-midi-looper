@@ -57,6 +57,7 @@ void run_tests2();
 void run_tests_sd_card_read_midi();
 void run_mp3_id3_reader_tests();
 void run_mp3_id3_reader_testvs_1();
+const char *sdcardlocation = const_cast<const char *>("/Users/johnsmith/Downloads/id3tags-20000623/");
 
 int main(int argc, char **argv){
 	std::cout << "starting app...\n";
@@ -124,7 +125,6 @@ void run_tests2() {
 
 void run_tests_sd_card_read_midi() {
 
-    const char *sdcardlocation = const_cast<const char *>("/Users/nicnewdigate/Development/sdcard");
     SD.setSDCardFolderPath(sdcardlocation);
 
     std::string path = std::string("A.mid");
@@ -140,7 +140,6 @@ void printDirectory();
 
 void run_mp3_id3_reader_tests() {
 
-    const char *sdcardlocation = const_cast<const char *>("/Volumes/SILVER/Music/Classic/Johann Sebastian Bach");
     SD.setSDCardFolderPath(sdcardlocation);
 
     printDirectory();
@@ -148,7 +147,6 @@ void run_mp3_id3_reader_tests() {
 
 void run_mp3_id3_reader_testvs_1() {
 
-    const char *sdcardlocation = const_cast<const char *>("/Volumes/SILVER/Music/Classic/Johan Sebastian Bach/");
     SD.setSDCardFolderPath(sdcardlocation);
     string filename = string("07 Symphony No. 3 in E flat major ('Eroica'), Op. 55- Allegro vivace.mp3");
     cout << filename << std::endl;
@@ -165,7 +163,7 @@ void run_mp3_id3_reader_testvs_1() {
 void printDirectory() {
     DIR *dir;
 
-    if ((dir = opendir ("/Volumes/SILVER/Music/Classic/Johann Sebastian Bach/")) != NULL) {
+    if ((dir = opendir (sdcardlocation)) != NULL) {
         dirent *ent;
         while ((ent = readdir (dir)) != NULL) {
             //printf ("%s\n", ent->d_name);
@@ -187,7 +185,7 @@ void printDirectory() {
 
                     ID3Reader id3reader = ID3Reader();
                     id3reader.onID3Tag = [] (char *tag, char *text) {
-                        Serial.printf("%s : %s", tag, text);
+                        Serial.printf("%s : %s\n", tag, text);
                     };
                     bool result = id3reader.open(filename.c_str());
                     Serial.printf("%x\n",result);

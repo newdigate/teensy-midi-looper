@@ -86,7 +86,6 @@ bool MidiReader::open(const char *filename) {
         _track_position[i] = 0;
         uint8_t channel = 0;
         unsigned char status_byte = 0;
-        bool running_status = false;
         while (_track_position[i] < track_length && !_track_buffer[i]->isFull()) {
 
             //Serial.printf("position: %d\n", _track_position[i] + _track_offset[i]);
@@ -99,10 +98,10 @@ bool MidiReader::open(const char *filename) {
             unsigned char new_status_byte = buffer[0];
             _track_position[i]++;
 
+            bool running_status = false;
             if (new_status_byte >= 0x80) {
                 status_byte = new_status_byte;
                 channel = new_status_byte & 0x0f;
-                running_status = false;
             } else
                 running_status = true;
 
