@@ -102,10 +102,10 @@ bool ID3Reader::readTags() {
 
 
         if (!shouldRead) {
-            //printf("frame_length: %d\n", frame_length);
+            //printf("!should read: %d\n", frame_length);
             if (_header.major_version < 4) {
-                position += frame_length - 2;
-                _file.seek(frame_length - 2);
+                position += frame_length ;
+                _file.seek(frame_length);
             }
             else {
                 _file.seek(frame_length);
