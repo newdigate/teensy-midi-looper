@@ -99,18 +99,13 @@ bool ID3Reader::readTags() {
         if (memcmp(frameId, "TPE2", 4) == 0) shouldRead = true;
 
         if (memcmp(frameId, "TCOM", 4) == 0) shouldRead = true;
+        if (memcmp(frameId, "APIC", 4) == 0) shouldRead = true;
 
 
         if (!shouldRead) {
-            //printf("!should read: %d\n", frame_length);
-            if (_header.major_version < 4) {
-                position += frame_length ;
-                _file.seek(frame_length);
-            }
-            else {
-                _file.seek(frame_length);
-                position += frame_length;
-            }
+            printf("!should not read: %d\n", frame_length);
+            position += frame_length ;
+            _file.seek(frame_length);
 
             continue;
         }
@@ -129,7 +124,7 @@ bool ID3Reader::readTags() {
         }
         char *text = new char[frame_length+1]();
         char *unpadded = text;
-
+        printf("!frame length %d\n", frame_length);
         _file.read(text, frame_length);
         position += frame_length;
         text[frame_length] = 0;
