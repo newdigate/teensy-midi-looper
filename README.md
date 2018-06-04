@@ -10,7 +10,7 @@
 * **display** midi input & output activity, indicators (tempo, key, signature, position) on small color TFT display 
 ### hardware 
 * ```Teensy 3.6 dev board```
-  * ```32-bit 180 MHz ARM Cortex-M4 processor```
+  * ```32-bit 180 MHz ARM Cortex-M4 micro-controller```
   * ```sd-card built-in```
 * ```1x Rotary encoder with built-in switch```
 * ```ST7735 128x128 pixel 16bit color TFT LCD display```
