@@ -25,10 +25,10 @@ export SAMD_PLATFORMS='declare -A samd_platforms=( [zero]="arduino:samd:arduino_
 sleep 3
 export DISPLAY=:1.0
 
-# download and install arduino 1.8.5
-wget --quiet https://downloads.arduino.cc/arduino-1.8.5-linux64.tar.xz
-tar xf arduino-1.8.5-linux64.tar.xz
-mv arduino-1.8.5 $HOME/arduino_ide
+# download and install arduino 1.8.8
+wget --quiet https://downloads.arduino.cc/arduino-1.8.8-linux64.tar.xz
+tar xf arduino-1.8.8-linux64.tar.xz
+mv arduino-1.8.8 $HOME/arduino_ide
 
 # move this library to the arduino libraries folder
 # ln -s $PWD $HOME/arduino_ide/libraries/Adafruit_Test_Library
