@@ -2,18 +2,14 @@ matrix:
   include:
     - language: c
       sudo: false
-      #before_install:
-        #- source <(curl -SLs https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Software/install-travis-ci-arduino.sh)
       install:
-        - pwd
-        - ls
         - ./Software/install-travis-ci-arduino.sh
-        - arduino --install-library "MIDI Library"
-        - arduino --install-library "Queue"
-        - arduino --install-library "SD",
-        - arduino --install-library "Adafruit GFX Library",
-        - arduino --install-library "Adafruit ST7735 Library",
-        - arduino --install-library "Encoder"
+        - $HOME/arduino_ide/arduino --install-library "MIDI Library"
+        - $HOME/arduino_ide/arduino --install-library "Queue"
+        - $HOME/arduino_ide/arduino --install-library "SD",
+        - $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
+        - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 Library",
+        - $HOME/arduino_ide/arduino --install-library "Encoder"
       script:
         - build_main_platforms
         
