@@ -5,6 +5,8 @@ matrix:
       #before_install:
         #- source <(curl -SLs https://raw.githubusercontent.com/newdigate/teensy-midi-looper/master/Software/install-travis-ci-arduino.sh)
       install:
+        - pwd
+        - ls
         - /Software/install-travis-ci-arduino.sh
         - arduino --install-library "MIDI Library"
         - arduino --install-library "Queue"
