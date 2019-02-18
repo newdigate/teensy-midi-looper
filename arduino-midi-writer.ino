@@ -27,7 +27,7 @@
 #define sclk 14  // SCLK can also use pin 14
 #define mosi 11  // MOSI can also use pin 7
 #define cs_   10  // CS & DC can use pins 2, 6, 9, 10, 15, 20, 21, 22, 23
-#define dc   9   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
+#define dc_   9   //  but certain pairs must NOT be used: 2+10, 6+9, 20+23, 21+22
 #define rst  8   // RST can use any pin
 #define sdcs 4   // CS for SD card, can use any pin
 
@@ -51,7 +51,7 @@ namespace std { void __throw_bad_function_call() { Serial.print("throw_bad_funct
 const int chipSelect = BUILTIN_SDCARD;
 const byte numOctaves = 3;
 const byte startOctave = 2;
-Adafruit_ST7735 tft = Adafruit_ST7735(cs_, dc, mosi, sclk, rst);
+Adafruit_ST7735 tft = Adafruit_ST7735(cs_, dc_, mosi, sclk, rst);
 
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1,     midiA);
 MidiWriter midi_writer;
