@@ -7,7 +7,7 @@ matrix:
       install:
         - pwd
         - ls
-        - /Software/install-travis-ci-arduino.sh
+        - ./Software/install-travis-ci-arduino.sh
         - arduino --install-library "MIDI Library"
         - arduino --install-library "Queue"
         - arduino --install-library "SD",
