@@ -8,7 +8,7 @@ matrix:
         - $HOME/arduino_ide/arduino --install-library "Queue"
         - $HOME/arduino_ide/arduino --install-library "SD",
         - $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
-        - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 Library",
+        - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
         - $HOME/arduino_ide/arduino --install-library "Encoder"
       script:
         - build_main_platforms
