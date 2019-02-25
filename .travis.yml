@@ -11,6 +11,7 @@ matrix:
         - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
         - $HOME/arduino_ide/arduino --install-library "Encoder"
       script:
+        - source <(cat Software/install-travis-ci-arduino.sh)
         - build_main_platforms
         
     #- os: osx
