@@ -10,6 +10,9 @@ matrix:
         - $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
         - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
         - $HOME/arduino_ide/arduino --install-library "Encoder"
+        - curl -fsSL https://www.pjrc.com/teensy/td_145/TeensyduinoInstall.linux64
+        - chmod +x TeensyduinoInstall.linux64
+        - ./TeensyduinoInstall.linux64 -dir=$HOME/arduino_ide/arduino
       script:
         - source <(cat Software/install-travis-ci-arduino.sh)
         - build_main_platforms
