@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+# set -x
 # we need bash 4 for associative arrays
 if [ "${BASH_VERSION%%[^0-9]*}" -lt "4" ]; then
   echo "BASH VERSION < 4: ${BASH_VERSION}" >&2
@@ -94,6 +94,12 @@ if [ $? -ne 0 ]; then echo -e """$RED""\xe2\x9c\x96"; else echo -e """$GREEN""\x
 echo -n "TEENSY: "
 DEPENDENCY_OUTPUT=$(arduino --install-boards teensy:avr 2>&1)
 if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
+
+echo -e "\n########################################################################";
+echo -e "${YELLOW} LIST CONTENTS OF HARDWARE"
+echo "########################################################################";
+
+ls $HOME/arduino_ide/hardware
 
 # This is a hack, we have to install by hand so lets delete it
 echo "Removing ESP32 cache"
