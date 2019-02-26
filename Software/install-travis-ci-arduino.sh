@@ -201,7 +201,7 @@ function build_platform()
     ))
   else
     # loop through results and add them to the array
-    examples=($(find $PWD -name "*.pde" -o -name "*.ino"))
+    examples=($(find $PWD/.. -name "*.pde" -o -name "*.ino"))
   fi
 
   # get the last example in the array
