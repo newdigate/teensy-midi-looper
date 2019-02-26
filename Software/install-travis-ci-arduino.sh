@@ -10,7 +10,7 @@ fi
 # this will be eval'd in the functions below because arrays can't be exported
 # Uno is ATmega328, Zero is SAMD21G18, ESP8266, Leonardo is ATmega32u4, M4 is SAMD51, Mega is ATmega2560, ESP32
 # export MAIN_PLATFORMS='declare -A main_platforms=( [teensy]="teensy:avr:teensy36" [uno]="arduino:avr:uno" [due]="arduino:sam:arduino_due_x" [zero]="arduino:samd:arduino_zero_native" [esp8266]="esp8266:esp8266:huzzah:eesz=4M3M,xtal=80" [leonardo]="arduino:avr:leonardo" [m4]="adafruit:samd:adafruit_metro_m4" [mega2560]="arduino:avr:mega:cpu=atmega2560" [esp32]="esp32:esp32:featheresp32:FlashFreq=80" )'
-export MAIN_PLATFORMS='declare -A main_platforms=( [teensy]="teensy:avr:teensy36" [zero]="arduino:samd:arduino_zero_native" [m4]="adafruit:samd:adafruit_metro_m4" )'
+export MAIN_PLATFORMS='declare -A main_platforms=( [teensy]="teensy:samd:teensy36" [zero]="arduino:samd:arduino_zero_native" [m4]="adafruit:samd:adafruit_metro_m4" )'
 
 # associative array for other platforms that can be called explicitly in .travis.yml configs
 # this will be eval'd in the functions below because arrays can't be exported
@@ -92,8 +92,16 @@ echo -n "ADD PACKAGE INDEX: "
 DEPENDENCY_OUTPUT=$(arduino --pref "boardsmanager.additional.urls=https://adafruit.github.io/arduino-board-index/package_adafruit_index.json,https://github.com/newdigate/teensy-build/raw/master/package_teensy_index.json,http://arduino.esp8266.com/stable/package_esp8266com_index.json,https://dl.espressif.com/dl/package_esp32_index.json" --save-prefs 2>&1)
 if [ $? -ne 0 ]; then echo -e """$RED""\xe2\x9c\x96"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
 
+echo -n "ZERO: "
+DEPENDENCY_OUTPUT=$(arduino --install-boards arduino:samd 2>&1)
+if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
+
+echo -n "ADAFRUIT SAMD: "
+DEPENDENCY_OUTPUT=$(arduino --install-boards adafruit:samd 2>&1)
+if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
+
 echo -n "TEENSY: "
-DEPENDENCY_OUTPUT=$(arduino --install-boards teensy:avr 2>&1)
+DEPENDENCY_OUTPUT=$(arduino --install-boards teensy:samd 2>&1)
 if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
 
 echo -e "\n########################################################################";
@@ -116,9 +124,6 @@ ls $HOME/arduino_ide/hardware
 # DEPENDENCY_OUTPUT=$(arduino --install-boards arduino:sam 2>&1)
 # if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
 
-echo -n "ZERO: "
-DEPENDENCY_OUTPUT=$(arduino --install-boards arduino:samd 2>&1)
-if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
 
 # echo -n "ESP8266: "
 # DEPENDENCY_OUTPUT=$(arduino --install-boards esp8266:esp8266 2>&1)
@@ -127,10 +132,6 @@ if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""
 # echo -n "ADAFRUIT AVR: "
 # DEPENDENCY_OUTPUT=$(arduino --install-boards adafruit:avr 2>&1)
 # if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
-
-echo -n "ADAFRUIT SAMD: "
-DEPENDENCY_OUTPUT=$(arduino --install-boards adafruit:samd 2>&1)
-if [ $? -ne 0 ]; then echo -e "\xe2\x9c\x96 OR CACHED"; else echo -e """$GREEN""\xe2\x9c\x93"; fi
 
 # install random lib so the arduino IDE grabs a new library index
 # see: https://github.com/arduino/Arduino/issues/3535
