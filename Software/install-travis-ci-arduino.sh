@@ -79,7 +79,7 @@ echo -e "\n#####################################################################
 echo -e "${YELLOW} LIST CONTENTS OF HARDWARE"
 echo "########################################################################";
 
-ls $HOME/arduino_ide/arduino/hardware
+ls $HOME/arduino_ide/hardware
 
 echo -e "\n########################################################################";
 echo -e "${YELLOW}INSTALLING DEPENDENCIES"
