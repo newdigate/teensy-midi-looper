@@ -4,12 +4,12 @@ matrix:
       sudo: false
       install:
         - ./Software/install-travis-ci-arduino.sh
-        #- $HOME/arduino_ide/arduino --install-library "MIDI Library"
+        - $HOME/arduino_ide/arduino --install-library "MIDI Library"
         - $HOME/arduino_ide/arduino --install-library "Queue"
-        #- $HOME/arduino_ide/arduino --install-library "SD",
-        #- $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
-        #- $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
-        #- $HOME/arduino_ide/arduino --install-library "Encoder"
+        - $HOME/arduino_ide/arduino --install-library "SD",
+        - $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
+        - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
+        - $HOME/arduino_ide/arduino --install-library "Encoder"
         #- curl -fsSL https://www.pjrc.com/teensy/td_145/TeensyduinoInstall.linux64 -o TeensyduinoInstall.linux64
         #- chmod +x TeensyduinoInstall.linux64
         #- ./TeensyduinoInstall.linux64 -dir=$HOME/arduino_ide/arduino
