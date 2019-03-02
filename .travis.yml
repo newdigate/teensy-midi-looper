@@ -3,31 +3,16 @@ matrix:
     - language: c
       sudo: false
       install:
-        - source <(cat Software/install-travis-ci-arduino.sh)
+        - source build/install-teensyduino.sh
         - $HOME/arduino_ide/arduino --install-library "MIDI Library"
         - $HOME/arduino_ide/arduino --install-library "Queue"
         - $HOME/arduino_ide/arduino --install-library "SD",
         - $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
         - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
-        - $HOME/arduino_ide/arduino --install-library "Encoder"
+        - $HOME/arduino_ide/arduino --install-library "Encoder"        
       script:
-        - build_main_platforms
+        - $HOME/arduino_ide/arduino --verify --verbose --board "teensyduino:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" arduino-midi-writer.ino 
         
-    #- os: osx
-      #language: cpp
-      #before_install:  
-        #install brew
-        #- /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        #- brew info llvm
-        #- brew install --with-toolchain llvm
-        #- brew update
-        #- brew upgrade 
-        #- cd Software/arduino/cmake-build-debug
-        #- cmake ..
-      #install:
-        #travis_wait 60 make
-        
-
 notifications:
   email:
     on_success: change
