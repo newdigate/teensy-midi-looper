@@ -49,7 +49,7 @@ fi
 #ln -s $TRAVIS_BUILD_DIR $HOME/arduino_ide/libraries/Adafruit_Test_Library
 
 # add the arduino CLI to our PATH
-# export PATH="$HOME/arduino_ide:$PATH"
+export PATH="$HOME/arduino_ide:$PATH"
 
 echo -e "\n########################################################################";
 echo -e "${YELLOW} ADDING PACKAGES"
