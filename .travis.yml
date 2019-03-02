@@ -11,7 +11,7 @@ matrix:
         - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
         - $HOME/arduino_ide/arduino --install-library "Encoder"        
       script:
-        - $HOME/arduino_ide/arduino --verify --verbose --board "teensyduino:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" blink/blink.ino 
+        - $HOME/arduino_ide/arduino --verify --verbose --board "teensyduino:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" arduino-midi-writer.ino 
         
 notifications:
   email:
