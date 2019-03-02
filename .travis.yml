@@ -3,6 +3,8 @@ matrix:
     - language: c
       sudo: false
       install:
+        - pwd
+        - ls -lrt
         - source <(cat build/install-teensyduino-1.45.sh)
         - $HOME/arduino_ide/arduino --install-library "MIDI Library"
         - $HOME/arduino_ide/arduino --install-library "Queue"
