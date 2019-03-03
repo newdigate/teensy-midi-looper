@@ -3,16 +3,20 @@ matrix:
     - language: c
       sudo: false
       install:
-        - source build/install-teensyduino.sh
-        - $HOME/arduino_ide/arduino --install-library "MIDI Library"
-        - $HOME/arduino_ide/arduino --install-library "Queue"
-        - $HOME/arduino_ide/arduino --install-library "SD",
-        - $HOME/arduino_ide/arduino --install-library "Adafruit GFX Library",
-        - $HOME/arduino_ide/arduino --install-library "Adafruit ST7735 and ST7789 Library",
-        - $HOME/arduino_ide/arduino --install-library "Encoder"        
+        #- set -v
+        - export ARDUINO_IDE_VERSION="1.8.8"
+        - wget --quiet https://downloads.arduino.cc/arduino-$ARDUINO_IDE_VERSION-linux64.tar.xz
+        - mkdir $HOME/arduino_ide
+        - tar xf arduino-$ARDUINO_IDE_VERSION-linux64.tar.xz -C $HOME/arduino_ide/ 
+        - curl -fsSL https://www.pjrc.com/teensy/td_145/TeensyduinoInstall.linux64 -o TeensyduinoInstall.linux64
+        - chmod +x TeensyduinoInstall.linux64
+        - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_1.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :1 -ac -screen 0 1280x1024x16
+        - sleep 3
+        - export DISPLAY=:1.0
+        - ./TeensyduinoInstall.linux64 --dir=$HOME/arduino_ide/arduino-$ARDUINO_IDE_VERSION
       script:
-        - $HOME/arduino_ide/arduino --verify --verbose --board "teensyduino:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" arduino-midi-writer.ino 
-        
+        - source build-sketches.sh
+
 notifications:
   email:
     on_success: change
