@@ -5,6 +5,7 @@ examples=($(find $HOME/build -name "*.pde" -o -name "*.ino"))
 for example in "${examples[@]}"; do
   echo -n $example:
   ($HOME/arduino_ide/arduino-$ARDUINO_IDE_VERSION/arduino --verify --board "teensy:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" $example | tee output.txt > /dev/null)
+  echo "PIPESTATUS:" ${PIPESTATUS[1]} ${PIPESTATUS[2]} ${PIPESTATUS[3]} ${PIPESTATUS[4]}
   local platform_switch=${PIPESTATUS[0]}
   # notify if the platform switch failed
   if [ $platform_switch -ne 0 ]; then
