@@ -7,6 +7,7 @@ for example in "${examples[@]}"; do
   local platform_stdout=$($HOME/arduino_ide/arduino-$ARDUINO_IDE_VERSION/arduino --verify --board "teensy:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" $example 2>&1)
   # grab the exit status of the arduino board change
   local platform_switch=$?
+  echo -e "result: " $platform_switch
   # notify if the platform switch failed
   if [ $platform_switch -ne 0 ]; then
     # heavy X
