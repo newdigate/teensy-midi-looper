@@ -4,13 +4,13 @@ GRAY='\033[1;30m'; RED='\033[0;31m'; LRED='\033[1;31m'; GREEN='\033[0;32m'; LGRE
 examples=($(find $HOME/build -name "*.pde" -o -name "*.ino"))
 for example in "${examples[@]}"; do
   echo -n $example:
-  $HOME/arduino_ide/arduino-$ARDUINO_IDE_VERSION/arduino --verify --board "teensy:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" $example | tee output.txt > /dev/null
+  ($HOME/arduino_ide/arduino-$ARDUINO_IDE_VERSION/arduino --verify --board "teensy:avr:teensy36:usb=serial,speed=180,opt=o2std,keys=en-us" $example | tee output.txt > /dev/null)
   local platform_switch=${PIPESTATUS[0]}
   # notify if the platform switch failed
   if [ $platform_switch -ne 0 ]; then
     # heavy X
     echo -e """$RED""\xe2\x9c\x96"
-    
+    echo -e "\n"
     cat output.txt
     exit_code=1
   else
