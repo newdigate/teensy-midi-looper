@@ -16,7 +16,7 @@ for example in "${examples[@]}"; do
   else
     # heavy checkmark
     echo -e """$GREEN""\xe2\x9c\x93"
-    cat output.txt
+    #cat output.txt
   fi
 done;
 exit $exit_code
