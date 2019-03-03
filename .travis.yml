@@ -1,6 +1,6 @@
 matrix:
   include:
-    - language: c
+    - language: generic
       sudo: false
       install:
         #- set -v
